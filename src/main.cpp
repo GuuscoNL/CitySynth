@@ -4,22 +4,26 @@
 #include <array>
 #include <iostream>
 #include "include/city.hpp"
+#include "include/roadsegment.hpp"
 
 #define RLIGHTS_IMPLEMENTATION
 #include "include/rlights.h"
 
 #define CAMERA_IMPLEMENTATION
 
-#define PLAYER_MOVEMENT_SENSITIVITY 100.0f
 
 #define ASPECT_RATIO 16/9
 #define SCREEN_HEIGHT 900
 #define SCREEN_WIDTH SCREEN_HEIGHT * ASPECT_RATIO
 
-void handleCameraControls(Camera3D& camera) {
-    if (!IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) return;
+#define PRINT(x) std::cout << x << std::endl
+#define PRINTVEC3(vec) std::cout << vec.x << ", " << vec.y << ", " << vec.z << std::endl
 
-    UpdateCamera(&camera, CAMERA_THIRD_PERSON); // Update camera only when right mouse button is held down
+void handleCameraControls(Camera3D& camera) {
+
+    if (!IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) return; // Update camera only when right mouse button is held down
+
+    UpdateCamera(&camera, CAMERA_THIRD_PERSON); 
 }
 
 int main() {
@@ -38,7 +42,7 @@ int main() {
 
     // ----- Models -----
     
-    Model cube = LoadModelFromMesh(GenMeshCube(2.0f, 2.0f, 2.0f));
+    Model cube = LoadModelFromMesh(GenMeshCube(0.5, .1, 2.0));
 
     // ----- lighting shaders -----
     Shader shader = LoadShader("shaders/lighting.vs",
@@ -49,7 +53,7 @@ int main() {
     int ambientLoc = GetShaderLocation(shader, "ambient");
     std::array<float, 4> ambientValues = { 0.7f, 0.7f, 0.7f, 1.0f };
     SetShaderValue(shader, ambientLoc, ambientValues.data(), SHADER_UNIFORM_VEC4);
-    City city = City(1000.f, 1000.f);
+    City city = City(100.f);
 
     city.GetPlane().materials[0].shader = shader;
     cube.materials[0].shader = shader;
@@ -70,6 +74,9 @@ int main() {
     SetRandomSeed(randomSeed);
 
     city.GeneratePopulationHeatmap(0, 0, 1.5);
+    RoadSegment road = RoadSegment(cube, Vector3{0,0,0}, 93);
+    RoadSegment road1 = RoadSegment(cube, Vector3{0,0,3}, 65);
+    RoadSegment road2 = RoadSegment(cube, Vector3{2,0,5}, 41);
 
     while (!WindowShouldClose()) {
     
@@ -79,7 +86,7 @@ int main() {
         SetShaderValue(shader, shader.locs[SHADER_LOC_VECTOR_VIEW], cameraPos, SHADER_UNIFORM_VEC3);
 
         for (int i = 0; i < MAX_LIGHTS; i++) UpdateLightValues(shader, lights[i]);
-
+    
         // ----- Draw 2D -----
         BeginDrawing();
 
@@ -88,19 +95,20 @@ int main() {
                 // ----- Draw 3D -----
                 BeginMode3D(camera);
 
-                DrawModel(city.GetPlane(), Vector3Zero(), 1.0f, WHITE);
-                for (float i = 0; i < 5; i++){
-                    DrawModel(cube, Vector3{i*2.0f*(totalTime/ 2.0f), 1, 0}, 1.0f, WHITE);
-                }
-                
-                DrawGrid(10, 1.0f);
+                road.Draw();
+                road1.Draw();
+                road2.Draw();
+
+                // for (float i = 0; i < 5; i++){
+                //     DrawModel(cube, Vector3{i*2.0f*(totalTime/ 2.0f), 0.05, 0}, 1.0f, WHITE);
+                // }
+                city.Draw();
 
                 EndMode3D();
 
             // ----- UI -----
             DrawFPS(10, 10);
             DrawText("Hold down right mouse button to move the camera", 10, 60, 20, DARKGRAY);
-            // DrawTexture(city.GetPopulationHeatmap(), 200, 200, WHITE);
 
         EndDrawing();
         totalTime += GetFrameTime();
