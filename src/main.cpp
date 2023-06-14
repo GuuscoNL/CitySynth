@@ -23,7 +23,7 @@ void handleCameraControls(Camera3D& camera) {
 
     if (!IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) return; // Update camera only when right mouse button is held down
 
-    UpdateCamera(&camera, CAMERA_THIRD_PERSON); 
+    UpdateCamera(&camera, CAMERA_THIRD_PERSON);
 }
 
 int main() {
@@ -41,32 +41,34 @@ int main() {
     camera.projection = CAMERA_PERSPECTIVE;
 
     // ----- Models -----
-    
-    Model cube = LoadModelFromMesh(GenMeshCube(0.5, .1, 2.0));
+
+    Model roadModel = LoadModelFromMesh(GenMeshCube(0.5, .1, 2.0));
 
     // ----- lighting shaders -----
-    Shader shader = LoadShader("shaders/lighting.vs",
-                               "shaders/lighting.fs");
+    Shader lightingShader = LoadShader("shaders/lighting.vs",
+        "shaders/lighting.fs");
 
-    shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
+    lightingShader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(lightingShader, "viewPos");
 
-    int ambientLoc = GetShaderLocation(shader, "ambient");
+    int ambientLoc = GetShaderLocation(lightingShader, "ambient");
     std::array<float, 4> ambientValues = { 0.7f, 0.7f, 0.7f, 1.0f };
-    SetShaderValue(shader, ambientLoc, ambientValues.data(), SHADER_UNIFORM_VEC4);
-    City city = City(100.f);
+    SetShaderValue(lightingShader, ambientLoc, ambientValues.data(), SHADER_UNIFORM_VEC4);
 
-    city.GetPlane().materials[0].shader = shader;
-    cube.materials[0].shader = shader;
+    roadModel.materials[0].shader = lightingShader;
+    City city = City(100.f, roadModel);
+
+    city.GetPlane().materials[0].shader = lightingShader;
+
 
     std::array<Light, MAX_LIGHTS> lights{};
     Color sunColour = { 247, 225, 150, 255 };
-    Color sunColour2 = {static_cast<unsigned char>(247 * 0.1), 
-                        static_cast<unsigned char>(225 * 0.1), 
-                        static_cast<unsigned char>(150 * 0.1), 
+    Color sunColour2 = { static_cast<unsigned char>(247 * 0.1),
+                        static_cast<unsigned char>(225 * 0.1),
+                        static_cast<unsigned char>(150 * 0.1),
                         255 };
-    lights[0] = CreateLight(LIGHT_DIRECTIONAL, { -2, 1, -2 }, Vector3Zero(), sunColour, shader);
-    lights[1] = CreateLight(LIGHT_DIRECTIONAL, { 2, 1, 2 }, Vector3Zero(), sunColour2, shader);
-    
+    lights[0] = CreateLight(LIGHT_DIRECTIONAL, { -2, 1, -2 }, Vector3Zero(), sunColour, lightingShader);
+    lights[1] = CreateLight(LIGHT_DIRECTIONAL, { 2, 1, 2 }, Vector3Zero(), sunColour2, lightingShader);
+
 
     // ----- Main draw loop -----
     float totalTime = 0;
@@ -74,48 +76,43 @@ int main() {
     SetRandomSeed(randomSeed);
 
     city.GeneratePopulationHeatmap(0, 0, 1.5);
-    RoadSegment road = RoadSegment(cube, Vector3{0,0,0}, 93);
-    RoadSegment road1 = RoadSegment(cube, Vector3{0,0,3}, 65);
-    RoadSegment road2 = RoadSegment(cube, Vector3{2,0,5}, 41);
+    city.City::GenerateCity(500);
 
     while (!WindowShouldClose()) {
-    
+
         handleCameraControls(camera);
 
         float cameraPos[3] = { camera.position.x, camera.position.y, camera.position.z };
-        SetShaderValue(shader, shader.locs[SHADER_LOC_VECTOR_VIEW], cameraPos, SHADER_UNIFORM_VEC3);
+        SetShaderValue(lightingShader, lightingShader.locs[SHADER_LOC_VECTOR_VIEW], cameraPos, SHADER_UNIFORM_VEC3);
 
-        for (int i = 0; i < MAX_LIGHTS; i++) UpdateLightValues(shader, lights[i]);
-    
+        for (int i = 0; i < MAX_LIGHTS; i++) UpdateLightValues(lightingShader, lights[i]);
+
         // ----- Draw 2D -----
-        BeginDrawing();
+        {
+            BeginDrawing();
 
             ClearBackground(RAYWHITE);
 
-                // ----- Draw 3D -----
+            // ----- Draw 3D -----
+            {
                 BeginMode3D(camera);
 
-                road.Draw();
-                road1.Draw();
-                road2.Draw();
-
-                // for (float i = 0; i < 5; i++){
-                //     DrawModel(cube, Vector3{i*2.0f*(totalTime/ 2.0f), 0.05, 0}, 1.0f, WHITE);
-                // }
                 city.Draw();
 
                 EndMode3D();
+            }
 
             // ----- UI -----
             DrawFPS(10, 10);
             DrawText("Hold down right mouse button to move the camera", 10, 60, 20, DARKGRAY);
 
-        EndDrawing();
+            EndDrawing();
+        }
         totalTime += GetFrameTime();
     }
 
-    UnloadModel(cube);
-    UnloadShader(shader);
+    UnloadModel(roadModel);
+    UnloadShader(lightingShader);
     CloseWindow();
 
     return 0;
