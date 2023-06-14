@@ -1,17 +1,24 @@
 #pragma once
 #include <raylib.h>
+#include "intersection.hpp"
 
 class RoadSegment {
-    public:
-    RoadSegment(Model model, Vector3 pos=Vector3{0, 0, 0}, float angle=0);
+public:
+    RoadSegment(Shader shader, Intersection* from, Intersection* to);
     ~RoadSegment();
     void Draw();
 
-    private:
+private:
     Model model;
+    Shader shader;
+    Intersection* from;
+    Intersection* to;
     Vector3 pos;
     float angle;
+    float length;
     RoadSegment* previous;
     RoadSegment* next;
-    
+    void CalculatePosAndAngle();
+
+
 };
