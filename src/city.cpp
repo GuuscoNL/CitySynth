@@ -1,6 +1,10 @@
 #include <iostream>
+#include <queue>
 #include "include/city.hpp"
 #include "raymath.h"
+#include "include/highway.hpp"
+#include "include/roadsegmentgreaterthan.hpp"
+
 
 #define PRINT(x) std::cout << x << std::endl
 
@@ -13,7 +17,6 @@ City::City(float size, Shader shader) :
     populationHeatmap = LoadTextureFromImage(GenImageColor(size, size, WHITE));
 
     UpdatePlaneTexture();
-
 }
 
 City::~City() {
@@ -26,11 +29,6 @@ City::~City() {
     }
     roads.clear();
 
-    for (auto* intersection : intersections) {
-        delete intersection;
-    }
-    intersections.clear();
-
 }
 
 void City::Draw() {
@@ -39,11 +37,9 @@ void City::Draw() {
         road->Draw();
     }
 
-    for (auto* intersection : intersections) {
-        intersection->Draw();
-    }
-
     DrawModel(plane, Vector3Zero(), 1.0f, WHITE);
+    DrawCylinder(Vector3{0, 0, 0}, 0.5, 0.5, 0.3, 10, GRAY);
+    DrawCylinder(Vector3{20, 0, 15}, 0.5, 0.5, 0.3, 10, WHITE);
     // DrawGrid(size/10, 10.0f);
 }
 
@@ -56,10 +52,10 @@ Texture2D City::GeneratePopulationHeatmap(int offsetX, int offsetY, float scale)
 }
 
 void  City::GenerateCity(int amount) {
+    std::priority_queue<RoadSegment, std::vector<RoadSegment>, RoadSegmentGreaterThan> Q;
 
-    intersections.push_back(new Intersection(Vector3Zero(), shader));
-    intersections.push_back(new Intersection(Vector3{ 1, 0, 5 }, shader));
-    roads.push_back(new RoadSegment(shader, intersections.at(0), intersections.at(1)));
+
+    roads.push_back(new RoadSegment(0, shader, Vector2{0,0}, Vector2{15,20}));
 
     // for (int i = 0; i < amount; i++) {
     //     roads.push_back(new RoadSegment(roadModel, shader, Vector3{ (float)(0 + i), 0, 0 }));

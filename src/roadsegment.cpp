@@ -5,10 +5,11 @@
 #define PRINT(x) std::cout << x << std::endl
 #define PRINTVEC3(vec) std::cout << vec.x << ", " << vec.y << ", " << vec.z << std::endl
 
-RoadSegment::RoadSegment(Shader shader, Intersection* from, Intersection* to) :
+RoadSegment::RoadSegment(int delay, Shader shader, Vector2 fromPos, Vector2 toPos) :
+    delay(delay),
     shader(shader),
-    from(from),
-    to(to) {
+    fromPos(fromPos),
+    toPos(toPos) {
 
     CalculatePosAndAngle();
     model = LoadModelFromMesh(GenMeshCube(0.5, .1, length));
@@ -24,14 +25,29 @@ void RoadSegment::Draw() {
     DrawModelEx(model, pos, { 0, 1, 0 }, angle, Vector3One(), WHITE);
 }
 
+int RoadSegment::GetDelay() const {
+    return delay;
+}
+
+// VEC2 {x, y}
+// VEC3 {y, z, x}
+
 void RoadSegment::CalculatePosAndAngle() {
-    Vector2 fromVec2D = Vector2{ from->GetPos().z, from->GetPos().x };
-    Vector2 toVec2D = Vector2{ to->GetPos().z, to->GetPos().x };
 
-    float x = (fromVec2D.y + toVec2D.y) / 2;
-    float z = (fromVec2D.x + toVec2D.x) / 2;
+    float y = (fromPos.y + toPos.y) / 2;
+    float x = (fromPos.x + toPos.x) / 2;
 
-    pos = Vector3{ x, 0.05, z };
-    angle = (RAD2DEG * Vector2Angle(fromVec2D, toVec2D));
-    length = Vector2Distance(fromVec2D, toVec2D);
+    pos = Vector3{ y, 0.05, x };
+
+    angle = (RAD2DEG * Vector2Angle(fromPos, toPos));
+    PRINT(angle);
+    length = Vector2Distance(fromPos, toPos);
+}
+
+bool operator>(const RoadSegment lhs, const RoadSegment rhs){
+    return lhs.GetDelay() > rhs.GetDelay();
+}
+
+bool operator<(const RoadSegment lhs, const RoadSegment rhs){
+    return lhs.GetDelay() < rhs.GetDelay();
 }

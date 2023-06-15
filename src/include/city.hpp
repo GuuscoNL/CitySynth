@@ -2,7 +2,6 @@
 #include <raylib.h>
 #include <vector>
 #include "roadsegment.hpp"
-#include "intersection.hpp"
 
 class City {
 public:
@@ -16,7 +15,6 @@ public:
 
 private:
     std::vector<RoadSegment*> roads;
-    std::vector<Intersection*> intersections;
     float size;
     Texture2D populationHeatmap;
     Model plane;
