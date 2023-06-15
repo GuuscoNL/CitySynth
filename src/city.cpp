@@ -85,7 +85,8 @@ bool City::LocalConstraints(RoadSegment* road){
 std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad){
     std::vector<RoadSegment*> newRoads;
     Vector2	newFromPos = rootRoad->GetToPos();
-    Vector2 newToPos = GetPosWithAngle(newFromPos, GetRandomValue(-20, 20));
+    Vector2 newToPos = GetPosWithAngle( newFromPos,
+                                        rootRoad->GetAngle() + GetRandomValue(-20, 20));
     newRoads.push_back(new RoadSegment(1, shader, newFromPos, newToPos));
     return newRoads;
 }
