@@ -15,9 +15,9 @@ RoadSegment::RoadSegment(int delay, Shader shader, Vector2 fromPos, Vector2 toPo
     CalculatePosAndAngle();
     model = LoadModelFromMesh(GenMeshCube(0.5, .1, length));
     this->model.materials[0].shader = shader;
-    color = Color{static_cast<unsigned char>(GetRandomValue(0,255)),
-                  static_cast<unsigned char>(GetRandomValue(0,255)), 
-                  static_cast<unsigned char>(GetRandomValue(0,255))};
+    color = Color{ static_cast<unsigned char>(GetRandomValue(0,255)),
+                  static_cast<unsigned char>(GetRandomValue(0,255)),
+                  static_cast<unsigned char>(GetRandomValue(0,255)) };
 }
 
 RoadSegment::~RoadSegment() {
@@ -30,8 +30,8 @@ void RoadSegment::Draw() {
 }
 
 std::ostream& operator<<(std::ostream& os, const RoadSegment& n) {
-    os << "FROM: " << n.GetFromPos().x << ", "<< n.GetFromPos().y;
-    os << "  TO: " << n.GetToPos().x << ", "<< n.GetToPos().y << std::endl;
+    os << "FROM: " << n.GetFromPos().x << ", " << n.GetFromPos().y;
+    os << "  TO: " << n.GetToPos().x << ", " << n.GetToPos().y << std::endl;
     return os;
 }
 
@@ -39,19 +39,19 @@ int RoadSegment::GetDelay() const {
     return delay;
 }
 
-Vector2 RoadSegment::GetToPos() const{
+Vector2 RoadSegment::GetToPos() const {
     return toPos;
 }
 
-Vector2 RoadSegment::GetFromPos() const{
+Vector2 RoadSegment::GetFromPos() const {
     return fromPos;
-}   
+}
 
-void RoadSegment::SetDelay(int delay){
+void RoadSegment::SetDelay(int delay) {
     this->delay = delay;
 }
 
-float RoadSegment::GetAngle() const{
+float RoadSegment::GetAngle() const {
     return angle;
 }
 
