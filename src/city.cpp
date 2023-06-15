@@ -24,10 +24,7 @@ City::~City() {
     UnloadTexture(populationHeatmap);
     UnloadModel(plane);
 
-    for (auto* road : roads) {
-        delete road;
-    }
-    roads.clear();
+    ResetCity();
 
 }
 
@@ -38,8 +35,7 @@ void City::Draw() {
     }
 
     DrawModel(plane, Vector3Zero(), 1.0f, WHITE);
-    DrawCylinder(Vector3{0, 0, 0}, 0.5, 0.5, 0.3, 10, GRAY);
-    DrawCylinder(Vector3{20, 0, 15}, 0.5, 0.5, 0.3, 10, WHITE);
+    DrawCylinder(Vector3{ 0, 0, 0 }, 0.5, 0.5, 0.3, 10, GRAY);
     // DrawGrid(size/10, 10.0f);
 }
 
@@ -51,19 +47,65 @@ Texture2D City::GeneratePopulationHeatmap(int offsetX, int offsetY, float scale)
     return populationHeatmap;
 }
 
-void  City::GenerateCity(int amount) {
-    std::priority_queue<RoadSegment, std::vector<RoadSegment>, RoadSegmentGreaterThan> Q;
+void  City::GenerateCity(unsigned int amount) {
+    ResetCity();
+    roads.reserve(amount); // speed!
+    std::priority_queue<RoadSegment*, std::vector<RoadSegment*>, RoadSegmentGreaterThan> Q;
+    Q.push(new RoadSegment(0, shader, Vector2{ 0,0 }, Vector2{ 2, 0 }));
 
+    while (!Q.empty() && roads.size() < amount){
+        RoadSegment* minRoad = Q.top();
+        Q.pop();
+        bool accepted = LocalConstraints(minRoad);
+        if (accepted){
+            roads.push_back(minRoad);
+            PRINT(*minRoad);
+            std::vector<RoadSegment*> newRoads = GlobalGoals(minRoad);
+            for (auto* newRoad : newRoads){
+                newRoad->SetDelay(minRoad->GetDelay() + 1 + newRoad->GetDelay());
+                Q.push(newRoad);
+            }
+        } else{
+            delete minRoad;
+        }
+    }
 
-    roads.push_back(new RoadSegment(0, shader, Vector2{0,0}, Vector2{15,20}));
+    // Make sure every non used roads gets deleted
+    while (!Q.empty()){
+        delete Q.top();
+        Q.pop();
+    }
+    PRINT(roads.size());
+}
 
-    // for (int i = 0; i < amount; i++) {
-    //     roads.push_back(new RoadSegment(roadModel, shader, Vector3{ (float)(0 + i), 0, 0 }));
-    // }
+bool City::LocalConstraints(RoadSegment* road){
+    return true;
+}
+
+std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad){
+    std::vector<RoadSegment*> newRoads;
+    Vector2	newFromPos = rootRoad->GetToPos();
+    Vector2 newToPos = GetPosWithAngle(newFromPos, GetRandomValue(-20, 20));
+    newRoads.push_back(new RoadSegment(1, shader, newFromPos, newToPos));
+    return newRoads;
+}
+
+Vector2 City::GetPosWithAngle(Vector2 fromPos, float angle){
+    float angleRad = angle * DEG2RAD;
+    return Vector2{fromPos.x + cos(angleRad) * 3,
+                                fromPos.y + sin(angleRad) * 3};
 }
 
 void City::UpdatePlaneTexture() {
     plane.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = populationHeatmap;
+}
+
+void City::ResetCity() {
+    for (auto* road : roads) {
+        delete road;
+    }
+    roads.clear();
+    roads.resize(0);
 }
 
 Texture2D City::GetPopulationHeatmap() const {

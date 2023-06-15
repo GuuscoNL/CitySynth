@@ -9,7 +9,7 @@ public:
     ~City();
     void Draw();
     Texture2D GeneratePopulationHeatmap(int offsetX = 0, int offsetY = 0, float scale = 1.0f);
-    void GenerateCity(int amount);
+    void GenerateCity(unsigned int amount);
     Texture2D GetPopulationHeatmap() const;
     Model GetPlane() const;
 
@@ -21,5 +21,9 @@ private:
     Shader shader;
 
     void UpdatePlaneTexture();
+    void ResetCity();
+    bool LocalConstraints(RoadSegment* road);
+    std::vector<RoadSegment*> GlobalGoals(RoadSegment* road);
+    Vector2 GetPosWithAngle(Vector2 fromPos, float angle);
 
 };
