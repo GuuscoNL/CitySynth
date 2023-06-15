@@ -15,6 +15,7 @@ City::City(float size, Shader shader) :
     plane.materials[0].shader = shader;
 
     populationHeatmap = LoadTextureFromImage(GenImageColor(size, size, WHITE));
+    heatmapCenter = Vector2{round(size/2), round(size/2)};
 
     UpdatePlaneTexture();
 }
@@ -25,7 +26,6 @@ City::~City() {
     UnloadModel(plane);
 
     ResetCity();
-
 }
 
 void City::Draw() {
@@ -36,13 +36,10 @@ void City::Draw() {
 
     DrawModel(plane, Vector3Zero(), 1.0f, WHITE);
     DrawCylinder(Vector3{ 0, 0, 0 }, 0.5, 0.5, 0.3, 10, GRAY);
-    // DrawGrid(size/10, 10.0f);
 }
 
 Texture2D City::GeneratePopulationHeatmap(int offsetX, int offsetY, float scale) {
-    Image populationHeatmapImage = GenImagePerlinNoise(size, size, offsetX, offsetY, scale);
-    populationHeatmap = LoadTextureFromImage(populationHeatmapImage);
-    UnloadImage(populationHeatmapImage);
+    populationHeatmap = LoadTextureFromImage(GenImagePerlinNoise(size, size, offsetX, offsetY, scale));
     UpdatePlaneTexture();
     return populationHeatmap;
 }
@@ -95,6 +92,16 @@ Vector2 City::GetPosWithAngle(Vector2 fromPos, float angle){
     float angleRad = angle * DEG2RAD;
     return Vector2{fromPos.x + cos(angleRad) * 3,
                                 fromPos.y + sin(angleRad) * 3};
+}
+
+int City::GetPopulationFromHeatmap(Vector2 pos) const{
+    Image heatmapImage = LoadImageFromTexture(populationHeatmap);
+    GetImageColor(heatmapImage, heatmapCenter.x + pos.x, heatmapCenter.y + pos.y);
+    UnloadImage(heatmapImage);
+}
+
+Vector2 City::ToTexVec2(Vector2 originalVec) const{
+    return Vector2{heatmapCenter.x + round(originalVec.y), heatmapCenter.y + round(originalVec.x)};
 }
 
 void City::UpdatePlaneTexture() {

@@ -17,6 +17,7 @@ private:
     std::vector<RoadSegment*> roads;
     float size;
     Texture2D populationHeatmap;
+    Vector2 heatmapCenter;
     Model plane;
     Shader shader;
 
@@ -25,5 +26,7 @@ private:
     bool LocalConstraints(RoadSegment* road);
     std::vector<RoadSegment*> GlobalGoals(RoadSegment* road);
     Vector2 GetPosWithAngle(Vector2 fromPos, float angle);
+    int GetPopulationFromHeatmap(Vector2 pos) const;
+    Vector2 ToTexVec2(Vector2 originalVec) const;
 
 };

@@ -12,6 +12,7 @@ public:
     int GetDelay() const;
     Vector2 GetToPos() const;
     Vector2 GetFromPos() const;
+    float GetAngle() const;
     void SetDelay(int delay);
 
 private:

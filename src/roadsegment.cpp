@@ -15,7 +15,9 @@ RoadSegment::RoadSegment(int delay, Shader shader, Vector2 fromPos, Vector2 toPo
     CalculatePosAndAngle();
     model = LoadModelFromMesh(GenMeshCube(0.5, .1, length));
     this->model.materials[0].shader = shader;
-    color = Color{GetRandomValue(0,255), GetRandomValue(0,255), GetRandomValue(0,255)};
+    color = Color{static_cast<unsigned char>(GetRandomValue(0,255)),
+                  static_cast<unsigned char>(GetRandomValue(0,255)), 
+                  static_cast<unsigned char>(GetRandomValue(0,255))};
 }
 
 RoadSegment::~RoadSegment() {
@@ -47,6 +49,10 @@ Vector2 RoadSegment::GetFromPos() const{
 
 void RoadSegment::SetDelay(int delay){
     this->delay = delay;
+}
+
+float RoadSegment::GetAngle() const{
+    return angle;
 }
 
 void RoadSegment::CalculatePosAndAngle() {

@@ -54,9 +54,6 @@ int main() {
     std::array<float, 4> ambientValues = { 0.7f, 0.7f, 0.7f, 1.0f };
     SetShaderValue(lightingShader, ambientLoc, ambientValues.data(), SHADER_UNIFORM_VEC4);
 
-    City city = City(200.f, lightingShader);
-
-
     std::array<Light, MAX_LIGHTS> lights{};
     Color sunColour = { 247, 225, 150, 255 };
     Color sunColour2 = { static_cast<unsigned char>(247 * 0.1),
@@ -72,7 +69,8 @@ int main() {
     int randomSeed = 0;
     SetRandomSeed(randomSeed);
 
-    city.GeneratePopulationHeatmap(0, 0, 1.5);
+    City city = City(300.f, lightingShader);
+    city.GeneratePopulationHeatmap(0, 0, 0.9);
     city.City::GenerateCity(30);
 
     while (!WindowShouldClose()) {
