@@ -2,10 +2,11 @@
 #include <raylib.h>
 #include <vector>
 #include <iostream>
+#include "settings.hpp"
 
 class RoadSegment {
 public:
-    RoadSegment(int delay, Shader shader, Vector2 fromPos, Vector2 toPos);
+    RoadSegment(int delay, Settings* settings, Vector2 fromPos, Vector2 toPos);
     ~RoadSegment();
     void Draw();
     friend std::ostream& operator<<(std::ostream& os, const RoadSegment& n);
@@ -18,7 +19,7 @@ public:
 private:
     Model model;
     int delay;
-    Shader shader;
+    Settings* settings;
     Color color;
 
     Vector3 pos;

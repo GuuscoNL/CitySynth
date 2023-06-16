@@ -65,27 +65,38 @@ int main() {
     lights[1] = CreateLight(LIGHT_DIRECTIONAL, { 2, 1, 2 }, Vector3Zero(), sunColour2, lightingShader);
 
 
-    // ----- Main draw loop -----
     float totalTime = 0;
-    int randomSeed = 2;
-    SetRandomSeed(randomSeed);
 
+    // ----- Settings -----
     Settings settings;
-    settings.highwayLength = 5;
-    settings.shader = lightingShader;
-    settings.AmountHighwaySamples = 5;
+    settings.highwayLength = 1.5;
+    settings.highwayWidth = 0.2;
+    settings.highwaySampleAmount = 5;
     settings.highwayAngle = 20;
+    settings.highwayHeight = 0.05;
 
-    City city = City(1000.f, &settings);
+    settings.frequency = 0.005; // bigger = smaller patches
+    settings.amplitude = 0.5; // ?
+    settings.lacunarity = 2; // ?
+    settings.persistence = 0.5; // ?
+    settings.octaves = 4; // More = more blurry
+
+    settings.shader = lightingShader;
+    settings.SetSeed(0);
+
+    // ----- City -----
+    City city = City(200.f, &settings);
     city.GeneratePopulationHeatmap(20, 5, 0.9);
     city.City::GenerateCity(50);
 
+    // ----- Main draw loop -----
     while (!WindowShouldClose()) {
 
         handleCameraControls(camera);
 
         float cameraPos[3] = { camera.position.x, camera.position.y, camera.position.z };
-        SetShaderValue(lightingShader, lightingShader.locs[SHADER_LOC_VECTOR_VIEW], cameraPos, SHADER_UNIFORM_VEC3);
+        SetShaderValue(lightingShader, lightingShader.locs[SHADER_LOC_VECTOR_VIEW], 
+                        cameraPos, SHADER_UNIFORM_VEC3);
 
         for (int i = 0; i < MAX_LIGHTS; i++) UpdateLightValues(lightingShader, lights[i]);
 

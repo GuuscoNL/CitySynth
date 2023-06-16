@@ -5,16 +5,16 @@
 #define PRINT(x) std::cout << x << std::endl
 #define PRINTVEC3(vec) std::cout << vec.x << ", " << vec.y << ", " << vec.z << std::endl
 
-RoadSegment::RoadSegment(int delay, Shader shader, Vector2 fromPos, Vector2 toPos) :
+RoadSegment::RoadSegment(int delay, Settings* settings, Vector2 fromPos, Vector2 toPos) :
     delay(delay),
-    shader(shader),
+    settings(settings),
     fromPos(fromPos),
     toPos(toPos) {
     PRINT("LOADING ROAD");
 
     CalculatePosAndAngle();
-    model = LoadModelFromMesh(GenMeshCube(0.5, .1, length));
-    this->model.materials[0].shader = shader;
+    model = LoadModelFromMesh(GenMeshCube(settings->highwayWidth, settings->highwayHeight, length));
+    this->model.materials[0].shader = settings->shader;
     color = Color{ static_cast<unsigned char>(GetRandomValue(0,255)),
                   static_cast<unsigned char>(GetRandomValue(0,255)),
                   static_cast<unsigned char>(GetRandomValue(0,255)) };
@@ -62,7 +62,7 @@ void RoadSegment::CalculatePosAndAngle() {
 
     // VEC2 {x, y}
     // VEC3 {y, z, x}
-    pos = Vector3{ y, 0.05, x };
+    pos = Vector3{ y, settings->highwayHeight/2, x };
     
 
     angle = (RAD2DEG * Vector2Angle(fromPos, toPos));
