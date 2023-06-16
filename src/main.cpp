@@ -70,8 +70,8 @@ int main() {
     SetRandomSeed(randomSeed);
 
     City city = City(300.f, lightingShader);
-    city.GeneratePopulationHeatmap(0, 0, 0.9);
-    city.City::GenerateCity(30);
+    city.GeneratePopulationHeatmap(20, 0, 0.9);
+    city.City::GenerateCity(60);
 
     while (!WindowShouldClose()) {
 

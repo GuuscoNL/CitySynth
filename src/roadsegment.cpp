@@ -63,8 +63,9 @@ void RoadSegment::CalculatePosAndAngle() {
     // VEC2 {x, y}
     // VEC3 {y, z, x}
     pos = Vector3{ y, 0.05, x };
+    
 
     angle = (RAD2DEG * Vector2Angle(fromPos, toPos));
-    PRINT(angle);
+
     length = Vector2Distance(fromPos, toPos);
 }

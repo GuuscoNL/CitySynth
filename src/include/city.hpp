@@ -25,8 +25,7 @@ private:
     void ResetCity();
     bool LocalConstraints(RoadSegment* road);
     std::vector<RoadSegment*> GlobalGoals(RoadSegment* road);
-    Vector2 GetPosWithAngle(Vector2 fromPos, float angle);
+    Vector2 GetPosWithAngle(Vector2 fromPos, float MaxAngle);
+    Vector2 HighwaySamples(Vector2 fromPos, float OriginalAngle, float MaxAngle);
     int GetPopulationFromHeatmap(Vector2 pos) const;
-    Vector2 ToTexVec2(Vector2 originalVec) const;
-
 };

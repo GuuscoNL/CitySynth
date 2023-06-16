@@ -1,5 +1,8 @@
 #include <iostream>
 #include <queue>
+#include <assert.h>
+#include <algorithm>
+#include <vector>
 #include "include/city.hpp"
 #include "raymath.h"
 #include "include/highway.hpp"
@@ -7,6 +10,15 @@
 
 
 #define PRINT(x) std::cout << x << std::endl
+#define PRINT_COLOR_RGB(color) \
+    do { \
+        int r = (color).r; \
+        int g = (color).g; \
+        int b = (color).b; \
+        std::cout << "R: " << r << std::endl; \
+        std::cout << "G: " << g << std::endl; \
+        std::cout << "B: " << b << std::endl; \
+    } while (false)
 
 City::City(float size, Shader shader) :
     size(size),
@@ -48,7 +60,7 @@ void  City::GenerateCity(unsigned int amount) {
     ResetCity();
     roads.reserve(amount); // speed!
     std::priority_queue<RoadSegment*, std::vector<RoadSegment*>, RoadSegmentGreaterThan> Q;
-    Q.push(new RoadSegment(0, shader, Vector2{ 0,0 }, Vector2{ 2, 0 }));
+    Q.push(new RoadSegment(0, shader, Vector2{ 0, 0 }, Vector2{ 2, 0 }));
 
     while (!Q.empty() && roads.size() < amount) {
         RoadSegment* minRoad = Q.top();
@@ -56,7 +68,7 @@ void  City::GenerateCity(unsigned int amount) {
         bool accepted = LocalConstraints(minRoad);
         if (accepted) {
             roads.push_back(minRoad);
-            PRINT(*minRoad);
+            // PRINT(*minRoad);
             std::vector<RoadSegment*> newRoads = GlobalGoals(minRoad);
             for (auto* newRoad : newRoads) {
                 newRoad->SetDelay(minRoad->GetDelay() + 1 + newRoad->GetDelay());
@@ -73,36 +85,77 @@ void  City::GenerateCity(unsigned int amount) {
         delete Q.top();
         Q.pop();
     }
-    PRINT(roads.size());
+    PRINT("size: " << roads.size());
+
 }
 
 bool City::LocalConstraints(RoadSegment* road) {
+    // Make sure it is in the city
+    if (road->GetToPos().x > size / 2 - 3 || road->GetToPos().x < -(size / 2) + 3 ||
+        road->GetToPos().y > size / 2 - 3 || road->GetToPos().y < -(size / 2) + 3) {
+            PRINT("REJECTED!");
+            return false;
+        }
     return true;
 }
 
 std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad) {
     std::vector<RoadSegment*> newRoads;
     Vector2	newFromPos = rootRoad->GetToPos();
-    Vector2 newToPos = GetPosWithAngle(newFromPos,
-        rootRoad->GetAngle() + GetRandomValue(-20, 20));
+    
+    // Highways
+    Vector2 newToPos = HighwaySamples(rootRoad->GetToPos(), rootRoad->GetAngle(),
+                                        30);
     newRoads.push_back(new RoadSegment(1, shader, newFromPos, newToPos));
     return newRoads;
 }
 
 Vector2 City::GetPosWithAngle(Vector2 fromPos, float angle) {
     float angleRad = angle * DEG2RAD;
+    
+    
     return Vector2{ fromPos.x + cos(angleRad) * 3,
-                                fromPos.y + sin(angleRad) * 3 };
+                    fromPos.y + sin(angleRad) * 3 };
+}
+
+Vector2 City::HighwaySamples(Vector2 fromPos, float OriginalAngle, float MaxAngle) {
+    std::vector<Vector2> positions;
+    for (int i = 0; i < 15; i++) {
+        positions.push_back(GetPosWithAngle(fromPos, GetRandomValue(-MaxAngle + OriginalAngle, MaxAngle + OriginalAngle)));
+    }
+
+    std::vector<int> positionPopulations;
+    for (Vector2 pos : positions) {
+        positionPopulations.push_back(GetPopulationFromHeatmap(pos));
+    }
+    int maxPop = *std::max_element(positionPopulations.begin(), positionPopulations.end());
+    Vector2 result;
+    for (int i = 0; i < positionPopulations.size(); i++)
+    {
+        if (positionPopulations[i] == maxPop){
+            result = positions[i];
+        }
+    }
+    return result;
 }
 
 int City::GetPopulationFromHeatmap(Vector2 pos) const {
+    Vector2 texPos = Vector2{   heatmapCenter.x + round(pos.y), 
+                                heatmapCenter.y + round(pos.x) };
     Image heatmapImage = LoadImageFromTexture(populationHeatmap);
-    GetImageColor(heatmapImage, heatmapCenter.x + pos.x, heatmapCenter.y + pos.y);
-    UnloadImage(heatmapImage);
-}
+    // PRINT(pos.x);
+    // PRINT(pos.y);
 
-Vector2 City::ToTexVec2(Vector2 originalVec) const {
-    return Vector2{ heatmapCenter.x + round(originalVec.y), heatmapCenter.y + round(originalVec.x) };
+    if (! (texPos.x < size && texPos.x > 0)){
+        PRINT("x: " << texPos.x);
+
+    };
+    if (! (texPos.y < size && texPos.y > 0)){
+        PRINT("y: " << texPos.y);
+    };
+    Color PopulationColor = GetImageColor(heatmapImage, texPos.x, texPos.y);
+    UnloadImage(heatmapImage);
+    return PopulationColor.r;
 }
 
 void City::UpdatePlaneTexture() {
