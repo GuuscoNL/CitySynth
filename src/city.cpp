@@ -7,6 +7,8 @@
 #include "raymath.h"
 #include "include/highway.hpp"
 #include "include/roadsegmentgreaterthan.hpp"
+#include "include/simplexnoise.hpp"
+
 
 
 #define PRINT(x) std::cout << x << std::endl
@@ -20,11 +22,11 @@
         std::cout << "B: " << b << std::endl; \
     } while (false)
 
-City::City(float size, Shader shader) :
+City::City(float size, Settings* settings) :
     size(size),
-    shader(shader) {
+    settings(settings) {
     plane = LoadModelFromMesh(GenMeshPlane(size, size, 3, 3));
-    plane.materials[0].shader = shader;
+    plane.materials[0].shader = settings->shader;
 
     populationHeatmap = LoadTextureFromImage(GenImageColor(size, size, WHITE));
     heatmapCenter = Vector2{ round(size / 2), round(size / 2) };
@@ -51,7 +53,25 @@ void City::Draw() {
 }
 
 Texture2D City::GeneratePopulationHeatmap(int offsetX, int offsetY, float scale) {
-    populationHeatmap = LoadTextureFromImage(GenImagePerlinNoise(size, size, offsetX, offsetY, scale));
+    // populationHeatmap = LoadTextureFromImage(GenImagePerlinNoise(size, size, offsetX, offsetY, scale));
+    Image noiseImage = GenImageColor(size, size, WHITE);
+    SimplexNoise simplexNoise = SimplexNoise(0.005, 0.5, 2, 0.5);
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            int noise = round(Remap(simplexNoise.fractal(6, i, j), -1, 1, 0, 255));
+            // PRINT(noise);
+            Color noiseColor = Color{   static_cast<unsigned char>(noise), 
+                                        static_cast<unsigned char>(noise), 
+                                        static_cast<unsigned char>(noise),
+                                        255};
+            ImageDrawPixel(&noiseImage, i, j, noiseColor);
+        }
+    }
+    populationHeatmap = LoadTextureFromImage(noiseImage);
+    UnloadImage(noiseImage);
+    
     UpdatePlaneTexture();
     return populationHeatmap;
 }
@@ -60,7 +80,7 @@ void  City::GenerateCity(unsigned int amount) {
     ResetCity();
     roads.reserve(amount); // speed!
     std::priority_queue<RoadSegment*, std::vector<RoadSegment*>, RoadSegmentGreaterThan> Q;
-    Q.push(new RoadSegment(0, shader, Vector2{ 0, 0 }, Vector2{ 2, 0 }));
+    Q.push(new RoadSegment(0, settings->shader, Vector2{ 0, 0 }, Vector2{ settings->highwayLength, 0 }));
 
     while (!Q.empty() && roads.size() < amount) {
         RoadSegment* minRoad = Q.top();
@@ -91,8 +111,8 @@ void  City::GenerateCity(unsigned int amount) {
 
 bool City::LocalConstraints(RoadSegment* road) {
     // Make sure it is in the city
-    if (road->GetToPos().x > size / 2 - 3 || road->GetToPos().x < -(size / 2) + 3 ||
-        road->GetToPos().y > size / 2 - 3 || road->GetToPos().y < -(size / 2) + 3) {
+    if (road->GetToPos().x > size / 2 - settings->highwayLength || road->GetToPos().x < -(size / 2) + settings->highwayLength ||
+        road->GetToPos().y > size / 2 - settings->highwayLength || road->GetToPos().y < -(size / 2) + settings->highwayLength) {
             PRINT("REJECTED!");
             return false;
         }
@@ -105,8 +125,8 @@ std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad) {
     
     // Highways
     Vector2 newToPos = HighwaySamples(rootRoad->GetToPos(), rootRoad->GetAngle(),
-                                        30);
-    newRoads.push_back(new RoadSegment(1, shader, newFromPos, newToPos));
+                                        settings->highwayAngle);
+    newRoads.push_back(new RoadSegment(1, settings->shader, newFromPos, newToPos));
     return newRoads;
 }
 
@@ -114,13 +134,13 @@ Vector2 City::GetPosWithAngle(Vector2 fromPos, float angle) {
     float angleRad = angle * DEG2RAD;
     
     
-    return Vector2{ fromPos.x + cos(angleRad) * 3,
-                    fromPos.y + sin(angleRad) * 3 };
+    return Vector2{ fromPos.x + cos(angleRad) * settings->highwayLength,
+                    fromPos.y + sin(angleRad) * settings->highwayLength };
 }
 
 Vector2 City::HighwaySamples(Vector2 fromPos, float OriginalAngle, float MaxAngle) {
     std::vector<Vector2> positions;
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < settings->AmountHighwaySamples; i++) {
         positions.push_back(GetPosWithAngle(fromPos, GetRandomValue(-MaxAngle + OriginalAngle, MaxAngle + OriginalAngle)));
     }
 

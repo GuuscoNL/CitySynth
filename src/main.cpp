@@ -5,6 +5,7 @@
 #include <iostream>
 #include "include/city.hpp"
 #include "include/roadsegment.hpp"
+#include "include/settings.hpp"
 
 #define RLIGHTS_IMPLEMENTATION
 #include "include/rlights.h"
@@ -66,12 +67,18 @@ int main() {
 
     // ----- Main draw loop -----
     float totalTime = 0;
-    int randomSeed = 0;
+    int randomSeed = 2;
     SetRandomSeed(randomSeed);
 
-    City city = City(300.f, lightingShader);
-    city.GeneratePopulationHeatmap(20, 0, 0.9);
-    city.City::GenerateCity(60);
+    Settings settings;
+    settings.highwayLength = 5;
+    settings.shader = lightingShader;
+    settings.AmountHighwaySamples = 5;
+    settings.highwayAngle = 20;
+
+    City city = City(1000.f, &settings);
+    city.GeneratePopulationHeatmap(20, 5, 0.9);
+    city.City::GenerateCity(50);
 
     while (!WindowShouldClose()) {
 

@@ -2,10 +2,11 @@
 #include <raylib.h>
 #include <vector>
 #include "roadsegment.hpp"
+#include "settings.hpp"
 
 class City {
 public:
-    City(float size, Shader shader);
+    City(float size, Settings* settings);
     ~City();
     void Draw();
     Texture2D GeneratePopulationHeatmap(int offsetX = 0, int offsetY = 0, float scale = 1.0f);
@@ -19,7 +20,7 @@ private:
     Texture2D populationHeatmap;
     Vector2 heatmapCenter;
     Model plane;
-    Shader shader;
+    Settings* settings;
 
     void UpdatePlaneTexture();
     void ResetCity();
