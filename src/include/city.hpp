@@ -17,7 +17,8 @@ public:
 private:
     std::vector<RoadSegment*> roads;
     float size;
-    Texture2D populationHeatmap;
+    Texture2D populationHeatmapTex;
+    Image populationHeatmapImg;
     Vector2 heatmapCenter;
     Model plane;
     Settings* settings;

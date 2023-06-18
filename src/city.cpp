@@ -28,7 +28,8 @@ City::City(float size, Settings* settings) :
     plane = LoadModelFromMesh(GenMeshPlane(size, size, 3, 3));
     plane.materials[0].shader = settings->shader;
 
-    populationHeatmap = LoadTextureFromImage(GenImageColor(size, size, WHITE));
+    populationHeatmapImg = GenImageColor(size, size, WHITE);
+    populationHeatmapTex = LoadTextureFromImage(populationHeatmapImg);
     heatmapCenter = Vector2{ round(size / 2), round(size / 2) };
 
     UpdatePlaneTexture();
@@ -36,7 +37,8 @@ City::City(float size, Settings* settings) :
 
 City::~City() {
     PRINT("Unloading City");
-    UnloadTexture(populationHeatmap);
+    UnloadTexture(populationHeatmapTex);
+    UnloadImage(populationHeatmapImg);
     UnloadModel(plane);
 
     ResetCity();
@@ -54,7 +56,8 @@ void City::Draw() {
 
 Texture2D City::GeneratePopulationHeatmap(int offsetX, int offsetY, float scale) {
 
-    Image noiseImage = GenImageColor(size, size, WHITE);
+    UnloadImage(populationHeatmapImg);
+    populationHeatmapImg = GenImageColor(size, size, WHITE);
     SimplexNoise simplexNoise = SimplexNoise(settings->frequency, 
                                             settings->amplitude, 
                                             settings->lacunarity, 
@@ -68,14 +71,14 @@ Texture2D City::GeneratePopulationHeatmap(int offsetX, int offsetY, float scale)
                                         static_cast<unsigned char>(noise), 
                                         static_cast<unsigned char>(noise),
                                         255};
-            ImageDrawPixel(&noiseImage, i, j, noiseColor);
+            ImageDrawPixel(&populationHeatmapImg, i, j, noiseColor);
         }
     }
-    populationHeatmap = LoadTextureFromImage(noiseImage);
-    UnloadImage(noiseImage);
+    UnloadTexture(populationHeatmapTex);
+    populationHeatmapTex = LoadTextureFromImage(populationHeatmapImg);
     
     UpdatePlaneTexture();
-    return populationHeatmap;
+    return populationHeatmapTex;
 }
 
 void  City::GenerateCity(unsigned int amount) {
@@ -108,13 +111,12 @@ void  City::GenerateCity(unsigned int amount) {
         Q.pop();
     }
     PRINT("size: " << roads.size());
-
 }
 
 bool City::LocalConstraints(RoadSegment* road) {
     // Make sure it is in the city
-    if (road->GetToPos().x > size / 2 - settings->highwayLength || road->GetToPos().x < -(size / 2) + settings->highwayLength ||
-        road->GetToPos().y > size / 2 - settings->highwayLength || road->GetToPos().y < -(size / 2) + settings->highwayLength) {
+    if (road->GetToPos().x >= size / 2 - settings->highwayLength || road->GetToPos().x <= -(size / 2) + settings->highwayLength ||
+        road->GetToPos().y >= size / 2 - settings->highwayLength || road->GetToPos().y <= -(size / 2) + settings->highwayLength) {
             PRINT("REJECTED!");
             return false;
         }
@@ -142,11 +144,14 @@ Vector2 City::GetPosWithAngle(Vector2 fromPos, float angle) {
 
 Vector2 City::HighwaySamples(Vector2 fromPos, float OriginalAngle, float MaxAngle) {
     std::vector<Vector2> positions;
+    positions.reserve(settings->highwaySampleAmount);
+
     for (int i = 0; i < settings->highwaySampleAmount; i++) {
         positions.push_back(GetPosWithAngle(fromPos, GetRandomValue(-MaxAngle + OriginalAngle, MaxAngle + OriginalAngle)));
     }
 
     std::vector<int> positionPopulations;
+    positionPopulations.reserve(positions.size());
     for (Vector2 pos : positions) {
         positionPopulations.push_back(GetPopulationFromHeatmap(pos));
     }
@@ -164,9 +169,6 @@ Vector2 City::HighwaySamples(Vector2 fromPos, float OriginalAngle, float MaxAngl
 int City::GetPopulationFromHeatmap(Vector2 pos) const {
     Vector2 texPos = Vector2{   heatmapCenter.x + round(pos.y), 
                                 heatmapCenter.y + round(pos.x) };
-    Image heatmapImage = LoadImageFromTexture(populationHeatmap);
-    // PRINT(pos.x);
-    // PRINT(pos.y);
 
     if (! (texPos.x < size && texPos.x > 0)){
         PRINT("x: " << texPos.x);
@@ -175,13 +177,12 @@ int City::GetPopulationFromHeatmap(Vector2 pos) const {
     if (! (texPos.y < size && texPos.y > 0)){
         PRINT("y: " << texPos.y);
     };
-    Color PopulationColor = GetImageColor(heatmapImage, texPos.x, texPos.y);
-    UnloadImage(heatmapImage);
+    Color PopulationColor = GetImageColor(populationHeatmapImg, texPos.x, texPos.y);
     return PopulationColor.r;
 }
 
 void City::UpdatePlaneTexture() {
-    plane.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = populationHeatmap;
+    plane.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = populationHeatmapTex;
 }
 
 void City::ResetCity() {
@@ -193,7 +194,7 @@ void City::ResetCity() {
 }
 
 Texture2D City::GetPopulationHeatmap() const {
-    return populationHeatmap;
+    return populationHeatmapTex;
 }
 
 Model City::GetPlane() const {

@@ -71,7 +71,7 @@ int main() {
     Settings settings;
     settings.highwayLength = 1.5;
     settings.highwayWidth = 0.2;
-    settings.highwaySampleAmount = 5;
+    settings.highwaySampleAmount = 10;
     settings.highwayAngle = 20;
     settings.highwayHeight = 0.05;
 
@@ -85,9 +85,9 @@ int main() {
     settings.SetSeed(0);
 
     // ----- City -----
-    City city = City(200.f, &settings);
+    City city = City(400.f, &settings);
     city.GeneratePopulationHeatmap(20, 5, 0.9);
-    city.City::GenerateCity(50);
+    city.City::GenerateCity(400);
 
     // ----- Main draw loop -----
     while (!WindowShouldClose()) {
