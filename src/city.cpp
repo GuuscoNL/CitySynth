@@ -167,7 +167,7 @@ Vector2 City::HighwaySamples(Vector2 fromPos, float OriginalAngle, float MaxAngl
     }
     int maxPop = *std::max_element(positionPopulations.begin(), positionPopulations.end());
     Vector2 result;
-    for (int i = 0; i < positionPopulations.size(); i++)
+    for (unsigned int i = 0; i < positionPopulations.size(); i++)
     {
         if (positionPopulations[i] == maxPop){
             result = positions[i];
