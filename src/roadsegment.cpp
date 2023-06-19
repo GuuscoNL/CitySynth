@@ -27,7 +27,7 @@ RoadSegment::~RoadSegment() {
 }
 
 void RoadSegment::Draw() {
-    DrawModelEx(model, pos, { 0, 1, 0 }, angle, Vector3{1, 1, length/settings->highwayLength}, color);
+    DrawModelEx(model, pos, { 0, 1, 0 }, angle, Vector3{ 1, 1, length / settings->highwayLength }, color);
 }
 
 std::ostream& operator<<(std::ostream& os, const RoadSegment& n) {
@@ -81,8 +81,8 @@ void RoadSegment::CalculatePosAndAngle() {
 
     // VEC2 {x, y}
     // VEC3 {y, z, x}
-    pos = Vector3{ y, settings->highwayHeight/2, x };
-    
+    pos = Vector3{ y, settings->highwayHeight / 2, x };
+
 
     angle = (RAD2DEG * Vector2Angle(GetFromPos(), GetToPos()));
 

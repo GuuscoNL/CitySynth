@@ -12,7 +12,7 @@ Node::Node(Vector2 pos2D, Settings* settings) :
     model.materials[0].shader = settings->shader;
     color = GRAY;
 
-    pos3D = Vector3{pos2D.y, 0, pos2D.x};
+    pos3D = Vector3{ pos2D.y, 0, pos2D.x };
 }
 
 Node::~Node() {

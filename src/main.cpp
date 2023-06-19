@@ -76,11 +76,11 @@ int main() {
     settings.frequency = 0.03; // bigger = smaller patches
     settings.amplitude = 0.5; // ?
     settings.lacunarity = 25; // How "dense" the patches are?
-    settings.persistence = 1/settings.lacunarity; // ?
+    settings.persistence = 1 / settings.lacunarity; // ?
     settings.octaves = 4; // More = more blurry
 
-    settings.RoadModel= LoadModelFromMesh(GenMeshCube(settings.highwayWidth, settings.highwayHeight, settings.highwayLength));
-    settings.NodeModel= LoadModelFromMesh(GenMeshCylinder(0.1, 0.05, 10));
+    settings.RoadModel = LoadModelFromMesh(GenMeshCube(settings.highwayWidth, settings.highwayHeight, settings.highwayLength));
+    settings.NodeModel = LoadModelFromMesh(GenMeshCylinder(0.1, 0.05, 10));
 
     settings.shader = lightingShader;
     settings.SetSeed(0);
@@ -96,8 +96,8 @@ int main() {
         handleCameraControls(camera);
 
         float cameraPos[3] = { camera.position.x, camera.position.y, camera.position.z };
-        SetShaderValue(lightingShader, lightingShader.locs[SHADER_LOC_VECTOR_VIEW], 
-                        cameraPos, SHADER_UNIFORM_VEC3);
+        SetShaderValue(lightingShader, lightingShader.locs[SHADER_LOC_VECTOR_VIEW],
+            cameraPos, SHADER_UNIFORM_VEC3);
 
         for (int i = 0; i < MAX_LIGHTS; i++) UpdateLightValues(lightingShader, lights[i]);
 

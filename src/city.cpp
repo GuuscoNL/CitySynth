@@ -62,25 +62,24 @@ Texture2D City::GeneratePopulationHeatmap(int offsetX, int offsetY, float scale)
 
     UnloadImage(populationHeatmapImg);
     populationHeatmapImg = GenImageColor(size, size, WHITE);
-    SimplexNoise simplexNoise = SimplexNoise(settings->frequency, 
-                                            settings->amplitude, 
-                                            settings->lacunarity, 
-                                            settings->persistence);
-    for (int i = 0; i < size; i++)
-    {
-        for (int j = 0; j < size; j++)
-        {
+    SimplexNoise simplexNoise = SimplexNoise(
+        settings->frequency,
+        settings->amplitude,
+        settings->lacunarity,
+        settings->persistence);
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
             int noise = round(Remap(simplexNoise.fractal(settings->octaves, i, j), -1, 1, 0, 255));
-            Color noiseColor = Color{   static_cast<unsigned char>(noise), 
-                                        static_cast<unsigned char>(noise), 
-                                        static_cast<unsigned char>(noise),
-                                        255};
+            Color noiseColor = Color{static_cast<unsigned char>(noise),
+                                    static_cast<unsigned char>(noise),
+                                    static_cast<unsigned char>(noise),
+                                    255 };
             ImageDrawPixel(&populationHeatmapImg, i, j, noiseColor);
         }
     }
     UnloadTexture(populationHeatmapTex);
     populationHeatmapTex = LoadTextureFromImage(populationHeatmapImg);
-    
+
     UpdatePlaneTexture();
     return populationHeatmapTex;
 }
@@ -89,10 +88,10 @@ void  City::GenerateCity(unsigned int amount) {
     ResetCity();
     roads.reserve(amount); // speed!
     std::priority_queue<RoadSegment*, std::vector<RoadSegment*>, RoadSegmentGreaterThan> Q;
-    
-    Node* startNode = new Node(Vector2{0, 0}, settings);
-    Node* nodeL = new Node(Vector2{settings->highwayLength, 0}, settings);
-    Node* nodeR = new Node(Vector2{-settings->highwayLength, 0}, settings);
+
+    Node* startNode = new Node(Vector2{ 0, 0 }, settings);
+    Node* nodeL = new Node(Vector2{ settings->highwayLength, 0 }, settings);
+    Node* nodeR = new Node(Vector2{ -settings->highwayLength, 0 }, settings);
     nodes.push_back(startNode);
     nodes.push_back(nodeL);
     nodes.push_back(nodeR);
@@ -117,7 +116,7 @@ void  City::GenerateCity(unsigned int amount) {
         }
         else {
             Node* nodeToRemove = minRoad->GetTo();
-            nodes.erase(remove(nodes.begin(),nodes.end(), nodeToRemove));
+            nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove));
 
             delete nodeToRemove;
             delete minRoad;
@@ -127,7 +126,7 @@ void  City::GenerateCity(unsigned int amount) {
     while (!Q.empty()) {
         RoadSegment* roadToRemove = Q.top();
         Node* nodeToRemove = roadToRemove->GetTo();
-        nodes.erase(remove(nodes.begin(),nodes.end(), nodeToRemove));
+        nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove));
         delete nodeToRemove;
         delete roadToRemove;
         Q.pop();
@@ -139,22 +138,22 @@ void  City::GenerateCity(unsigned int amount) {
 
 bool City::LocalConstraints(RoadSegment* orgRoad) {
     // Make sure it is in the city
-    if (orgRoad->GetToPos().x >= size / 2 - (settings->highwayLength + 1) || 
+    if (orgRoad->GetToPos().x >= size / 2 - (settings->highwayLength + 1) ||
         orgRoad->GetToPos().x <= -(size / 2) + (settings->highwayLength + 1) ||
-        orgRoad->GetToPos().y >= size / 2 - (settings->highwayLength + 1) || 
+        orgRoad->GetToPos().y >= size / 2 - (settings->highwayLength + 1) ||
         orgRoad->GetToPos().y <= -(size / 2) + (settings->highwayLength + 1)) {
-            PRINT("REJECTED: OUT OF BOUNDS");
-            return false;
-        }
+        PRINT("REJECTED: OUT OF BOUNDS");
+        return false;
+    }
 
     {
         // if “ends close to an existing crossing” then “extend street, to reach the crossing”.
         Node* closestNode;
         Vector2 endNodePos = orgRoad->GetToPos();
         float smallestDistance = std::numeric_limits<float>::max();
-        for (auto* node : nodes) { 
+        for (auto* node : nodes) {
             float distance = Vector2Distance(endNodePos, node->GetPos());
-            if ( distance < smallestDistance && node != orgRoad->GetTo()) {
+            if (distance < smallestDistance && node != orgRoad->GetTo()) {
                 smallestDistance = distance;
                 closestNode = node;
             }
@@ -162,7 +161,7 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
 
         if (smallestDistance < settings->highwayCloseCrossing) {
             Node* nodeToRemove = orgRoad->GetTo();
-            nodes.erase(remove(nodes.begin(),nodes.end(), nodeToRemove));
+            nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove));
             delete nodeToRemove;
             orgRoad->SetTo(closestNode);
             closestNode->color = RED;
@@ -170,45 +169,46 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
             return true;
         }
     }
-    // Check if roads collide
-    for (auto* road : roads) { 
-        Node* fromNode = road->GetFrom();
-        Node* toNode = road->GetTo();
-        std::vector<RoadSegment*> ConnectedRoads = orgRoad->GetFrom()->GetConnectedRoads();
-        std::vector<RoadSegment*> ConnectedRoadsTo = orgRoad->GetTo()->GetConnectedRoads();
-        ConnectedRoads.insert(ConnectedRoads.end(), ConnectedRoadsTo.begin(), ConnectedRoadsTo.end());
+    {// Check if roads collide
+        for (auto* road : roads) {
+            Node* fromNode = road->GetFrom();
+            Node* toNode = road->GetTo();
+            std::vector<RoadSegment*> ConnectedRoads = orgRoad->GetFrom()->GetConnectedRoads();
+            std::vector<RoadSegment*> ConnectedRoadsTo = orgRoad->GetTo()->GetConnectedRoads();
+            ConnectedRoads.insert(ConnectedRoads.end(), ConnectedRoadsTo.begin(), ConnectedRoadsTo.end());
 
-        // Don't check roads that are connected to this road, since they will 100% be intersecting.
-        if (std::find(ConnectedRoads.begin(), ConnectedRoads.end(), road) != ConnectedRoads.end()) {
-            continue;
-        }
+            // Don't check roads that are connected to this road, since they will 100% be intersecting.
+            if (std::find(ConnectedRoads.begin(), ConnectedRoads.end(), road) != ConnectedRoads.end()) {
+                continue;
+            }
 
-        Vector2 intersectionPos;
+            Vector2 intersectionPos;
 
-        if (RoadsCollide(road, orgRoad, intersectionPos)) {
-            
-            // remove old road
-            roads.erase(remove(roads.begin(),roads.end(), road));
-            fromNode->RemoveRoad(road);
-            toNode->RemoveRoad(road);
-            delete road;
+            if (RoadsCollide(road, orgRoad, intersectionPos)) {
 
-            // Remove old Node
-            Node* orgToNode = orgRoad->GetTo();
-            nodes.erase(remove(nodes.begin(),nodes.end(), orgToNode));
-            delete orgToNode;
+                // remove old road
+                roads.erase(remove(roads.begin(), roads.end(), road));
+                fromNode->RemoveRoad(road);
+                toNode->RemoveRoad(road);
+                delete road;
 
-            // Create new intersection node
-            Node* intersectionNode = new Node(intersectionPos, settings);
-            nodes.push_back(intersectionNode);
+                // Remove old Node
+                Node* orgToNode = orgRoad->GetTo();
+                nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode));
+                delete orgToNode;
 
-            // Connect all roads to the intersect node
-            orgRoad->SetTo(intersectionNode);
-            roads.push_back(new RoadSegment(1, settings, fromNode, intersectionNode));
-            roads.push_back(new RoadSegment(1, settings, intersectionNode, toNode));
-            intersectionNode->color = GREEN;
-            PRINT("INTERSECT NODE");
-            return true;
+                // Create new intersection node
+                Node* intersectionNode = new Node(intersectionPos, settings);
+                nodes.push_back(intersectionNode);
+
+                // Connect all roads to the intersect node
+                orgRoad->SetTo(intersectionNode);
+                roads.push_back(new RoadSegment(1, settings, fromNode, intersectionNode));
+                roads.push_back(new RoadSegment(1, settings, intersectionNode, toNode));
+                intersectionNode->color = GREEN;
+                PRINT("INTERSECT NODE");
+                return true;
+            }
         }
     }
 
@@ -223,21 +223,21 @@ std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad) {
     if (newFromNode->GetSize() >= 2) {
         return newRoads;
     }
-    
+
     // Highways
     Vector2 newToPos = HighwaySamples(rootRoad->GetToPos(), rootRoad->GetAngle(),
-                                        settings->highwayAngle);
+        settings->highwayAngle);
     Node* toNode = new Node(newToPos, settings);
     nodes.push_back(toNode);
     newRoads.push_back(new RoadSegment(1, settings, newFromNode, toNode));
 
     if (GetRandomValue(0, 100) <= settings->highwayBranchChange) {
         float angle = 90;
-        if (GetRandomValue(0,1) == 0) {
+        if (GetRandomValue(0, 1) == 0) {
             angle = -90;
         }
-         Node* branchNode = new Node(GetPosWithAngle(rootRoad->GetToPos(), rootRoad->GetAngle() + angle, settings->highwayLength), settings);
-         nodes.push_back(branchNode);
+        Node* branchNode = new Node(GetPosWithAngle(rootRoad->GetToPos(), rootRoad->GetAngle() + angle, settings->highwayLength), settings);
+        nodes.push_back(branchNode);
 
         newRoads.push_back(new RoadSegment(1, settings, newFromNode, branchNode));
     }
@@ -246,9 +246,9 @@ std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad) {
 
 Vector2 City::GetPosWithAngle(Vector2 fromPos, float angle, float length) {
     float angleRad = angle * DEG2RAD;
-    
+
     return Vector2{ fromPos.x + cos(angleRad) * length,
-                    fromPos.y + sin(angleRad) * length};
+                    fromPos.y + sin(angleRad) * length };
 }
 
 Vector2 City::HighwaySamples(Vector2 fromPos, float OriginalAngle, float MaxAngle) {
@@ -266,9 +266,8 @@ Vector2 City::HighwaySamples(Vector2 fromPos, float OriginalAngle, float MaxAngl
     }
     int maxPop = *std::max_element(positionPopulations.begin(), positionPopulations.end());
     Vector2 result;
-    for (unsigned int i = 0; i < positionPopulations.size(); i++)
-    {
-        if (positionPopulations[i] == maxPop){
+    for (unsigned int i = 0; i < positionPopulations.size(); i++) {
+        if (positionPopulations[i] == maxPop) {
             result = positions[i];
         }
     }
@@ -315,14 +314,14 @@ bool City::RoadsCollide(RoadSegment* road1, RoadSegment* road2, Vector2& interse
 
 
 int City::GetPopulationFromHeatmap(Vector2 pos) const {
-    Vector2 texPos = Vector2{   heatmapCenter.x + round(pos.y), 
+    Vector2 texPos = Vector2{ heatmapCenter.x + round(pos.y),
                                 heatmapCenter.y + round(pos.x) };
 
-    if (! (texPos.x < size && texPos.x > 0)){
+    if (!(texPos.x < size && texPos.x > 0)) {
         PRINT("x: " << texPos.x);
 
     };
-    if (! (texPos.y < size && texPos.y > 0)){
+    if (!(texPos.y < size && texPos.y > 0)) {
         PRINT("y: " << texPos.y);
     };
     Color PopulationColor = GetImageColor(populationHeatmapImg, texPos.x, texPos.y);
