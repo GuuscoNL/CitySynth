@@ -9,6 +9,7 @@ Node::Node(Vector2 pos2D, Settings* settings) :
     settings(settings) {
     model = settings->NodeModel;
     model.materials[0].shader = settings->shader;
+    color = GRAY;
 
     pos3D = Vector3{pos2D.y, 0, pos2D.x};
 }
@@ -18,9 +19,17 @@ Node::~Node() {
 }
 
 void Node::Draw() {
-    DrawModel(model, pos3D, 1, GRAY);
+    DrawModel(model, pos3D, 1, color);
 }
 
 Vector2 Node::GetPos() {
     return pos2D;
+}
+
+int Node::GetSize() {
+    return connectedRoads.size();
+}
+
+void Node::AddRoad(RoadSegment* road) {
+    connectedRoads.push_back(road);
 }

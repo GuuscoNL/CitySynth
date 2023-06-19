@@ -11,6 +11,7 @@ struct Settings {
     float highwayAngle;
     int highwaySampleAmount;
     float highwayBranchChange;
+    float highwayCloseCrossing;
 
     // Simplex
     float frequency;// bigger = smaller patches

@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <algorithm>
 #include <vector>
+#include <limits>
 #include "include/city.hpp"
 #include "raymath.h"
 #include "include/highway.hpp"
@@ -89,14 +90,16 @@ void  City::GenerateCity(unsigned int amount) {
     std::priority_queue<RoadSegment*, std::vector<RoadSegment*>, RoadSegmentGreaterThan> Q;
     
     Node* startNode = new Node(Vector2{0, 0}, settings);
-    Node* node1 = new Node(Vector2{settings->highwayLength, 0}, settings);
-    Node* node2 = new Node(Vector2{-settings->highwayLength, 0}, settings);
+    Node* nodeL = new Node(Vector2{settings->highwayLength, 0}, settings);
+    Node* nodeR = new Node(Vector2{-settings->highwayLength, 0}, settings);
     nodes.push_back(startNode);
-    nodes.push_back(node1);
-    nodes.push_back(node2);
+    nodes.push_back(nodeL);
+    nodes.push_back(nodeR);
+    RoadSegment* roadL = new RoadSegment(0, settings, startNode, nodeL);
+    RoadSegment* roadR = new RoadSegment(0, settings, startNode, nodeR);
 
-    Q.push(new RoadSegment(0, settings, startNode, node1));
-    Q.push(new RoadSegment(0, settings, startNode, node2));
+    Q.push(roadL);
+    Q.push(roadR);
 
     while (!Q.empty() && roads.size() < amount) {
         RoadSegment* minRoad = Q.top();
@@ -142,12 +145,39 @@ bool City::LocalConstraints(RoadSegment* road) {
             PRINT("REJECTED: OUT OF BOUNDS");
             return false;
         }
+    
+    // // if “ends close to an existing crossing” then “extend street, to reach the crossing”.
+    Node* closestNode;
+    Vector2 endNodePos = road->GetToPos();
+    float smallestDistance = std::numeric_limits<float>::max();
+    for (auto* node : nodes) { 
+        float distance = Vector2Distance(endNodePos, node->GetPos());
+        if ( distance < smallestDistance && node != road->GetTo()) {
+            smallestDistance = distance;
+            closestNode = node;
+        }
+    }
+
+    if (smallestDistance < settings->highwayCloseCrossing) {
+        Node* nodeToRemove = road->GetTo();
+        nodes.erase(remove(nodes.begin(),nodes.end(), nodeToRemove));
+        delete nodeToRemove;
+        road->SetTo(closestNode);
+        closestNode->color = RED;
+        PRINT("CLOSE NODE");
+    }
+
     return true;
 }
 
 std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad) {
     std::vector<RoadSegment*> newRoads;
     Node* newFromNode = rootRoad->GetTo();
+
+    // If it is already split don't add new roads
+    if (newFromNode->GetSize() >= 2) {
+        return newRoads;
+    }
     
     // Highways
     Vector2 newToPos = HighwaySamples(rootRoad->GetToPos(), rootRoad->GetAngle(),

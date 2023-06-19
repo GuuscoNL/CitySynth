@@ -73,6 +73,7 @@ int main() {
     settings.highwayAngle = 15;
     settings.highwayHeight = 0.04;
     settings.highwayBranchChange = 1; // in procenten
+    settings.highwayCloseCrossing = 0.5;
 
     settings.frequency = 0.03; // bigger = smaller patches
     settings.amplitude = 0.5; // ?
@@ -89,7 +90,7 @@ int main() {
     // ----- City -----
     City city = City(300.f, &settings);
     city.GeneratePopulationHeatmap(20, 5, 0.9);
-    city.City::GenerateCity(3000);
+    city.City::GenerateCity(1000);
 
     // ----- Main draw loop -----
     while (!WindowShouldClose()) {
