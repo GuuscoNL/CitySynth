@@ -72,22 +72,23 @@ int main() {
     settings.highwayLength = 1.5;
     settings.highwayWidth = 0.2;
     settings.highwaySampleAmount = 10;
-    settings.highwayAngle = 20;
+    settings.highwayAngle = 15;
     settings.highwayHeight = 0.05;
+    settings.highwayBranchChange = 1; // in procenten
 
-    settings.frequency = 0.005; // bigger = smaller patches
+    settings.frequency = 0.01; // bigger = smaller patches
     settings.amplitude = 0.5; // ?
-    settings.lacunarity = 2; // ?
-    settings.persistence = 0.5; // ?
+    settings.lacunarity = 35; // How "dense" the patches are?
+    settings.persistence = 1/settings.lacunarity; // ?
     settings.octaves = 4; // More = more blurry
 
     settings.shader = lightingShader;
     settings.SetSeed(0);
 
     // ----- City -----
-    City city = City(400.f, &settings);
+    City city = City(500.f, &settings);
     city.GeneratePopulationHeatmap(20, 5, 0.9);
-    city.City::GenerateCity(400);
+    city.City::GenerateCity(1000);
 
     // ----- Main draw loop -----
     while (!WindowShouldClose()) {

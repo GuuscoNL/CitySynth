@@ -86,6 +86,7 @@ void  City::GenerateCity(unsigned int amount) {
     roads.reserve(amount); // speed!
     std::priority_queue<RoadSegment*, std::vector<RoadSegment*>, RoadSegmentGreaterThan> Q;
     Q.push(new RoadSegment(0, settings, Vector2{ 0, 0 }, Vector2{ settings->highwayLength, 0 }));
+    Q.push(new RoadSegment(0, settings, Vector2{ 0, 0 }, Vector2{ -settings->highwayLength, 0 }));
 
     while (!Q.empty() && roads.size() < amount) {
         RoadSegment* minRoad = Q.top();
@@ -131,15 +132,24 @@ std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad) {
     Vector2 newToPos = HighwaySamples(rootRoad->GetToPos(), rootRoad->GetAngle(),
                                         settings->highwayAngle);
     newRoads.push_back(new RoadSegment(1, settings, newFromPos, newToPos));
+
+    if (GetRandomValue(0, 100) <= settings->highwayBranchChange) {
+        float angle = 90;
+        if (GetRandomValue(0,1) == 0) {
+            angle = -90;
+        }
+
+        newRoads.push_back(new RoadSegment(1, settings, newFromPos, 
+        GetPosWithAngle(newFromPos, rootRoad->GetAngle() + angle, settings->highwayLength)));
+    }
     return newRoads;
 }
 
-Vector2 City::GetPosWithAngle(Vector2 fromPos, float angle) {
+Vector2 City::GetPosWithAngle(Vector2 fromPos, float angle, float length) {
     float angleRad = angle * DEG2RAD;
     
-    
-    return Vector2{ fromPos.x + cos(angleRad) * settings->highwayLength,
-                    fromPos.y + sin(angleRad) * settings->highwayLength };
+    return Vector2{ fromPos.x + cos(angleRad) * length,
+                    fromPos.y + sin(angleRad) * length};
 }
 
 Vector2 City::HighwaySamples(Vector2 fromPos, float OriginalAngle, float MaxAngle) {
@@ -147,7 +157,7 @@ Vector2 City::HighwaySamples(Vector2 fromPos, float OriginalAngle, float MaxAngl
     positions.reserve(settings->highwaySampleAmount);
 
     for (int i = 0; i < settings->highwaySampleAmount; i++) {
-        positions.push_back(GetPosWithAngle(fromPos, GetRandomValue(-MaxAngle + OriginalAngle, MaxAngle + OriginalAngle)));
+        positions.push_back(GetPosWithAngle(fromPos, GetRandomValue(-MaxAngle + OriginalAngle, MaxAngle + OriginalAngle), settings->highwayLength));
     }
 
     std::vector<int> positionPopulations;
