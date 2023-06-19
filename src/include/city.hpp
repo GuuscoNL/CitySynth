@@ -32,4 +32,6 @@ private:
     Vector2 GetPosWithAngle(Vector2 fromPos, float angle, float length);
     Vector2 HighwaySamples(Vector2 fromPos, float OriginalAngle, float MaxAngle);
     int GetPopulationFromHeatmap(Vector2 pos) const;
+    bool RoadsCollide(RoadSegment* road1, RoadSegment* road2, Vector2& intersection);
+    float CrossProduct(Vector2 v1, Vector2 v2);
 };

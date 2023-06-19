@@ -12,6 +12,7 @@
 
 
 #define PRINT(x) std::cout << x << std::endl
+#define PRINTVEC2(vec) std::cout << vec.x << ", " << vec.y<< std::endl
 #define PRINT_COLOR_RGB(color) \
     do { \
         int r = (color).r; \
@@ -136,35 +137,79 @@ void  City::GenerateCity(unsigned int amount) {
     PRINT("size: " << nodes.size());
 }
 
-bool City::LocalConstraints(RoadSegment* road) {
+bool City::LocalConstraints(RoadSegment* orgRoad) {
     // Make sure it is in the city
-    if (road->GetToPos().x >= size / 2 - settings->highwayLength || 
-        road->GetToPos().x <= -(size / 2) + settings->highwayLength ||
-        road->GetToPos().y >= size / 2 - settings->highwayLength || 
-        road->GetToPos().y <= -(size / 2) + settings->highwayLength) {
+    if (orgRoad->GetToPos().x >= size / 2 - (settings->highwayLength + 1) || 
+        orgRoad->GetToPos().x <= -(size / 2) + (settings->highwayLength + 1) ||
+        orgRoad->GetToPos().y >= size / 2 - (settings->highwayLength + 1) || 
+        orgRoad->GetToPos().y <= -(size / 2) + (settings->highwayLength + 1)) {
             PRINT("REJECTED: OUT OF BOUNDS");
             return false;
         }
-    
-    // // if “ends close to an existing crossing” then “extend street, to reach the crossing”.
-    Node* closestNode;
-    Vector2 endNodePos = road->GetToPos();
-    float smallestDistance = std::numeric_limits<float>::max();
-    for (auto* node : nodes) { 
-        float distance = Vector2Distance(endNodePos, node->GetPos());
-        if ( distance < smallestDistance && node != road->GetTo()) {
-            smallestDistance = distance;
-            closestNode = node;
+
+    {
+        // if “ends close to an existing crossing” then “extend street, to reach the crossing”.
+        Node* closestNode;
+        Vector2 endNodePos = orgRoad->GetToPos();
+        float smallestDistance = std::numeric_limits<float>::max();
+        for (auto* node : nodes) { 
+            float distance = Vector2Distance(endNodePos, node->GetPos());
+            if ( distance < smallestDistance && node != orgRoad->GetTo()) {
+                smallestDistance = distance;
+                closestNode = node;
+            }
+        }
+
+        if (smallestDistance < settings->highwayCloseCrossing) {
+            Node* nodeToRemove = orgRoad->GetTo();
+            nodes.erase(remove(nodes.begin(),nodes.end(), nodeToRemove));
+            delete nodeToRemove;
+            orgRoad->SetTo(closestNode);
+            closestNode->color = RED;
+            PRINT("CLOSE NODE");
+            return true;
         }
     }
+    // Check if roads collide
+    for (auto* road : roads) { 
+        Node* fromNode = road->GetFrom();
+        Node* toNode = road->GetTo();
+        std::vector<RoadSegment*> ConnectedRoads = orgRoad->GetFrom()->GetConnectedRoads();
+        std::vector<RoadSegment*> ConnectedRoadsTo = orgRoad->GetTo()->GetConnectedRoads();
+        ConnectedRoads.insert(ConnectedRoads.end(), ConnectedRoadsTo.begin(), ConnectedRoadsTo.end());
 
-    if (smallestDistance < settings->highwayCloseCrossing) {
-        Node* nodeToRemove = road->GetTo();
-        nodes.erase(remove(nodes.begin(),nodes.end(), nodeToRemove));
-        delete nodeToRemove;
-        road->SetTo(closestNode);
-        closestNode->color = RED;
-        PRINT("CLOSE NODE");
+        // Don't check roads that are connected to this road, since they will 100% be intersecting.
+        if (std::find(ConnectedRoads.begin(), ConnectedRoads.end(), road) != ConnectedRoads.end()) {
+            continue;
+        }
+
+        Vector2 intersectionPos;
+
+        if (RoadsCollide(road, orgRoad, intersectionPos)) {
+            
+            // remove old road
+            roads.erase(remove(roads.begin(),roads.end(), road));
+            fromNode->RemoveRoad(road);
+            toNode->RemoveRoad(road);
+            delete road;
+
+            // Remove old Node
+            Node* orgToNode = orgRoad->GetTo();
+            nodes.erase(remove(nodes.begin(),nodes.end(), orgToNode));
+            delete orgToNode;
+
+            // Create new intersection node
+            Node* intersectionNode = new Node(intersectionPos, settings);
+            nodes.push_back(intersectionNode);
+
+            // Connect all roads to the intersect node
+            orgRoad->SetTo(intersectionNode);
+            roads.push_back(new RoadSegment(1, settings, fromNode, intersectionNode));
+            roads.push_back(new RoadSegment(1, settings, intersectionNode, toNode));
+            intersectionNode->color = GREEN;
+            PRINT("INTERSECT NODE");
+            return true;
+        }
     }
 
     return true;
@@ -229,6 +274,45 @@ Vector2 City::HighwaySamples(Vector2 fromPos, float OriginalAngle, float MaxAngl
     }
     return result;
 }
+
+float City::CrossProduct(Vector2 v1, Vector2 v2) {
+    return v1.x * v2.y - v1.y * v2.x;
+}
+
+bool City::RoadsCollide(RoadSegment* road1, RoadSegment* road2, Vector2& intersection) {
+    Vector2 p1 = road1->GetFromPos();
+    Vector2 p2 = road1->GetToPos();
+    // PRINT("P1 " << p1.x << ", " << p1.y);
+    // PRINT("P2 " << p2.x << ", " << p2.y);
+
+    Vector2 q1 = road2->GetFromPos();
+    Vector2 q2 = road2->GetToPos();
+    // PRINT("q1 " << q1.x << ", " << q1.y);
+    // PRINT("q2 " << q2.x << ", " << q2.y);
+    // PRINT("");
+
+    Vector2 d1 = { p2.x - p1.x, p2.y - p1.y };
+    Vector2 d2 = { q2.x - q1.x, q2.y - q1.y };
+
+    float d1d2Cross = CrossProduct(d1, d2);
+    if (std::abs(d1d2Cross) < std::numeric_limits<float>::epsilon()) {
+        return false;  // Lines are parallel or coincident
+    }
+
+    Vector2 p1q1 = { q1.x - p1.x, q1.y - p1.y };
+
+    float t = CrossProduct(p1q1, d2) / d1d2Cross;
+    float u = CrossProduct(p1q1, d1) / d1d2Cross;
+
+    if (t >= 0.0f && t <= 1.0f && u >= 0.0f && u <= 1.0f) {
+        intersection.x = p1.x + t * d1.x;
+        intersection.y = p1.y + t * d1.y;
+        return true;
+    }
+
+    return false;
+}
+
 
 int City::GetPopulationFromHeatmap(Vector2 pos) const {
     Vector2 texPos = Vector2{   heatmapCenter.x + round(pos.y), 

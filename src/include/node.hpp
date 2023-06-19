@@ -13,6 +13,8 @@ public:
     Vector2 GetPos();
     int GetSize();
     void AddRoad(RoadSegment* road);
+    void RemoveRoad(RoadSegment* road);
+    std::vector<RoadSegment*> GetConnectedRoads();
     Color color; // debug
 
 private:

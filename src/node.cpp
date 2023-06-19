@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include "include/node.hpp"
+#include <algorithm>
 
 #define PRINT(x) std::cout << x << std::endl
 
@@ -32,4 +33,13 @@ int Node::GetSize() {
 
 void Node::AddRoad(RoadSegment* road) {
     connectedRoads.push_back(road);
+}
+
+void Node::RemoveRoad(RoadSegment* road) {
+    connectedRoads.erase(remove(connectedRoads.begin(), connectedRoads.end(), road));
+    connectedRoads.shrink_to_fit();
+}
+
+std::vector<RoadSegment*> Node::GetConnectedRoads() {
+    return connectedRoads;
 }

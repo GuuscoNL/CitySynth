@@ -65,10 +65,12 @@ float RoadSegment::GetAngle() const {
 
 void RoadSegment::SetFrom(Node* node) {
     from = node;
+    node->AddRoad(this);
     CalculatePosAndAngle();
 }
 void RoadSegment::SetTo(Node* node) {
     to = node;
+    node->AddRoad(this);
     CalculatePosAndAngle();
 }
 

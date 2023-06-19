@@ -28,8 +28,6 @@ void handleCameraControls(Camera3D& camera) {
 }
 
 int main() {
-
-
     SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_VSYNC_HINT);
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "raylib [shaders] example - basic lighting");
@@ -67,13 +65,13 @@ int main() {
 
     // ----- Settings -----
     Settings settings;
-    settings.highwayLength = 0.75;
-    settings.highwayWidth = 0.1;
+    settings.highwayLength = 1;
+    settings.highwayWidth = 0.2;
     settings.highwaySampleAmount = 10;
     settings.highwayAngle = 15;
     settings.highwayHeight = 0.04;
-    settings.highwayBranchChange = 1; // in procenten
-    settings.highwayCloseCrossing = 0.5;
+    settings.highwayBranchChange = 2; // in procenten
+    settings.highwayCloseCrossing = 0.3;
 
     settings.frequency = 0.03; // bigger = smaller patches
     settings.amplitude = 0.5; // ?
@@ -82,7 +80,7 @@ int main() {
     settings.octaves = 4; // More = more blurry
 
     settings.RoadModel= LoadModelFromMesh(GenMeshCube(settings.highwayWidth, settings.highwayHeight, settings.highwayLength));
-    settings.NodeModel= LoadModelFromMesh(GenMeshCylinder(0.08, 0.05, 10));
+    settings.NodeModel= LoadModelFromMesh(GenMeshCylinder(0.1, 0.05, 10));
 
     settings.shader = lightingShader;
     settings.SetSeed(0);
