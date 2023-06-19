@@ -3,6 +3,7 @@
 #include <vector>
 #include "roadsegment.hpp"
 #include "settings.hpp"
+#include "node.hpp"
 
 class City {
 public:
@@ -16,6 +17,7 @@ public:
 
 private:
     std::vector<RoadSegment*> roads;
+    std::vector<Node*> nodes;
     float size;
     Texture2D populationHeatmapTex;
     Image populationHeatmapImg;

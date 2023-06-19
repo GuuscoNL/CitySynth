@@ -3,10 +3,11 @@
 #include <vector>
 #include <iostream>
 #include "settings.hpp"
+#include "node.hpp"
 
 class RoadSegment {
 public:
-    RoadSegment(int delay, Settings* settings, Vector2 fromPos, Vector2 toPos);
+    RoadSegment(int delay, Settings* settings, Node* from, Node* to);
     ~RoadSegment();
     void Draw();
     friend std::ostream& operator<<(std::ostream& os, const RoadSegment& n);
@@ -14,7 +15,11 @@ public:
     Vector2 GetToPos() const;
     Vector2 GetFromPos() const;
     float GetAngle() const;
+    Node* GetFrom();
+    Node* GetTo();
     void SetDelay(int delay);
+    void SetFrom(Node* node);
+    void SetTo(Node* node);
 
 private:
     Model model;
@@ -23,13 +28,11 @@ private:
     Color color;
 
     Vector3 pos;
-    Vector2 fromPos;
-    Vector2 toPos;
+    Node* from;
+    Node* to;
     float angle;
     float length;
     RoadSegment* previousRoad;
     std::vector<RoadSegment*> nextRoads;
     void CalculatePosAndAngle();
-
-
 };

@@ -81,6 +81,7 @@ int main() {
     settings.octaves = 4; // More = more blurry
 
     settings.RoadModel= LoadModelFromMesh(GenMeshCube(settings.highwayWidth, settings.highwayHeight, settings.highwayLength));
+    settings.NodeModel= LoadModelFromMesh(GenMeshCylinder(0.08, 0.05, 10));
 
     settings.shader = lightingShader;
     settings.SetSeed(0);
@@ -105,7 +106,7 @@ int main() {
         {
             BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(WHITE);
 
             // ----- Draw 3D -----
             {
@@ -126,6 +127,7 @@ int main() {
     }
 
     UnloadModel(settings.RoadModel);
+    UnloadModel(settings.NodeModel);
     UnloadShader(lightingShader);
     CloseWindow();
 

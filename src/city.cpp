@@ -10,7 +10,6 @@
 #include "include/simplexnoise.hpp"
 
 
-
 #define PRINT(x) std::cout << x << std::endl
 #define PRINT_COLOR_RGB(color) \
     do { \
@@ -49,9 +48,12 @@ void City::Draw() {
     for (auto* road : roads) {
         road->Draw();
     }
+    for (auto* node : nodes) {
+        node->Draw();
+    }
 
     DrawModel(plane, Vector3Zero(), 1.0f, WHITE);
-    DrawCylinder(Vector3{ 0, 0, 0 }, 0.5, 0.5, 0.3, 10, GRAY);
+    DrawCylinder(Vector3{ 0, 0, 0 }, 0.3, 0.3, 0.2, 10, GRAY);
 }
 
 Texture2D City::GeneratePopulationHeatmap(int offsetX, int offsetY, float scale) {
@@ -85,8 +87,16 @@ void  City::GenerateCity(unsigned int amount) {
     ResetCity();
     roads.reserve(amount); // speed!
     std::priority_queue<RoadSegment*, std::vector<RoadSegment*>, RoadSegmentGreaterThan> Q;
-    Q.push(new RoadSegment(0, settings, Vector2{ 0, 0 }, Vector2{ settings->highwayLength, 0 }));
-    Q.push(new RoadSegment(0, settings, Vector2{ 0, 0 }, Vector2{ -settings->highwayLength, 0 }));
+    
+    Node* startNode = new Node(Vector2{0, 0}, settings);
+    Node* node1 = new Node(Vector2{settings->highwayLength, 0}, settings);
+    Node* node2 = new Node(Vector2{-settings->highwayLength, 0}, settings);
+    nodes.push_back(startNode);
+    nodes.push_back(node1);
+    nodes.push_back(node2);
+
+    Q.push(new RoadSegment(0, settings, startNode, node1));
+    Q.push(new RoadSegment(0, settings, startNode, node2));
 
     while (!Q.empty() && roads.size() < amount) {
         RoadSegment* minRoad = Q.top();
@@ -102,23 +112,34 @@ void  City::GenerateCity(unsigned int amount) {
             }
         }
         else {
+            Node* nodeToRemove = minRoad->GetTo();
+            nodes.erase(remove(nodes.begin(),nodes.end(), nodeToRemove));
+
+            delete nodeToRemove;
             delete minRoad;
         }
     }
-
-    // Make sure every non used roads get deleted
+    // Make sure every non used road gets deleted
     while (!Q.empty()) {
-        delete Q.top();
+        RoadSegment* roadToRemove = Q.top();
+        Node* nodeToRemove = roadToRemove->GetTo();
+        nodes.erase(remove(nodes.begin(),nodes.end(), nodeToRemove));
+        delete nodeToRemove;
+        delete roadToRemove;
         Q.pop();
     }
+    nodes.shrink_to_fit();
     PRINT("size: " << roads.size());
+    PRINT("size: " << nodes.size());
 }
 
 bool City::LocalConstraints(RoadSegment* road) {
     // Make sure it is in the city
-    if (road->GetToPos().x >= size / 2 - settings->highwayLength || road->GetToPos().x <= -(size / 2) + settings->highwayLength ||
-        road->GetToPos().y >= size / 2 - settings->highwayLength || road->GetToPos().y <= -(size / 2) + settings->highwayLength) {
-            PRINT("REJECTED!");
+    if (road->GetToPos().x >= size / 2 - settings->highwayLength || 
+        road->GetToPos().x <= -(size / 2) + settings->highwayLength ||
+        road->GetToPos().y >= size / 2 - settings->highwayLength || 
+        road->GetToPos().y <= -(size / 2) + settings->highwayLength) {
+            PRINT("REJECTED: OUT OF BOUNDS");
             return false;
         }
     return true;
@@ -126,21 +147,24 @@ bool City::LocalConstraints(RoadSegment* road) {
 
 std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad) {
     std::vector<RoadSegment*> newRoads;
-    Vector2	newFromPos = rootRoad->GetToPos();
+    Node* newFromNode = rootRoad->GetTo();
     
     // Highways
     Vector2 newToPos = HighwaySamples(rootRoad->GetToPos(), rootRoad->GetAngle(),
                                         settings->highwayAngle);
-    newRoads.push_back(new RoadSegment(1, settings, newFromPos, newToPos));
+    Node* toNode = new Node(newToPos, settings);
+    nodes.push_back(toNode);
+    newRoads.push_back(new RoadSegment(1, settings, newFromNode, toNode));
 
     if (GetRandomValue(0, 100) <= settings->highwayBranchChange) {
         float angle = 90;
         if (GetRandomValue(0,1) == 0) {
             angle = -90;
         }
+         Node* branchNode = new Node(GetPosWithAngle(rootRoad->GetToPos(), rootRoad->GetAngle() + angle, settings->highwayLength), settings);
+         nodes.push_back(branchNode);
 
-        newRoads.push_back(new RoadSegment(1, settings, newFromPos, 
-        GetPosWithAngle(newFromPos, rootRoad->GetAngle() + angle, settings->highwayLength)));
+        newRoads.push_back(new RoadSegment(1, settings, newFromNode, branchNode));
     }
     return newRoads;
 }
@@ -201,6 +225,12 @@ void City::ResetCity() {
     }
     roads.clear();
     roads.resize(0);
+
+    for (auto* node : nodes) {
+        delete node;
+    }
+    nodes.clear();
+    nodes.resize(0);
 }
 
 Texture2D City::GetPopulationHeatmap() const {

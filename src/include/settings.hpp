@@ -21,6 +21,7 @@ struct Settings {
 
     // Model
     Model RoadModel;
+    Model NodeModel;
     Shader shader;
 
 private:

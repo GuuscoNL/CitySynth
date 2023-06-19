@@ -5,16 +5,16 @@
 #define PRINT(x) std::cout << x << std::endl
 #define PRINTVEC3(vec) std::cout << vec.x << ", " << vec.y << ", " << vec.z << std::endl
 
-RoadSegment::RoadSegment(int delay, Settings* settings, Vector2 fromPos, Vector2 toPos) :
+RoadSegment::RoadSegment(int delay, Settings* settings, Node* from, Node* to) :
     delay(delay),
     settings(settings),
-    fromPos(fromPos),
-    toPos(toPos) {
+    from(from),
+    to(to) {
     // PRINT("LOADING ROAD");
 
     CalculatePosAndAngle();
     model = settings->RoadModel;
-    this->model.materials[0].shader = settings->shader;
+    model.materials[0].shader = settings->shader;
     color = Color{ static_cast<unsigned char>(GetRandomValue(0,255)),
                   static_cast<unsigned char>(GetRandomValue(0,255)),
                   static_cast<unsigned char>(GetRandomValue(0,255)) };
@@ -39,11 +39,18 @@ int RoadSegment::GetDelay() const {
 }
 
 Vector2 RoadSegment::GetToPos() const {
-    return toPos;
+    return to->GetPos();
 }
 
 Vector2 RoadSegment::GetFromPos() const {
-    return fromPos;
+    return from->GetPos();
+}
+
+Node* RoadSegment::GetFrom() {
+    return from;
+}
+Node* RoadSegment::GetTo() {
+    return to;
 }
 
 void RoadSegment::SetDelay(int delay) {
@@ -54,17 +61,24 @@ float RoadSegment::GetAngle() const {
     return angle;
 }
 
+void RoadSegment::SetFrom(Node* node) {
+    from = node;
+}
+void RoadSegment::SetTo(Node* node) {
+    to = node;
+}
+
 void RoadSegment::CalculatePosAndAngle() {
 
-    float y = (fromPos.y + toPos.y) / 2;
-    float x = (fromPos.x + toPos.x) / 2;
+    float y = (GetFromPos().y + GetToPos().y) / 2;
+    float x = (GetFromPos().x + GetToPos().x) / 2;
 
     // VEC2 {x, y}
     // VEC3 {y, z, x}
     pos = Vector3{ y, settings->highwayHeight/2, x };
     
 
-    angle = (RAD2DEG * Vector2Angle(fromPos, toPos));
+    angle = (RAD2DEG * Vector2Angle(GetFromPos(), GetToPos()));
 
-    length = Vector2Distance(fromPos, toPos);
+    length = Vector2Distance(GetFromPos(), GetToPos());
 }
