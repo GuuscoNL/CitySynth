@@ -29,6 +29,7 @@ void handleCameraControls(Camera3D& camera) {
 
 int main() {
 
+
     SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_VSYNC_HINT);
 
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "raylib [shaders] example - basic lighting");
@@ -41,9 +42,6 @@ int main() {
     camera.fovy = 45.0f;
     camera.projection = CAMERA_PERSPECTIVE;
 
-    // ----- Models -----
-
-    Model roadModel = LoadModelFromMesh(GenMeshCube(0.5, .1, 2.0));
 
     // ----- lighting shaders -----
     Shader lightingShader = LoadShader("shaders/lighting.vs",
@@ -69,26 +67,28 @@ int main() {
 
     // ----- Settings -----
     Settings settings;
-    settings.highwayLength = 1.5;
-    settings.highwayWidth = 0.2;
+    settings.highwayLength = 0.75;
+    settings.highwayWidth = 0.1;
     settings.highwaySampleAmount = 10;
     settings.highwayAngle = 15;
-    settings.highwayHeight = 0.05;
+    settings.highwayHeight = 0.04;
     settings.highwayBranchChange = 1; // in procenten
 
-    settings.frequency = 0.01; // bigger = smaller patches
+    settings.frequency = 0.03; // bigger = smaller patches
     settings.amplitude = 0.5; // ?
-    settings.lacunarity = 35; // How "dense" the patches are?
+    settings.lacunarity = 25; // How "dense" the patches are?
     settings.persistence = 1/settings.lacunarity; // ?
     settings.octaves = 4; // More = more blurry
+
+    settings.RoadModel= LoadModelFromMesh(GenMeshCube(settings.highwayWidth, settings.highwayHeight, settings.highwayLength));
 
     settings.shader = lightingShader;
     settings.SetSeed(0);
 
     // ----- City -----
-    City city = City(500.f, &settings);
+    City city = City(300.f, &settings);
     city.GeneratePopulationHeatmap(20, 5, 0.9);
-    city.City::GenerateCity(1000);
+    city.City::GenerateCity(3000);
 
     // ----- Main draw loop -----
     while (!WindowShouldClose()) {
@@ -125,7 +125,7 @@ int main() {
         totalTime += GetFrameTime();
     }
 
-    UnloadModel(roadModel);
+    UnloadModel(settings.RoadModel);
     UnloadShader(lightingShader);
     CloseWindow();
 

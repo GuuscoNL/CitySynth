@@ -10,10 +10,10 @@ RoadSegment::RoadSegment(int delay, Settings* settings, Vector2 fromPos, Vector2
     settings(settings),
     fromPos(fromPos),
     toPos(toPos) {
-    PRINT("LOADING ROAD");
+    // PRINT("LOADING ROAD");
 
     CalculatePosAndAngle();
-    model = LoadModelFromMesh(GenMeshCube(settings->highwayWidth, settings->highwayHeight, length));
+    model = settings->RoadModel;
     this->model.materials[0].shader = settings->shader;
     color = Color{ static_cast<unsigned char>(GetRandomValue(0,255)),
                   static_cast<unsigned char>(GetRandomValue(0,255)),
@@ -21,8 +21,7 @@ RoadSegment::RoadSegment(int delay, Settings* settings, Vector2 fromPos, Vector2
 }
 
 RoadSegment::~RoadSegment() {
-    PRINT("Unloading Road");
-    UnloadModel(model);
+    // PRINT("Unloading Road");
 }
 
 void RoadSegment::Draw() {

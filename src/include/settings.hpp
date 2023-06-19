@@ -19,13 +19,16 @@ struct Settings {
     float persistence;// ?
     float octaves;// More = more blurry
 
-    // Misc
+    // Model
+    Model RoadModel;
     Shader shader;
 
 private:
     int randomSeed;
 
 public:
+
+
     void SetSeed(int seed) {
         randomSeed = seed;
         SetRandomSeed(seed);
