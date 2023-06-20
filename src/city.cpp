@@ -146,8 +146,7 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
         return false;
     }
 
-    {
-        // if “ends close to an existing crossing” then “extend street, to reach the crossing”.
+    { // if “ends close to an existing crossing” then “extend street, to reach the crossing”.        
         Node* closestNode;
         Vector2 endNodePos = orgRoad->GetToPos();
         float smallestDistance = std::numeric_limits<float>::max();
@@ -169,7 +168,51 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
             return true;
         }
     }
-    {// Check if roads collide
+
+    { // if “close to intersecting” then “extend street to form intersection”
+        Node* orgToNode = orgRoad->GetTo();
+        Vector2 intersectionPos;
+        Vector2 closestIntersectionPos;
+        RoadSegment* closestRoad;
+        float smallestDistance = std::numeric_limits<float>::max();
+        for (auto* road : roads) {
+            float distance = DistNodeToRoad(orgToNode, road, intersectionPos);
+            if ( distance < smallestDistance && road != orgRoad) {
+                smallestDistance = distance;
+                closestRoad = road;
+                closestIntersectionPos = intersectionPos;
+            }
+        }
+
+        if (smallestDistance < settings->highwayCloseRoad) {
+            Node* fromNode = closestRoad->GetFrom();
+            Node* toNode = closestRoad->GetTo();
+            // remove old road
+            roads.erase(remove(roads.begin(), roads.end(), closestRoad));
+            fromNode->RemoveRoad(closestRoad);
+            toNode->RemoveRoad(closestRoad);
+            delete closestRoad;
+
+            // Remove old Node
+            Node* orgToNode = orgRoad->GetTo();
+            nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode));
+            delete orgToNode;
+
+            // Create new intersection node
+            Node* intersectionNode = new Node(closestIntersectionPos, settings);
+            nodes.push_back(intersectionNode);
+
+            // Connect all roads to the intersect node
+            orgRoad->SetTo(intersectionNode);
+            roads.push_back(new RoadSegment(1, settings, fromNode, intersectionNode));
+            roads.push_back(new RoadSegment(1, settings, intersectionNode, toNode));
+            intersectionNode->color = BLUE;
+            PRINT("CLOSE ROAD");
+            return true;
+        }
+    }
+
+    { // Check if roads collide
         for (auto* road : roads) {
             Node* fromNode = road->GetFrom();
             Node* toNode = road->GetTo();
@@ -281,14 +324,9 @@ float City::CrossProduct(Vector2 v1, Vector2 v2) {
 bool City::RoadsCollide(RoadSegment* road1, RoadSegment* road2, Vector2& intersection) {
     Vector2 p1 = road1->GetFromPos();
     Vector2 p2 = road1->GetToPos();
-    // PRINT("P1 " << p1.x << ", " << p1.y);
-    // PRINT("P2 " << p2.x << ", " << p2.y);
 
     Vector2 q1 = road2->GetFromPos();
     Vector2 q2 = road2->GetToPos();
-    // PRINT("q1 " << q1.x << ", " << q1.y);
-    // PRINT("q2 " << q2.x << ", " << q2.y);
-    // PRINT("");
 
     Vector2 d1 = { p2.x - p1.x, p2.y - p1.y };
     Vector2 d2 = { q2.x - q1.x, q2.y - q1.y };
@@ -312,6 +350,33 @@ bool City::RoadsCollide(RoadSegment* road1, RoadSegment* road2, Vector2& interse
     return false;
 }
 
+// https://youtu.be/egmZJU-1zPU
+float City::DistNodeToRoad(Node* node, RoadSegment* road, Vector2& intersection) {
+    Vector2 NodePos = node->GetPos();
+    Vector2 RoadFromPos = road->GetFromPos();
+    Vector2 RoadToPos = road->GetToPos();
+
+    Vector2 ab = Vector2Subtract(RoadToPos, RoadFromPos);
+    Vector2 ap = Vector2Subtract(NodePos, RoadFromPos);
+
+
+    float proj = Vector2DotProduct(ap, ab);
+    float abLenSqr = Vector2LengthSqr(ab);
+    float d = proj / abLenSqr;
+
+    if ( d <= 0) {
+        intersection = RoadFromPos;
+    }
+    else if (d >= 1) {
+        intersection = RoadToPos;
+    }
+    else {
+        intersection = Vector2Add(RoadFromPos, Vector2Scale(ab, d));
+    }
+
+    return Vector2Distance(NodePos, intersection);
+
+}
 
 int City::GetPopulationFromHeatmap(Vector2 pos) const {
     Vector2 texPos = Vector2{ heatmapCenter.x + round(pos.y),

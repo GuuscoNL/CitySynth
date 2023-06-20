@@ -70,8 +70,9 @@ int main() {
     settings.highwaySampleAmount = 10;
     settings.highwayAngle = 15;
     settings.highwayHeight = 0.04;
-    settings.highwayBranchChange = 2; // in procenten
-    settings.highwayCloseCrossing = 0.3;
+    settings.highwayBranchChange = 3; // in procenten
+    settings.highwayCloseCrossing = 0.4;
+    settings.highwayCloseRoad = 0.2;
 
     settings.frequency = 0.03; // bigger = smaller patches
     settings.amplitude = 0.5; // ?
