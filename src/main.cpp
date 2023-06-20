@@ -71,8 +71,17 @@ int main() {
     settings.highwayAngle = 15;
     settings.highwayHeight = 0.04;
     settings.highwayBranchChange = 3; // in procenten
+    settings.highwaySideRoadBranchChange = 3; // in procenten
     settings.highwayCloseCrossing = 0.4;
-    settings.highwayCloseRoad = 0.2;
+    settings.highwayCloseRoad = 0.3;
+
+    settings.sideRoadLength = 0.5;
+    settings.sideRoadWidth = 0.1;
+    settings.sideRoadHeight = 0.04;
+    settings.sideRoadBranchChange = 90;
+    settings.sideRoadBranchDelay = 5;
+    settings.sideRoadCloseCrossing = 0.2;
+    settings.sideRoadCloseRoad = 0.15;
 
     settings.frequency = 0.03; // bigger = smaller patches
     settings.amplitude = 0.5; // ?
@@ -80,16 +89,17 @@ int main() {
     settings.persistence = 1 / settings.lacunarity; // ?
     settings.octaves = 4; // More = more blurry
 
-    settings.RoadModel = LoadModelFromMesh(GenMeshCube(settings.highwayWidth, settings.highwayHeight, settings.highwayLength));
+    settings.highwayModel = LoadModelFromMesh(GenMeshCube(settings.highwayWidth, settings.highwayHeight, settings.highwayLength));
+    settings.sideRoadModel = LoadModelFromMesh(GenMeshCube(settings.sideRoadWidth, settings.sideRoadHeight, settings.sideRoadLength));
     settings.NodeModel = LoadModelFromMesh(GenMeshCylinder(0.1, 0.05, 10));
 
     settings.shader = lightingShader;
-    settings.SetSeed(0);
+    settings.SetSeed(2);
 
     // ----- City -----
     City city = City(300.f, &settings);
     city.GeneratePopulationHeatmap(20, 5, 0.9);
-    city.City::GenerateCity(1000);
+    city.City::GenerateCity(100);
 
     // ----- Main draw loop -----
     while (!WindowShouldClose()) {
@@ -126,7 +136,8 @@ int main() {
         totalTime += GetFrameTime();
     }
 
-    UnloadModel(settings.RoadModel);
+    UnloadModel(settings.highwayModel);
+    UnloadModel(settings.sideRoadModel);
     UnloadModel(settings.NodeModel);
     UnloadShader(lightingShader);
     CloseWindow();

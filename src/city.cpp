@@ -95,8 +95,8 @@ void  City::GenerateCity(unsigned int amount) {
     nodes.push_back(startNode);
     nodes.push_back(nodeL);
     nodes.push_back(nodeR);
-    RoadSegment* roadL = new RoadSegment(0, settings, startNode, nodeL);
-    RoadSegment* roadR = new RoadSegment(0, settings, startNode, nodeR);
+    RoadSegment* roadL = new Highway(0, settings, startNode, nodeL);
+    RoadSegment* roadR = new Highway(0, settings, startNode, nodeR);
 
     Q.push(roadL);
     Q.push(roadR);
@@ -105,10 +105,11 @@ void  City::GenerateCity(unsigned int amount) {
         RoadSegment* minRoad = Q.top();
         Q.pop();
         bool accepted = LocalConstraints(minRoad);
+
         if (accepted) {
             roads.push_back(minRoad);
-            // PRINT(*minRoad);
             std::vector<RoadSegment*> newRoads = GlobalGoals(minRoad);
+
             for (auto* newRoad : newRoads) {
                 newRoad->SetDelay(minRoad->GetDelay() + 1 + newRoad->GetDelay());
                 Q.push(newRoad);
@@ -204,8 +205,8 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
 
             // Connect all roads to the intersect node
             orgRoad->SetTo(intersectionNode);
-            roads.push_back(new RoadSegment(1, settings, fromNode, intersectionNode));
-            roads.push_back(new RoadSegment(1, settings, intersectionNode, toNode));
+            roads.push_back(new Highway(1, settings, fromNode, intersectionNode));
+            roads.push_back(new Highway(1, settings, intersectionNode, toNode));
             intersectionNode->color = BLUE;
             PRINT("CLOSE ROAD");
             return true;
@@ -246,8 +247,8 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
 
                 // Connect all roads to the intersect node
                 orgRoad->SetTo(intersectionNode);
-                roads.push_back(new RoadSegment(1, settings, fromNode, intersectionNode));
-                roads.push_back(new RoadSegment(1, settings, intersectionNode, toNode));
+                roads.push_back(new Highway(1, settings, fromNode, intersectionNode));
+                roads.push_back(new Highway(1, settings, intersectionNode, toNode));
                 intersectionNode->color = GREEN;
                 PRINT("INTERSECT NODE");
                 return true;
@@ -272,7 +273,7 @@ std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad) {
         settings->highwayAngle);
     Node* toNode = new Node(newToPos, settings);
     nodes.push_back(toNode);
-    newRoads.push_back(new RoadSegment(1, settings, newFromNode, toNode));
+    newRoads.push_back(new Highway(1, settings, newFromNode, toNode));
 
     if (GetRandomValue(0, 100) <= settings->highwayBranchChange) {
         float angle = 90;
@@ -282,7 +283,7 @@ std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad) {
         Node* branchNode = new Node(GetPosWithAngle(rootRoad->GetToPos(), rootRoad->GetAngle() + angle, settings->highwayLength), settings);
         nodes.push_back(branchNode);
 
-        newRoads.push_back(new RoadSegment(1, settings, newFromNode, branchNode));
+        newRoads.push_back(new Highway(1, settings, newFromNode, branchNode));
     }
     return newRoads;
 }

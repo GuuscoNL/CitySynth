@@ -8,7 +8,7 @@
 class RoadSegment {
 public:
     RoadSegment(int delay, Settings* settings, Node* from, Node* to);
-    ~RoadSegment();
+    virtual ~RoadSegment();
     void Draw();
     friend std::ostream& operator<<(std::ostream& os, const RoadSegment& n);
     int GetDelay() const;
@@ -21,7 +21,7 @@ public:
     void SetFrom(Node* node);
     void SetTo(Node* node);
 
-private:
+protected:
     Model model;
     int delay;
     Settings* settings;
@@ -32,6 +32,8 @@ private:
     Node* to;
     float angle;
     float length;
+    float modelLength;
+    float height;
     RoadSegment* previousRoad;
     std::vector<RoadSegment*> nextRoads;
     void CalculatePosAndAngle();

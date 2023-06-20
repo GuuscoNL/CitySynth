@@ -11,8 +11,18 @@ struct Settings {
     float highwayAngle;
     int highwaySampleAmount;
     float highwayBranchChange;
+    float highwaySideRoadBranchChange;
     float highwayCloseCrossing;
     float highwayCloseRoad;
+
+    // SideRoad
+    float sideRoadLength;
+    float sideRoadWidth;
+    float sideRoadHeight;
+    float sideRoadBranchChange;
+    float sideRoadBranchDelay;
+    float sideRoadCloseCrossing;
+    float sideRoadCloseRoad;
 
     // Simplex
     float frequency;// bigger = smaller patches
@@ -22,7 +32,8 @@ struct Settings {
     float octaves;// More = more blurry
 
     // Model
-    Model RoadModel;
+    Model highwayModel;
+    Model sideRoadModel;
     Model NodeModel;
     Shader shader;
 

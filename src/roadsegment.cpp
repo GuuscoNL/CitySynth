@@ -9,25 +9,14 @@ RoadSegment::RoadSegment(int delay, Settings* settings, Node* from, Node* to) :
     delay(delay),
     settings(settings),
     from(from),
-    to(to) {
-    // PRINT("LOADING ROAD");
-
-    CalculatePosAndAngle();
-    model = settings->RoadModel;
-    model.materials[0].shader = settings->shader;
-    color = Color{ static_cast<unsigned char>(GetRandomValue(0,255)),
-                  static_cast<unsigned char>(GetRandomValue(0,255)),
-                  static_cast<unsigned char>(GetRandomValue(0,255)) };
-    from->AddRoad(this);
-    to->AddRoad(this);
-}
+    to(to) {}
 
 RoadSegment::~RoadSegment() {
     // PRINT("Unloading Road");
 }
 
 void RoadSegment::Draw() {
-    DrawModelEx(model, pos, { 0, 1, 0 }, angle, Vector3{ 1, 1, length / settings->highwayLength }, color);
+    DrawModelEx(model, pos, { 0, 1, 0 }, angle, Vector3{ 1, 1, length / modelLength }, color);
 }
 
 std::ostream& operator<<(std::ostream& os, const RoadSegment& n) {
@@ -81,7 +70,7 @@ void RoadSegment::CalculatePosAndAngle() {
 
     // VEC2 {x, y}
     // VEC3 {y, z, x}
-    pos = Vector3{ y, settings->highwayHeight / 2, x };
+    pos = Vector3{ y, height / 2, x };
 
 
     angle = (RAD2DEG * Vector2Angle(GetFromPos(), GetToPos()));
