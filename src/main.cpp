@@ -70,18 +70,19 @@ int main() {
     settings.highwaySampleAmount = 10;
     settings.highwayAngle = 15;
     settings.highwayHeight = 0.04;
-    settings.highwayBranchChange = 3; // in procenten
-    settings.highwaySideRoadBranchChange = 3; // in procenten
+    settings.highwayBranchChance = 2; // in procenten
+    settings.highwaySideRoadBranchChance = 80; // in procenten
     settings.highwayCloseCrossing = 0.4;
     settings.highwayCloseRoad = 0.3;
 
     settings.sideRoadLength = 0.5;
     settings.sideRoadWidth = 0.1;
     settings.sideRoadHeight = 0.04;
-    settings.sideRoadBranchChange = 90;
+    settings.sideRoadBranchChance = 90;
     settings.sideRoadBranchDelay = 5;
-    settings.sideRoadCloseCrossing = 0.2;
+    settings.sideRoadCloseCrossing = 0.3;
     settings.sideRoadCloseRoad = 0.15;
+    settings.sideRoadThreshold = 0.5; // 0..1
 
     settings.frequency = 0.03; // bigger = smaller patches
     settings.amplitude = 0.5; // ?
@@ -99,7 +100,7 @@ int main() {
     // ----- City -----
     City city = City(300.f, &settings);
     city.GeneratePopulationHeatmap(20, 5, 0.9);
-    city.City::GenerateCity(100);
+    city.City::GenerateCity(1000);
 
     // ----- Main draw loop -----
     while (!WindowShouldClose()) {

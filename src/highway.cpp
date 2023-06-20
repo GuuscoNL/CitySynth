@@ -9,6 +9,8 @@ Highway::Highway(int delay, Settings* settings, Node* from, Node* to) : RoadSegm
 
     modelLength = settings->highwayLength;
 
+    type = HIGHWAY;
+
     CalculatePosAndAngle();
     color = Color{ static_cast<unsigned char>(GetRandomValue(0,255)),
                   static_cast<unsigned char>(GetRandomValue(0,255)),

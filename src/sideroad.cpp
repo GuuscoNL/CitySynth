@@ -9,6 +9,8 @@ SideRoad::SideRoad(int delay, Settings* settings, Node* from, Node* to) : RoadSe
 
     modelLength = settings->sideRoadLength;
 
+    type = SIDEROAD;
+
     CalculatePosAndAngle();
     color = Color{ static_cast<unsigned char>(GetRandomValue(0,255)),
                   static_cast<unsigned char>(GetRandomValue(0,255)),

@@ -7,6 +7,7 @@
 #include "include/city.hpp"
 #include "raymath.h"
 #include "include/highway.hpp"
+#include "include/sideroad.hpp"
 #include "include/roadsegmentgreaterthan.hpp"
 #include "include/simplexnoise.hpp"
 
@@ -269,21 +270,41 @@ std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad) {
     }
 
     // Highways
-    Vector2 newToPos = HighwaySamples(rootRoad->GetToPos(), rootRoad->GetAngle(),
-        settings->highwayAngle);
-    Node* toNode = new Node(newToPos, settings);
-    nodes.push_back(toNode);
-    newRoads.push_back(new Highway(1, settings, newFromNode, toNode));
+    if (rootRoad->GetType() == RoadSegment::HIGHWAY) {
+        Vector2 newToPos = HighwaySamples(rootRoad->GetToPos(), rootRoad->GetAngle(),
+            settings->highwayAngle);
+        Node* toNode = new Node(newToPos, settings);
+        nodes.push_back(toNode);
+        newRoads.push_back(new Highway(1, settings, newFromNode, toNode));
 
-    if (GetRandomValue(0, 100) <= settings->highwayBranchChange) {
-        float angle = 90;
-        if (GetRandomValue(0, 1) == 0) {
-            angle = -90;
+        if (GetRandomValue(0, 100) <= settings->highwayBranchChance) {
+            // HIGHWAYS
+            float angle = 90;
+            if (GetRandomValue(0, 1) == 0) {
+                angle = -90;
+            }
+            Node* branchNode = new Node(GetPosWithAngle(rootRoad->GetToPos(), rootRoad->GetAngle() + angle, settings->highwayLength), settings);
+            nodes.push_back(branchNode);
+
+            newRoads.push_back(new Highway(1, settings, newFromNode, branchNode));
+    
+        } else if (GetRandomValue(0, 100) <= settings->highwaySideRoadBranchChance) {
+            // SIDEROADS
+            float angle = 90;
+            if (GetRandomValue(0, 1) == 0) {
+                angle = -90;
+            }
+            Vector2 newPos = GetPosWithAngle(rootRoad->GetToPos(), rootRoad->GetAngle() + angle, settings->highwayLength);
+            if (GetPopulationFromHeatmap(newPos) / 255. >= settings->sideRoadThreshold) {
+                Node* branchNode = new Node(newPos, settings);
+                nodes.push_back(branchNode);
+                newRoads.push_back(new SideRoad(settings->sideRoadBranchDelay, settings, newFromNode, branchNode));
+            }
+
         }
-        Node* branchNode = new Node(GetPosWithAngle(rootRoad->GetToPos(), rootRoad->GetAngle() + angle, settings->highwayLength), settings);
-        nodes.push_back(branchNode);
+    }
+    else if (rootRoad->GetType() == RoadSegment::SIDEROAD) {
 
-        newRoads.push_back(new Highway(1, settings, newFromNode, branchNode));
     }
     return newRoads;
 }

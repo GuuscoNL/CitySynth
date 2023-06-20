@@ -10,8 +10,8 @@ struct Settings {
     float highwayHeight;
     float highwayAngle;
     int highwaySampleAmount;
-    float highwayBranchChange;
-    float highwaySideRoadBranchChange;
+    float highwayBranchChance;
+    float highwaySideRoadBranchChance;
     float highwayCloseCrossing;
     float highwayCloseRoad;
 
@@ -19,10 +19,11 @@ struct Settings {
     float sideRoadLength;
     float sideRoadWidth;
     float sideRoadHeight;
-    float sideRoadBranchChange;
+    float sideRoadBranchChance;
     float sideRoadBranchDelay;
     float sideRoadCloseCrossing;
     float sideRoadCloseRoad;
+    float sideRoadThreshold;
 
     // Simplex
     float frequency;// bigger = smaller patches

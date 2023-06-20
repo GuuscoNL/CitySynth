@@ -9,6 +9,7 @@ class RoadSegment {
 public:
     RoadSegment(int delay, Settings* settings, Node* from, Node* to);
     virtual ~RoadSegment();
+    enum RoadType {HIGHWAY, SIDEROAD};
     void Draw();
     friend std::ostream& operator<<(std::ostream& os, const RoadSegment& n);
     int GetDelay() const;
@@ -17,6 +18,7 @@ public:
     float GetAngle() const;
     Node* GetFrom();
     Node* GetTo();
+    RoadSegment::RoadType GetType();
     void SetDelay(int delay);
     void SetFrom(Node* node);
     void SetTo(Node* node);
@@ -26,6 +28,7 @@ protected:
     int delay;
     Settings* settings;
     Color color;
+    RoadSegment::RoadType type;
 
     Vector3 pos;
     Node* from;

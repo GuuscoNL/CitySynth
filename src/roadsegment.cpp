@@ -52,6 +52,10 @@ float RoadSegment::GetAngle() const {
     return angle;
 }
 
+RoadSegment::RoadType RoadSegment::GetType() {
+    return type;
+}
+
 void RoadSegment::SetFrom(Node* node) {
     from = node;
     node->AddRoad(this);
