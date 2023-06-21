@@ -78,13 +78,13 @@ int main() {
     settings.sideRoadLength = 0.7;
     settings.sideRoadWidth = 0.1;
     settings.sideRoadHeight = 0.04;
-    settings.sideRoadBranchChance = 90;
+    settings.sideRoadBranchChance = 80;
     settings.sideRoadBranchDelay = 5;
     settings.sideRoadCloseCrossing = 0.3;
     settings.sideRoadCloseRoad = 0.15;
     settings.sideRoadThreshold = 0.5; // 0..1
 
-    settings.frequency = 0.03; // bigger = smaller patches
+    settings.frequency = 0.04; // bigger = smaller patches
     settings.amplitude = 0.5; // ?
     settings.lacunarity = 25; // How "dense" the patches are?
     settings.persistence = 1 / settings.lacunarity; // ?

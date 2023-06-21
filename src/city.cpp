@@ -149,6 +149,7 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
         PRINT("REJECTED: OUT OF BOUNDS");
         return false;
     }
+
     { // Check if roads collide
         for (auto* road : roads) {
             std::vector<RoadSegment*> ConnectedRoads = orgRoad->GetFrom()->GetConnectedRoads();
@@ -265,7 +266,27 @@ std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad) {
         }
     }
     else if (rootRoad->GetType() == RoadSegment::SIDEROAD) {
-
+        {    
+            float angle = 0;
+            Vector2 newPos = GetPosWithAngle(rootRoad->GetToPos(), rootRoad->GetAngle() + angle, settings->sideRoadLength);
+            if (GetPopulationFromHeatmap(newPos) / 255. >= settings->sideRoadThreshold) {
+                Node* newToNode = new Node(newPos, settings);
+                nodes.push_back(newToNode);
+                newRoads.push_back(new SideRoad(1, settings, newFromNode, newToNode));
+            }
+        }
+        if (GetRandomValue(0, 100) <= settings->sideRoadBranchChance) {
+            float angle = 90;
+            // if (GetRandomValue(0, 1) == 0) { // BUG: segfaults?!
+            //     angle = -90;
+            // }
+            Vector2 newPos = GetPosWithAngle(rootRoad->GetToPos(), rootRoad->GetAngle() + angle, settings->sideRoadLength);
+            if (GetPopulationFromHeatmap(newPos) / 255. >= settings->sideRoadThreshold) {
+                Node* newToNode = new Node(newPos, settings);
+                nodes.push_back(newToNode);
+                newRoads.push_back(new SideRoad(1, settings, newFromNode, newToNode));
+            }
+        }
     }
     return newRoads;
 }
@@ -308,6 +329,16 @@ Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, Ve
         Node* orgToNode = toAddRoad->GetTo();
         nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
         delete orgToNode;
+
+        if (Vector2Distance(fromNode->GetPos(), intersectionPos) < 0.2) {
+            toAddRoad->SetTo(fromNode);
+            return fromNode;
+        }
+
+        if (Vector2Distance(toNode->GetPos(), intersectionPos) < 0.2) {
+            toAddRoad->SetTo(toNode);
+            return toNode;
+        }
 
         // Create new intersection node
         Node* intersectionNode = new Node(intersectionPos, settings);
