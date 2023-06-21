@@ -29,11 +29,11 @@ private:
     void ResetCity();
     bool LocalConstraints(RoadSegment* road);
     std::vector<RoadSegment*> GlobalGoals(RoadSegment* road);
-    Vector2 GetPosWithAngle(Vector2 fromPos, float angle, float length);
-    Vector2 HighwaySamples(Vector2 fromPos, float OriginalAngle, float MaxAngle);
-    int GetPopulationFromHeatmap(Vector2 pos) const;
+    Vector2 GetPosWithAngle(const Vector2& fromPos, float angle, float length);
+    Vector2 HighwaySamples(const Vector2& fromPos, float OriginalAngle, float MaxAngle);
+    int GetPopulationFromHeatmap(const Vector2& pos) const;
     bool RoadsCollide(RoadSegment* road1, RoadSegment* road2, Vector2& intersection);
-    float CrossProduct(Vector2 v1, Vector2 v2);
+    float CrossProduct(const Vector2& v1, const Vector2& v2);
     float DistNodeToRoad(Node* node, RoadSegment* road, Vector2& intersection);
-    Node* AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, Vector2 intersectionPos);
+    Node* AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, const Vector2& intersectionPos);
 };

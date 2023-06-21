@@ -95,7 +95,7 @@ int main() {
     settings.NodeModel = LoadModelFromMesh(GenMeshCylinder(0.1, 0.05, 10));
 
     settings.shader = lightingShader;
-    settings.SetSeed(1);
+    settings.SetSeed(3);
 
     // ----- City -----
     City city = City(300.f, &settings);

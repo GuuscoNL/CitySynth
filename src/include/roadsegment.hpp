@@ -37,7 +37,5 @@ protected:
     float length;
     float modelLength;
     float height;
-    RoadSegment* previousRoad;
-    std::vector<RoadSegment*> nextRoads;
     void CalculatePosAndAngle();
 };

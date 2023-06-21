@@ -48,10 +48,10 @@ City::~City() {
 
 void City::Draw() {
 
-    for (auto* road : roads) {
+    for (auto*& road : roads) {
         road->Draw();
     }
-    for (auto* node : nodes) {
+    for (auto*& node : nodes) {
         node->Draw();
     }
 
@@ -88,6 +88,7 @@ Texture2D City::GeneratePopulationHeatmap(int offsetX, int offsetY, float scale)
 void  City::GenerateCity(unsigned int amount) {
     ResetCity();
     roads.reserve(amount); // speed!
+    nodes.reserve(amount/2); // speed!
     std::priority_queue<RoadSegment*, std::vector<RoadSegment*>, RoadSegmentGreaterThan> Q;
 
     Node* startNode = new Node(Vector2{ 0, 0 }, settings);
@@ -291,14 +292,14 @@ std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad) {
     return newRoads;
 }
 
-Vector2 City::GetPosWithAngle(Vector2 fromPos, float angle, float length) {
+Vector2 City::GetPosWithAngle(const Vector2& fromPos, float angle, float length) {
     float angleRad = angle * DEG2RAD;
 
     return Vector2{ fromPos.x + cos(angleRad) * length,
                     fromPos.y + sin(angleRad) * length };
 }
 
-Vector2 City::HighwaySamples(Vector2 fromPos, float OriginalAngle, float MaxAngle) {
+Vector2 City::HighwaySamples(const Vector2& fromPos, float OriginalAngle, float MaxAngle) {
     std::vector<Vector2> positions;
     positions.reserve(settings->highwaySampleAmount);
 
@@ -308,7 +309,7 @@ Vector2 City::HighwaySamples(Vector2 fromPos, float OriginalAngle, float MaxAngl
 
     std::vector<int> positionPopulations;
     positionPopulations.reserve(positions.size());
-    for (Vector2 pos : positions) {
+    for (const Vector2& pos : positions) {
         positionPopulations.push_back(GetPopulationFromHeatmap(pos));
     }
     int maxPop = *std::max_element(positionPopulations.begin(), positionPopulations.end());
@@ -321,7 +322,7 @@ Vector2 City::HighwaySamples(Vector2 fromPos, float OriginalAngle, float MaxAngl
     return result;
 }
 
-Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, Vector2 intersectionPos) {
+Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, const Vector2& intersectionPos) {
         Node* fromNode = toSplitRoad->GetFrom();
         Node* toNode = toSplitRoad->GetTo();
 
@@ -365,7 +366,7 @@ Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, Ve
         return intersectionNode;
 }
 
-float City::CrossProduct(Vector2 v1, Vector2 v2) {
+float City::CrossProduct(const Vector2& v1, const Vector2& v2) {
     return v1.x * v2.y - v1.y * v2.x;
 }
 
@@ -426,7 +427,7 @@ float City::DistNodeToRoad(Node* node, RoadSegment* road, Vector2& intersection)
 
 }
 
-int City::GetPopulationFromHeatmap(Vector2 pos) const {
+int City::GetPopulationFromHeatmap(const Vector2& pos) const {
     Vector2 texPos = Vector2{ heatmapCenter.x + round(pos.y),
                                 heatmapCenter.y + round(pos.x) };
 

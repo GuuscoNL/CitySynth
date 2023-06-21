@@ -5,7 +5,7 @@
 
 #define PRINT(x) std::cout << x << std::endl
 
-Node::Node(Vector2 pos2D, Settings* settings) :
+Node::Node(const Vector2& pos2D, Settings* settings) :
     pos2D(pos2D),
     settings(settings) {
     model = settings->NodeModel;
