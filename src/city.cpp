@@ -118,7 +118,7 @@ void  City::GenerateCity(unsigned int amount) {
         }
         else {
             Node* nodeToRemove = minRoad->GetTo();
-            nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove));
+            nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
 
             delete nodeToRemove;
             delete minRoad;
@@ -128,9 +128,9 @@ void  City::GenerateCity(unsigned int amount) {
     while (!Q.empty()) {
         RoadSegment* roadToRemove = Q.top();
         Node* nodeToRemove = roadToRemove->GetTo();
-        nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove));
-        delete nodeToRemove;
+        nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
         delete roadToRemove;
+        delete nodeToRemove;
         Q.pop();
     }
     nodes.shrink_to_fit();
@@ -162,7 +162,7 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
 
         if (smallestDistance < settings->highwayCloseCrossing) {
             Node* nodeToRemove = orgRoad->GetTo();
-            nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove));
+            nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
             delete nodeToRemove;
             orgRoad->SetTo(closestNode);
             closestNode->color = RED;
@@ -190,14 +190,12 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
             Node* fromNode = closestRoad->GetFrom();
             Node* toNode = closestRoad->GetTo();
             // remove old road
-            roads.erase(remove(roads.begin(), roads.end(), closestRoad));
-            fromNode->RemoveRoad(closestRoad);
-            toNode->RemoveRoad(closestRoad);
+            roads.erase(remove(roads.begin(), roads.end(), closestRoad), roads.end());
             delete closestRoad;
 
             // Remove old Node
             Node* orgToNode = orgRoad->GetTo();
-            nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode));
+            nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
             delete orgToNode;
 
             // Create new intersection node
@@ -232,14 +230,12 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
             if (RoadsCollide(road, orgRoad, intersectionPos)) {
 
                 // remove old road
-                roads.erase(remove(roads.begin(), roads.end(), road));
-                fromNode->RemoveRoad(road);
-                toNode->RemoveRoad(road);
+                roads.erase(remove(roads.begin(), roads.end(), road), roads.end());
                 delete road;
 
                 // Remove old Node
                 Node* orgToNode = orgRoad->GetTo();
-                nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode));
+                nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
                 delete orgToNode;
 
                 // Create new intersection node

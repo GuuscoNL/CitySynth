@@ -13,6 +13,8 @@ RoadSegment::RoadSegment(int delay, Settings* settings, Node* from, Node* to) :
 
 RoadSegment::~RoadSegment() {
     // PRINT("Unloading Road");
+    from->RemoveRoad(this);
+    to->RemoveRoad(this);
 }
 
 void RoadSegment::Draw() {

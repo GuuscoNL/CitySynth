@@ -36,7 +36,7 @@ void Node::AddRoad(RoadSegment* road) {
 }
 
 void Node::RemoveRoad(RoadSegment* road) {
-    connectedRoads.erase(remove(connectedRoads.begin(), connectedRoads.end(), road));
+    connectedRoads.erase(remove(connectedRoads.begin(), connectedRoads.end(), road), connectedRoads.end());
     connectedRoads.shrink_to_fit();
 }
 
