@@ -65,17 +65,17 @@ int main() {
 
     // ----- Settings -----
     Settings settings;
-    settings.highwayLength = 1;
-    settings.highwayWidth = 0.2;
+    settings.highwayLength = 1.4;
+    settings.highwayWidth = 0.25;
     settings.highwaySampleAmount = 10;
     settings.highwayAngle = 15;
     settings.highwayHeight = 0.04;
     settings.highwayBranchChance = 2; // in procenten
     settings.highwaySideRoadBranchChance = 80; // in procenten
-    settings.highwayCloseCrossing = 0.4;
-    settings.highwayCloseRoad = 0.3;
+    settings.highwayCloseCrossing = 0.3;
+    settings.highwayCloseRoad = 0.2;
 
-    settings.sideRoadLength = 0.5;
+    settings.sideRoadLength = 0.7;
     settings.sideRoadWidth = 0.1;
     settings.sideRoadHeight = 0.04;
     settings.sideRoadBranchChance = 90;
@@ -95,12 +95,12 @@ int main() {
     settings.NodeModel = LoadModelFromMesh(GenMeshCylinder(0.1, 0.05, 10));
 
     settings.shader = lightingShader;
-    settings.SetSeed(2);
+    settings.SetSeed(1);
 
     // ----- City -----
     City city = City(300.f, &settings);
     city.GeneratePopulationHeatmap(20, 5, 0.9);
-    city.City::GenerateCity(1000);
+    city.City::GenerateCity(2000);
 
     // ----- Main draw loop -----
     while (!WindowShouldClose()) {

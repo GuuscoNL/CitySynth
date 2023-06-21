@@ -35,4 +35,5 @@ private:
     bool RoadsCollide(RoadSegment* road1, RoadSegment* road2, Vector2& intersection);
     float CrossProduct(Vector2 v1, Vector2 v2);
     float DistNodeToRoad(Node* node, RoadSegment* road, Vector2& intersection);
+    Node* AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, Vector2 intersectionPos);
 };

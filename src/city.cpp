@@ -119,9 +119,10 @@ void  City::GenerateCity(unsigned int amount) {
         else {
             Node* nodeToRemove = minRoad->GetTo();
             nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
+            roads.erase(remove(roads.begin(), roads.end(), minRoad), roads.end());
 
-            delete nodeToRemove;
             delete minRoad;
+            delete nodeToRemove;
         }
     }
     // Make sure every non used road gets deleted
@@ -129,6 +130,7 @@ void  City::GenerateCity(unsigned int amount) {
         RoadSegment* roadToRemove = Q.top();
         Node* nodeToRemove = roadToRemove->GetTo();
         nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
+        roads.erase(remove(roads.begin(), roads.end(), roadToRemove), roads.end());
         delete roadToRemove;
         delete nodeToRemove;
         Q.pop();
@@ -147,9 +149,32 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
         PRINT("REJECTED: OUT OF BOUNDS");
         return false;
     }
+    { // Check if roads collide
+        for (auto* road : roads) {
+            std::vector<RoadSegment*> ConnectedRoads = orgRoad->GetFrom()->GetConnectedRoads();
+            std::vector<RoadSegment*> ConnectedRoadsTo = orgRoad->GetTo()->GetConnectedRoads();
+            ConnectedRoads.insert(ConnectedRoads.end(), ConnectedRoadsTo.begin(), ConnectedRoadsTo.end());
+
+            // Don't check roads that are connected to this road, since they will 100% be intersecting.
+            if (std::find(ConnectedRoads.begin(), ConnectedRoads.end(), road) != ConnectedRoads.end()) {
+                continue;
+            }
+
+            Vector2 intersectionPos;
+
+            if (RoadsCollide(road, orgRoad, intersectionPos)) {
+
+                Node* intersectionNode = AddIntersection(road, orgRoad, intersectionPos);
+                intersectionNode->color = GREEN;
+                PRINT("INTERSECT NODE");
+                return true;
+            }
+        }
+    }
 
     { // if “ends close to an existing crossing” then “extend street, to reach the crossing”.        
         Node* closestNode;
+
         Vector2 endNodePos = orgRoad->GetToPos();
         float smallestDistance = std::numeric_limits<float>::max();
         for (auto* node : nodes) {
@@ -187,69 +212,10 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
         }
 
         if (smallestDistance < settings->highwayCloseRoad) {
-            Node* fromNode = closestRoad->GetFrom();
-            Node* toNode = closestRoad->GetTo();
-            // remove old road
-            roads.erase(remove(roads.begin(), roads.end(), closestRoad), roads.end());
-            delete closestRoad;
-
-            // Remove old Node
-            Node* orgToNode = orgRoad->GetTo();
-            nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
-            delete orgToNode;
-
-            // Create new intersection node
-            Node* intersectionNode = new Node(closestIntersectionPos, settings);
-            nodes.push_back(intersectionNode);
-
-            // Connect all roads to the intersect node
-            orgRoad->SetTo(intersectionNode);
-            roads.push_back(new Highway(1, settings, fromNode, intersectionNode));
-            roads.push_back(new Highway(1, settings, intersectionNode, toNode));
+            Node* intersectionNode = AddIntersection(closestRoad, orgRoad, closestIntersectionPos);
             intersectionNode->color = BLUE;
             PRINT("CLOSE ROAD");
             return true;
-        }
-    }
-
-    { // Check if roads collide
-        for (auto* road : roads) {
-            Node* fromNode = road->GetFrom();
-            Node* toNode = road->GetTo();
-            std::vector<RoadSegment*> ConnectedRoads = orgRoad->GetFrom()->GetConnectedRoads();
-            std::vector<RoadSegment*> ConnectedRoadsTo = orgRoad->GetTo()->GetConnectedRoads();
-            ConnectedRoads.insert(ConnectedRoads.end(), ConnectedRoadsTo.begin(), ConnectedRoadsTo.end());
-
-            // Don't check roads that are connected to this road, since they will 100% be intersecting.
-            if (std::find(ConnectedRoads.begin(), ConnectedRoads.end(), road) != ConnectedRoads.end()) {
-                continue;
-            }
-
-            Vector2 intersectionPos;
-
-            if (RoadsCollide(road, orgRoad, intersectionPos)) {
-
-                // remove old road
-                roads.erase(remove(roads.begin(), roads.end(), road), roads.end());
-                delete road;
-
-                // Remove old Node
-                Node* orgToNode = orgRoad->GetTo();
-                nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
-                delete orgToNode;
-
-                // Create new intersection node
-                Node* intersectionNode = new Node(intersectionPos, settings);
-                nodes.push_back(intersectionNode);
-
-                // Connect all roads to the intersect node
-                orgRoad->SetTo(intersectionNode);
-                roads.push_back(new Highway(1, settings, fromNode, intersectionNode));
-                roads.push_back(new Highway(1, settings, intersectionNode, toNode));
-                intersectionNode->color = GREEN;
-                PRINT("INTERSECT NODE");
-                return true;
-            }
         }
     }
 
@@ -260,7 +226,7 @@ std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad) {
     std::vector<RoadSegment*> newRoads;
     Node* newFromNode = rootRoad->GetTo();
 
-    // If it is already split don't add new roads
+    // If it is already split don't add new roads (there was already a conflict resolved)
     if (newFromNode->GetSize() >= 2) {
         return newRoads;
     }
@@ -290,13 +256,12 @@ std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad) {
             if (GetRandomValue(0, 1) == 0) {
                 angle = -90;
             }
-            Vector2 newPos = GetPosWithAngle(rootRoad->GetToPos(), rootRoad->GetAngle() + angle, settings->highwayLength);
+            Vector2 newPos = GetPosWithAngle(rootRoad->GetToPos(), rootRoad->GetAngle() + angle, settings->sideRoadLength);
             if (GetPopulationFromHeatmap(newPos) / 255. >= settings->sideRoadThreshold) {
                 Node* branchNode = new Node(newPos, settings);
                 nodes.push_back(branchNode);
                 newRoads.push_back(new SideRoad(settings->sideRoadBranchDelay, settings, newFromNode, branchNode));
             }
-
         }
     }
     else if (rootRoad->GetType() == RoadSegment::SIDEROAD) {
@@ -333,6 +298,40 @@ Vector2 City::HighwaySamples(Vector2 fromPos, float OriginalAngle, float MaxAngl
         }
     }
     return result;
+}
+
+Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, Vector2 intersectionPos) {
+        Node* fromNode = toSplitRoad->GetFrom();
+        Node* toNode = toSplitRoad->GetTo();
+
+        // Remove old Node
+        Node* orgToNode = toAddRoad->GetTo();
+        nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
+        delete orgToNode;
+
+        // Create new intersection node
+        Node* intersectionNode = new Node(intersectionPos, settings);
+        nodes.push_back(intersectionNode);
+
+        // Connect all roads to the intersect node
+        toAddRoad->SetTo(intersectionNode);
+        if (toSplitRoad->GetType() == RoadSegment::HIGHWAY) {
+            roads.push_back(new Highway(1, settings, fromNode, intersectionNode));
+            roads.push_back(new Highway(1, settings, intersectionNode, toNode));
+
+        } else if (toSplitRoad->GetType() == RoadSegment::SIDEROAD) {
+            roads.push_back(new SideRoad(1, settings, fromNode, intersectionNode));
+            roads.push_back(new SideRoad(1, settings, intersectionNode, toNode));
+
+        } else {
+            PRINT("AddIntersection(): Unknown type!");
+        }
+
+        // remove old road
+        roads.erase(remove(roads.begin(), roads.end(), toSplitRoad), roads.end());
+        delete toSplitRoad;
+
+        return intersectionNode;
 }
 
 float City::CrossProduct(Vector2 v1, Vector2 v2) {
