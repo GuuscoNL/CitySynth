@@ -7,6 +7,8 @@ City generator
 - Raylib
   - [Website](https://www.raylib.com/)
   - [Github](https://github.com/raysan5/raylib)
+  - [Raygui](https://github.com/raysan5/raygui)
+  - [GUI maker tool](https://raylibtech.itch.io/rguilayout)
 - Github template for raylib in VS code
   - [Github](https://github.com/educ8s/Raylib-CPP-Starter-Template-for-VSCODE-V2)
   - [How to install video](https://www.youtube.com/watch?v=PaAcVk5jUd8&ab_channel=ProgrammingWithNick)

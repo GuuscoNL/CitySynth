@@ -12,8 +12,6 @@ struct Settings {
     int highwaySampleAmount;
     float highwayBranchChance;
     float highwaySideRoadBranchChance;
-    float highwayCloseCrossing;
-    float highwayCloseRoad;
 
     // SideRoad
     float sideRoadLength;
@@ -25,11 +23,15 @@ struct Settings {
     float sideRoadCloseRoad;
     float sideRoadThreshold;
 
+    // Road conflicts
+    float CloseCrossing;
+    float CloseRoad;
+
     // Simplex
     float frequency;// bigger = smaller patches
     float amplitude;// ?
-    float lacunarity;// ?
-    float persistence;// ?
+    float lacunarity;// How "dense" the patches are?
+    float persistence;// 1/lacunarity
     float octaves;// More = more blurry
 
     // Model

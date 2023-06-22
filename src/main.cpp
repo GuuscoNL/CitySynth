@@ -12,10 +12,15 @@
 
 #define CAMERA_IMPLEMENTATION
 
-
 #define ASPECT_RATIO 16/9
 #define SCREEN_HEIGHT 900
 #define SCREEN_WIDTH SCREEN_HEIGHT * ASPECT_RATIO
+
+#define RAYGUI_IMPLEMENTATION
+#include "include/raygui.h"
+#define GUI_MAIN_GUI_IMPLEMENTATION
+#include "include/Main_GUI.hpp"
+
 
 #define PRINT(x) std::cout << x << std::endl
 #define PRINTVEC3(vec) std::cout << vec.x << ", " << vec.y << ", " << vec.z << std::endl
@@ -39,6 +44,7 @@ int main() {
     camera.up = { 0.0f, 1.0f, 0.0f };
     camera.fovy = 45.0f;
     camera.projection = CAMERA_PERSPECTIVE;
+    
 
 
     // ----- lighting shaders -----
@@ -72,17 +78,16 @@ int main() {
     settings.highwayHeight = 0.041;
     settings.highwayBranchChance = 2; // in procenten
     settings.highwaySideRoadBranchChance = 80; // in procenten
-    settings.highwayCloseCrossing = 0.3;
-    settings.highwayCloseRoad = 0.2;
 
     settings.sideRoadLength = 0.7;
     settings.sideRoadWidth = 0.1;
     settings.sideRoadHeight = 0.04;
     settings.sideRoadBranchChance = 80;
     settings.sideRoadBranchDelay = 7;
-    settings.sideRoadCloseCrossing = 0.3;
-    settings.sideRoadCloseRoad = 0.15;
     settings.sideRoadThreshold = 0.5; // 0..1
+
+    settings.CloseCrossing = 0.3;
+    settings.CloseRoad = 0.2;
 
     settings.frequency = 0.04; // bigger = smaller patches
     settings.amplitude = 0.5; // ?
@@ -100,7 +105,10 @@ int main() {
     // ----- City -----
     City city = City(300.f, &settings);
     city.GeneratePopulationHeatmap(20, 5, 0.9);
-    city.City::GenerateCity(10000);
+    city.City::GenerateCity(100);
+
+    // ----- GUI -----
+    GuiMainGUIState GUIState = InitGuiMainGUI();
 
     // ----- Main draw loop -----
     while (!WindowShouldClose()) {
@@ -131,6 +139,7 @@ int main() {
             // ----- UI -----
             DrawFPS(10, 10);
             DrawText("Hold down right mouse button to move the camera", 10, 60, 20, DARKGRAY);
+            GuiMainGUI(&GUIState);
 
             EndDrawing();
         }

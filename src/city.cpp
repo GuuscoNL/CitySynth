@@ -191,7 +191,7 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
             }
         }
 
-        if (smallestDistance < settings->highwayCloseCrossing) {
+        if (smallestDistance < settings->CloseCrossing) {
             Node* nodeToRemove = orgRoad->GetTo();
             nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
             orgRoad->SetTo(closestNode);
@@ -220,7 +220,7 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
             }
         }
 
-        if (smallestDistance < settings->highwayCloseRoad) {
+        if (smallestDistance < settings->CloseRoad) {
             Node* intersectionNode = AddIntersection(closestRoad, orgRoad, closestIntersectionPos);
             intersectionNode->color = BLUE;
             // PRINT("CLOSE ROAD");
