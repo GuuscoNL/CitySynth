@@ -190,10 +190,10 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
         if (smallestDistance < settings->highwayCloseCrossing) {
             Node* nodeToRemove = orgRoad->GetTo();
             nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
-            delete nodeToRemove;
             orgRoad->SetTo(closestNode);
             closestNode->color = RED;
             PRINT("CLOSE NODE");
+            delete nodeToRemove;
             return true;
         }
     }
@@ -329,7 +329,6 @@ Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, co
         // Remove old Node
         Node* orgToNode = toAddRoad->GetTo();
         nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
-        delete orgToNode;
 
         if (Vector2Distance(fromNode->GetPos(), intersectionPos) < 0.2) {
             toAddRoad->SetTo(fromNode);
@@ -361,7 +360,9 @@ Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, co
 
         // remove old road
         roads.erase(remove(roads.begin(), roads.end(), toSplitRoad), roads.end());
+
         delete toSplitRoad;
+        delete orgToNode;
 
         return intersectionNode;
 }

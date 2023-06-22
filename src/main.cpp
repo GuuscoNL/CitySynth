@@ -95,12 +95,12 @@ int main() {
     settings.NodeModel = LoadModelFromMesh(GenMeshCylinder(0.1, 0.05, 10));
 
     settings.shader = lightingShader;
-    settings.SetSeed(3);
+    settings.SetSeed(234);
 
     // ----- City -----
     City city = City(300.f, &settings);
     city.GeneratePopulationHeatmap(20, 5, 0.9);
-    city.City::GenerateCity(2000);
+    city.City::GenerateCity(4000);
 
     // ----- Main draw loop -----
     while (!WindowShouldClose()) {
