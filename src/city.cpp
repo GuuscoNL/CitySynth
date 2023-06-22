@@ -130,10 +130,14 @@ void  City::GenerateCity(unsigned int amount) {
     while (!Q.empty()) {
         RoadSegment* roadToRemove = Q.top();
         Node* nodeToRemove = roadToRemove->GetTo();
-        nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
         roads.erase(remove(roads.begin(), roads.end(), roadToRemove), roads.end());
         delete roadToRemove;
-        delete nodeToRemove;
+
+        // If this node is used by other roads do not delete.
+        if (nodeToRemove->GetSize() <= 1) {
+            nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
+            delete nodeToRemove;
+        }
         Q.pop();
     }
     nodes.shrink_to_fit();
@@ -168,7 +172,7 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
 
                 Node* intersectionNode = AddIntersection(road, orgRoad, intersectionPos);
                 intersectionNode->color = GREEN;
-                PRINT("INTERSECT NODE");
+                // PRINT("INTERSECT NODE");
                 return true;
             }
         }
@@ -192,8 +196,11 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
             nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
             orgRoad->SetTo(closestNode);
             closestNode->color = RED;
-            PRINT("CLOSE NODE");
-            delete nodeToRemove;
+            // PRINT("CLOSE NODE");
+            if (nodeToRemove->GetSize() <= 1) {
+                nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
+                delete nodeToRemove;
+            }
             return true;
         }
     }
@@ -216,8 +223,9 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
         if (smallestDistance < settings->highwayCloseRoad) {
             Node* intersectionNode = AddIntersection(closestRoad, orgRoad, closestIntersectionPos);
             intersectionNode->color = BLUE;
-            PRINT("CLOSE ROAD");
+            // PRINT("CLOSE ROAD");
             return true;
+
         }
     }
 
@@ -278,7 +286,7 @@ std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad) {
         }
         if (GetRandomValue(0, 100) <= settings->sideRoadBranchChance) {
             float angle = 90;
-            // if (GetRandomValue(0, 1) == 0) { // BUG: segfaults?!
+            // if (GetRandomValue(0, 1) == 0) { // Does not look good
             //     angle = -90;
             // }
             Vector2 newPos = GetPosWithAngle(rootRoad->GetToPos(), rootRoad->GetAngle() + angle, settings->sideRoadLength);
@@ -362,7 +370,10 @@ Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, co
         roads.erase(remove(roads.begin(), roads.end(), toSplitRoad), roads.end());
 
         delete toSplitRoad;
-        delete orgToNode;
+        if (orgToNode->GetSize() <= 1) {
+            nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
+            delete orgToNode;
+        }
 
         return intersectionNode;
 }
@@ -402,12 +413,12 @@ bool City::RoadsCollide(RoadSegment* road1, RoadSegment* road2, Vector2& interse
 
 // https://youtu.be/egmZJU-1zPU
 float City::DistNodeToRoad(Node* node, RoadSegment* road, Vector2& intersection) {
-    Vector2 NodePos = node->GetPos();
-    Vector2 RoadFromPos = road->GetFromPos();
-    Vector2 RoadToPos = road->GetToPos();
+    Vector2 p = node->GetPos();
+    Vector2 a = road->GetFromPos();
+    Vector2 b = road->GetToPos();
 
-    Vector2 ab = Vector2Subtract(RoadToPos, RoadFromPos);
-    Vector2 ap = Vector2Subtract(NodePos, RoadFromPos);
+    Vector2 ab = Vector2Subtract(b, a);
+    Vector2 ap = Vector2Subtract(p, a);
 
 
     float proj = Vector2DotProduct(ap, ab);
@@ -415,16 +426,16 @@ float City::DistNodeToRoad(Node* node, RoadSegment* road, Vector2& intersection)
     float d = proj / abLenSqr;
 
     if ( d <= 0) {
-        intersection = RoadFromPos;
+        intersection = a;
     }
     else if (d >= 1) {
-        intersection = RoadToPos;
+        intersection = b;
     }
     else {
-        intersection = Vector2Add(RoadFromPos, Vector2Scale(ab, d));
+        intersection = Vector2Add(a, Vector2Scale(ab, d));
     }
 
-    return Vector2Distance(NodePos, intersection);
+    return Vector2Distance(p, intersection);
 
 }
 
