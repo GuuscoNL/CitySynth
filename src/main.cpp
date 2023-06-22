@@ -105,7 +105,7 @@ int main() {
     // ----- City -----
     City city = City(300.f, &settings);
     city.GeneratePopulationHeatmap(20, 5, 0.9);
-    city.City::GenerateCity(100);
+    city.City::GenerateCity(1000);
 
     // ----- GUI -----
     GuiMainGUIState GUIState = InitGuiMainGUI(SCREEN_WIDTH);

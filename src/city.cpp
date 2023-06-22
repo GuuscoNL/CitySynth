@@ -134,7 +134,7 @@ void  City::GenerateCity(unsigned int amount) {
         delete roadToRemove;
 
         // If this node is used by other roads do not delete.
-        if (nodeToRemove->GetSize() <= 1) {
+        if (nodeToRemove->GetSize() <= 0) {
             nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
             delete nodeToRemove;
         }
@@ -197,7 +197,7 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
             orgRoad->SetTo(closestNode);
             closestNode->color = RED;
             // PRINT("CLOSE NODE");
-            if (nodeToRemove->GetSize() <= 1) {
+            if (nodeToRemove->GetSize() <= 0) {
                 nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
                 delete nodeToRemove;
             }
@@ -370,7 +370,7 @@ Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, co
         roads.erase(remove(roads.begin(), roads.end(), toSplitRoad), roads.end());
 
         delete toSplitRoad;
-        if (orgToNode->GetSize() <= 1) {
+        if (orgToNode->GetSize() <= 0) {
             nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
             delete orgToNode;
         }
