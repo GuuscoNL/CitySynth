@@ -18,8 +18,8 @@
 
 #define RAYGUI_IMPLEMENTATION
 #include "include/raygui.h"
-#define GUI_MAIN_GUI_IMPLEMENTATION
-#include "include/Main_GUI.hpp"
+#define GUI_MAINGUI_IMPLEMENTATION
+#include "include/MainGUI.hpp"
 
 
 #define PRINT(x) std::cout << x << std::endl
@@ -108,7 +108,7 @@ int main() {
     city.City::GenerateCity(100);
 
     // ----- GUI -----
-    GuiMainGUIState GUIState = InitGuiMainGUI();
+    GuiMainGUIState GUIState = InitGuiMainGUI(SCREEN_WIDTH);
 
     // ----- Main draw loop -----
     while (!WindowShouldClose()) {
