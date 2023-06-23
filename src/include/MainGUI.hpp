@@ -91,6 +91,7 @@ typedef struct {
     Settings* settings;
     char labelDiscoRoads[13];
     char labelShowNodes[11];
+    char labelinfo[33];
     City* city;
     bool DiscoRoads;
 
@@ -179,7 +180,7 @@ GuiMainGUIState InitGuiMainGUI(int screenWidth, Settings* settings, City* city)
     state.inputMaxAngleEditMode = false;
     strcpy(state.inputMaxAngleText, "15");
     state.inputSampleAmountEditMode = false;
-    state.inputSampleAmountValue = 0;
+    state.inputSampleAmountValue = 10;
     state.inputHighwayBranchChanceEditMode = false;
     strcpy(state.inputHighwayBranchChanceText, "2");
     state.inputHighwaySideRoadChanceEditMode = false;
@@ -187,9 +188,9 @@ GuiMainGUIState InitGuiMainGUI(int screenWidth, Settings* settings, City* city)
     state.inputSeedEditMode = false;
     state.inputSeedValue = 0;
     state.inputSegmentLimitEditMode = false;
-    state.inputSegmentLimitValue = 0;
+    state.inputSegmentLimitValue = 1000;
     state.inputSizeEditMode = false;
-    state.inputSizeValue = 0;
+    state.inputSizeValue = 300;
     state.inputCityNameEditMode = false;
     strcpy(state.inputCityNameText, "");
     state.inputSideRoadLengthEditMode = false;
@@ -215,6 +216,7 @@ GuiMainGUIState InitGuiMainGUI(int screenWidth, Settings* settings, City* city)
     state.settings = settings;
     strcpy(state.labelShowNodes, "Show Nodes");
     strcpy(state.labelDiscoRoads, "Disco Roads");
+    strcpy(state.labelinfo, "");
     state.city = city;
     state.DiscoRoads = false;
 
@@ -256,40 +258,124 @@ static void ButtonDiscoRoads(GuiMainGUIState* state)
         }
     }
 }
-static void ButtonResetCity()
+static void ButtonResetCity(GuiMainGUIState* state)
 {
-    // TODO: Implement control logic
+    state->city->ResetCity();
 }
 static void ButtonExportCity()
 {
+    PRINT("Export City: TODO");
     // TODO: Implement control logic
 }
-static void ButtonGenerateCity()
+static void ButtonGenerateCity(GuiMainGUIState* state)
 {
-    // TODO: Implement control logic
+    Settings& settings = *state->settings;
+    PRINT(atof(state->inputHighwayLengthText));
+    if (atof(state->inputHighwayLengthText) > 0 && atof(state->inputHighwayLengthText) <= 100) {
+        settings.highwayLength = atof(state->inputHighwayLengthText);
+    } else {
+        strcpy(state->labelinfo, "HighwayLength: 0-100");
+        return;
+    }
+
+    if (atof(state->inputHighwayWidthText) > 0 && atof(state->inputHighwayWidthText) <= 50) {
+        settings.highwayWidth = atof(state->inputHighwayWidthText);
+    } else {
+        strcpy(state->labelinfo, "HighwayWidth: 0-50");
+        return;
+    }
+
+    // Already has min and max value
+    settings.highwaySampleAmount = state->inputSampleAmountValue;
+  
+    if (atof(state->inputMaxAngleText) > 0 && atof(state->inputMaxAngleText) <= 180) {
+        settings.highwayAngle = atof(state->inputMaxAngleText);
+    } else {
+        strcpy(state->labelinfo, "HighwayAngle: 0-180");
+        return;
+    }
+
+    if (atof(state->inputHighwayHeightText) > 0 && atof(state->inputHighwayHeightText) <= 50) {
+        settings.highwayHeight = atof(state->inputHighwayHeightText);
+    } else {
+        strcpy(state->labelinfo, "HighwayHeight: 0-50");
+        return;
+    }
+
+    if (atof(state->inputHighwayBranchChanceText) > 0 && atof(state->inputHighwayBranchChanceText) <= 100) {
+        settings.highwayBranchChance = atof(state->inputHighwayBranchChanceText);
+    } else {
+        strcpy(state->labelinfo, "HighwayBranchChance: 0-100");
+        return;
+    }
+
+    if (atof(state->inputHighwaySideRoadChanceText) > 0 && atof(state->inputHighwaySideRoadChanceText) <= 100) {
+        settings.highwaySideRoadBranchChance = atof(state->inputHighwaySideRoadChanceText);
+    } else {
+        strcpy(state->labelinfo, "HighwaySideRoadBranchChan: 0-100");
+        return;
+    }
+
+    if (atof(state->inputSideRoadLengthText) > 0 && atof(state->inputSideRoadLengthText) <= 100) {
+        settings.sideRoadLength = atof(state->inputSideRoadLengthText);
+    } else {
+        strcpy(state->labelinfo, "SideRoadLength: 0-100");
+        return;
+    }
+
+    if (atof(state->inputSideRoadWidthText) > 0 && atof(state->inputSideRoadWidthText) <= 50) {
+        settings.sideRoadWidth = atof(state->inputSideRoadWidthText);
+    } else {
+        strcpy(state->labelinfo, "SideRoadWidth: 0-50");
+        return;
+    }
+
+    if (atof(state->inputSideRoadHeightText) > 0 && atof(state->inputSideRoadHeightText) <= 50) {
+        settings.sideRoadHeight = atof(state->inputSideRoadHeightText);
+    } else {
+        strcpy(state->labelinfo, "SideRoadHeight: 0-50");
+        return;
+    }
+
+    if (atof(state->inputThresholdText) > 0 && atof(state->inputThresholdText) <= 1) {
+        settings.sideRoadThreshold = atof(state->inputThresholdText);
+    } else {
+        strcpy(state->labelinfo, "SideRoadThreshold: 0-1");
+        return;
+    }
+
+    settings.SetSeed(state->inputSeedValue);
+
+    strcpy(state->labelinfo, "");
+
+    UnloadModel(settings.highwayModel);
+    settings.highwayModel = LoadModelFromMesh(GenMeshCube(settings.highwayWidth, settings.highwayHeight, settings.highwayLength));
+    UnloadModel(settings.sideRoadModel);
+    settings.sideRoadModel = LoadModelFromMesh(GenMeshCube(settings.sideRoadWidth, settings.sideRoadHeight, settings.sideRoadLength));
+    state->city->GenerateCity(state->inputSegmentLimitValue);
+
 }
 static void ButtonGenerateHeatmap()
 {
+    PRINT("Generate heatmap: TODO");
     // TODO: Implement control logic
 }
 static void ButtonCustomHeatmap()
 {
+    PRINT("Custom heatmap: TODO");
     // TODO: Implement control logic
 }
 
 
 void GuiMainGUI(GuiMainGUIState *state)
-{
-    if (state->windowMainActive)
-    {
-        state->windowMainActive = !GuiWindowBox((Rectangle){ state->anchorMain.x + 0, state->anchorMain.y + 0, 424, 440 }, "City Settings");
-    }
-    if (state->windowDebugActive)
-    {
-        state->windowDebugActive = !GuiWindowBox((Rectangle){ state->anchorDebug.x + 0, state->anchorDebug.y + 0, 120, 96 }, "Debug");
-        if (GuiButton((Rectangle){ state->anchorDebug.x + 8, state->anchorDebug.y + 32, 104, 24 }, state->labelShowNodes)) ButtonShowNodes(state); 
-        if (GuiButton((Rectangle){ state->anchorDebug.x + 8, state->anchorDebug.y + 64, 104, 24 }, state->labelDiscoRoads)) ButtonDiscoRoads(state); 
-    }
+{   
+
+    state->windowMainActive = !GuiWindowBox((Rectangle){ state->anchorMain.x + 0, state->anchorMain.y + 0, 424, 440 }, "City Settings");
+
+    state->windowDebugActive = !GuiWindowBox((Rectangle){ state->anchorDebug.x + 0, state->anchorDebug.y + 0, 120, 96 }, "Debug");
+    if (GuiButton((Rectangle){ state->anchorDebug.x + 8, state->anchorDebug.y + 32, 104, 24 }, state->labelShowNodes)) ButtonShowNodes(state); 
+    if (GuiButton((Rectangle){ state->anchorDebug.x + 8, state->anchorDebug.y + 64, 104, 24 }, state->labelDiscoRoads)) ButtonDiscoRoads(state); 
+
     GuiGroupBox((Rectangle){ state->anchorHighway.x + 0, state->anchorHighway.y + 0, 200, 184 }, "Highway");
     if (GuiTextBox((Rectangle){ state->anchorHighway.x + 104, state->anchorHighway.y + 8, 88, 24 }, state->inputHighwayLengthText, 128, state->inputHighwayLengthEditMode)) state->inputHighwayLengthEditMode = !state->inputHighwayLengthEditMode;
     GuiLabel((Rectangle){ state->anchorHighway.x + 8, state->anchorHighway.y + 8, 96, 24 }, "Length:");
@@ -307,17 +393,17 @@ void GuiMainGUI(GuiMainGUIState *state)
     if (GuiTextBox((Rectangle){ state->anchorHighway.x + 104, state->anchorHighway.y + 152, 88, 24 }, state->inputHighwaySideRoadChanceText, 128, state->inputHighwaySideRoadChanceEditMode)) state->inputHighwaySideRoadChanceEditMode = !state->inputHighwaySideRoadChanceEditMode;
     GuiGroupBox((Rectangle){ state->anchorGeneral.x + 0, state->anchorGeneral.y + 0, 200, 112 }, "General");
     GuiLabel((Rectangle){ state->anchorGeneral.x + 8, state->anchorGeneral.y + 8, 96, 24 }, "Seed:");
-    if (GuiSpinner((Rectangle){ state->anchorGeneral.x + 96, state->anchorGeneral.y + 8, 96, 24 }, NULL, &state->inputSeedValue, 0, 100, state->inputSeedEditMode)) state->inputSeedEditMode = !state->inputSeedEditMode;
+    if (GuiSpinner((Rectangle){ state->anchorGeneral.x + 96, state->anchorGeneral.y + 8, 96, 24 }, NULL, &state->inputSeedValue, 0, 999999, state->inputSeedEditMode)) state->inputSeedEditMode = !state->inputSeedEditMode;
     GuiLabel((Rectangle){ state->anchorGeneral.x + 8, state->anchorGeneral.y + 32, 96, 24 }, "Segment limit:");
-    if (GuiValueBox((Rectangle){ state->anchorGeneral.x + 96, state->anchorGeneral.y + 32, 96, 24 }, NULL, &state->inputSegmentLimitValue, 0, 100, state->inputSegmentLimitEditMode)) state->inputSegmentLimitEditMode = !state->inputSegmentLimitEditMode;
+    if (GuiValueBox((Rectangle){ state->anchorGeneral.x + 96, state->anchorGeneral.y + 32, 96, 24 }, NULL, &state->inputSegmentLimitValue, 0, 30000, state->inputSegmentLimitEditMode)) state->inputSegmentLimitEditMode = !state->inputSegmentLimitEditMode;
     GuiLabel((Rectangle){ state->anchorGeneral.x + 8, state->anchorGeneral.y + 56, 96, 24 }, "Size:");
-    if (GuiValueBox((Rectangle){ state->anchorGeneral.x + 96, state->anchorGeneral.y + 56, 96, 24 }, NULL, &state->inputSizeValue, 0, 100, state->inputSizeEditMode)) state->inputSizeEditMode = !state->inputSizeEditMode;
+    if (GuiValueBox((Rectangle){ state->anchorGeneral.x + 96, state->anchorGeneral.y + 56, 96, 24 }, NULL, &state->inputSizeValue, 0, 2000, state->inputSizeEditMode)) state->inputSizeEditMode = !state->inputSizeEditMode;
     GuiLabel((Rectangle){ state->anchorGeneral.x + 8, state->anchorGeneral.y + 80, 56, 24 }, "City name:");
     if (GuiTextBox((Rectangle){ state->anchorGeneral.x + 64, state->anchorGeneral.y + 80, 128, 24 }, state->inputCityNameText, 128, state->inputCityNameEditMode)) state->inputCityNameEditMode = !state->inputCityNameEditMode;
     GuiGroupBox((Rectangle){ state->anchorControls.x + 0, state->anchorControls.y + 0, 200, 88 }, "Controls");
-    if (GuiButton((Rectangle){ state->anchorControls.x + 8, state->anchorControls.y + 8, 72, 24 }, "Reset City")) ButtonResetCity(); 
+    if (GuiButton((Rectangle){ state->anchorControls.x + 8, state->anchorControls.y + 8, 72, 24 }, "Reset City")) ButtonResetCity(state); 
     if (GuiButton((Rectangle){ state->anchorControls.x + 88, state->anchorControls.y + 8, 104, 24 }, "Export City")) ButtonExportCity(); 
-    if (GuiButton((Rectangle){ state->anchorControls.x + 8, state->anchorControls.y + 40, 184, 40 }, "Generate City")) ButtonGenerateCity(); 
+    if (GuiButton((Rectangle){ state->anchorControls.x + 8, state->anchorControls.y + 40, 184, 40 }, "Generate City")) ButtonGenerateCity(state); 
     GuiGroupBox((Rectangle){ state->anchorSideRoad.x + 0, state->anchorSideRoad.y + 0, 200, 136 }, "SideRoad");
     GuiLabel((Rectangle){ state->anchorSideRoad.x + 8, state->anchorSideRoad.y + 8, 96, 24 }, "Length:");
     GuiLabel((Rectangle){ state->anchorSideRoad.x + 8, state->anchorSideRoad.y + 32, 96, 24 }, "Width:");
@@ -344,7 +430,15 @@ void GuiMainGUI(GuiMainGUIState *state)
     if (GuiTextBox((Rectangle){ state->anchorCustomHeatmap.x + 64, state->anchorCustomHeatmap.y + 8, 128, 24 }, state->inputCustomHeatmapText, 128, state->inputCustomHeatmapEditMode)) state->inputCustomHeatmapEditMode = !state->inputCustomHeatmapEditMode;
     if (GuiButton((Rectangle){ state->anchorCustomHeatmap.x + 72, state->anchorCustomHeatmap.y + 40, 120, 24 }, "Import")) ButtonCustomHeatmap(); 
     GuiGroupBox((Rectangle){ state->anchorInfo.x + 0, state->anchorInfo.y + 0, 200, 40 }, "Info");
-    GuiLabel((Rectangle){ state->anchorInfo.x + 8, state->anchorInfo.y + 8, 184, 24 }, NULL);
+    GuiLabel((Rectangle){ state->anchorInfo.x + 8, state->anchorInfo.y + 8, 184, 24 }, state->labelinfo);
+
+
+    static bool WasEditingSize;
+    if (WasEditingSize && !state->inputSizeEditMode) {
+        state->city->SetSize(state->inputSizeValue);
+    }
+
+    WasEditingSize = state->inputSizeEditMode;
 }
 
 // #endif // GUI_MAINGUI_IMPLEMENTATION

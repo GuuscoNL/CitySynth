@@ -27,6 +27,7 @@
 City::City(float size, Settings* settings) :
     size(size),
     settings(settings) {
+    // temp models
     plane = LoadModelFromMesh(GenMeshPlane(size, size, 3, 3));
     plane.materials[0].shader = settings->shader;
 
@@ -34,7 +35,8 @@ City::City(float size, Settings* settings) :
     populationHeatmapTex = LoadTextureFromImage(populationHeatmapImg);
     heatmapCenter = Vector2{ round(size / 2), round(size / 2) };
 
-    UpdatePlaneTexture();
+    SetSize(size);
+
 }
 
 City::~City() {
@@ -44,6 +46,19 @@ City::~City() {
     UnloadModel(plane);
 
     ResetCity();
+}
+
+void City::SetSize(int size) {
+    this->size = size;
+
+    // is it loaded?
+    plane = LoadModelFromMesh(GenMeshPlane(size, size, 3, 3));
+    plane.materials[0].shader = settings->shader;
+
+    GeneratePopulationHeatmap();
+    heatmapCenter = Vector2{ (float)round(size / 2), (float)round(size / 2) };
+
+    UpdatePlaneTexture();
 }
 
 void City::Draw() {
@@ -61,7 +76,7 @@ void City::Draw() {
     DrawCylinder(Vector3{ 0, 0, 0 }, 0.3, 0.3, 0.2, 10, GRAY);
 }
 
-Texture2D City::GeneratePopulationHeatmap(int offsetX, int offsetY, float scale) {
+Texture2D City::GeneratePopulationHeatmap(int offsetX, int offsetY) {
 
     UnloadImage(populationHeatmapImg);
     populationHeatmapImg = GenImageColor(size, size, WHITE);

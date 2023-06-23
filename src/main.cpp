@@ -97,17 +97,14 @@ int main() {
 
     settings.highwayModel = LoadModelFromMesh(GenMeshCube(settings.highwayWidth, settings.highwayHeight, settings.highwayLength));
     settings.sideRoadModel = LoadModelFromMesh(GenMeshCube(settings.sideRoadWidth, settings.sideRoadHeight, settings.sideRoadLength));
-    settings.NodeModel = LoadModelFromMesh(GenMeshCylinder(0.1, 0.05, 10));
+    settings.NodeModel = LoadModelFromMesh(GenMeshCylinder(0.1, 0.07, 10));
 
     settings.shader = lightingShader;
-    settings.SetSeed(25);
 
     settings.ShowNodes = false;
 
     // ----- City -----
     City city = City(300.f, &settings);
-    city.GeneratePopulationHeatmap(20, 5, 0.9);
-    city.City::GenerateCity(1000);
 
     // ----- GUI -----
     GuiMainGUIState GUIState = InitGuiMainGUI(SCREEN_WIDTH, &settings, &city);

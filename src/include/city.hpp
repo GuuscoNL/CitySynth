@@ -10,16 +10,18 @@ public:
     City(float size, Settings* settings);
     ~City();
     void Draw();
-    Texture2D GeneratePopulationHeatmap(int offsetX = 0, int offsetY = 0, float scale = 1.0f);
+    Texture2D GeneratePopulationHeatmap(int offsetX = 0, int offsetY = 0);
     void GenerateCity(unsigned int amount);
     Texture2D GetPopulationHeatmap() const;
     Model GetPlane() const;
     std::vector<RoadSegment*> GetRoads();
+    void ResetCity();
+    void SetSize(int size);
 
 private:
     std::vector<RoadSegment*> roads;
     std::vector<Node*> nodes;
-    float size;
+    int size;
     Texture2D populationHeatmapTex;
     Image populationHeatmapImg;
     Vector2 heatmapCenter;
@@ -27,7 +29,6 @@ private:
     Settings* settings;
 
     void UpdatePlaneTexture();
-    void ResetCity();
     bool LocalConstraints(RoadSegment* road);
     std::vector<RoadSegment*> GlobalGoals(RoadSegment* road);
     Vector2 GetPosWithAngle(const Vector2& fromPos, float angle, float length);
