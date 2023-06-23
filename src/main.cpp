@@ -93,7 +93,7 @@ int main() {
     settings.amplitude = 0.5; // ?
     settings.lacunarity = 25; // How "dense" the patches are?
     settings.persistence = 1 / settings.lacunarity; // ?
-    settings.octaves = 4; // More = more blurry
+    settings.octaves = 4; // Less is more smooth?
 
     settings.highwayModel = LoadModelFromMesh(GenMeshCube(settings.highwayWidth, settings.highwayHeight, settings.highwayLength));
     settings.sideRoadModel = LoadModelFromMesh(GenMeshCube(settings.sideRoadWidth, settings.sideRoadHeight, settings.sideRoadLength));

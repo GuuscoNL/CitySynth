@@ -210,7 +210,7 @@ GuiMainGUIState InitGuiMainGUI(int screenWidth, Settings* settings, City* city)
     state.inputLacunarityEditMode = false;
     strcpy(state.inputLacunarityText, "25");
     state.inputOctavesEditMode = false;
-    state.inputOctavesValue = 0;
+    state.inputOctavesValue = 1;
     state.inputCustomHeatmapEditMode = false;
     strcpy(state.inputCustomHeatmapText, "");
     state.settings = settings;
@@ -270,7 +270,7 @@ static void ButtonExportCity()
 static void ButtonGenerateCity(GuiMainGUIState* state)
 {
     Settings& settings = *state->settings;
-    PRINT(atof(state->inputHighwayLengthText));
+
     if (atof(state->inputHighwayLengthText) > 0 && atof(state->inputHighwayLengthText) <= 100) {
         settings.highwayLength = atof(state->inputHighwayLengthText);
     } else {
@@ -355,9 +355,36 @@ static void ButtonGenerateCity(GuiMainGUIState* state)
     state->city->GenerateCity(state->inputSegmentLimitValue);
 
 }
-static void ButtonGenerateHeatmap()
+static void ButtonGenerateHeatmap(GuiMainGUIState* state)
 {
-    PRINT("Generate heatmap: TODO");
+    Settings& settings = *state->settings;
+
+    if (atof(state->inputFrequencyText) > 0 && atof(state->inputFrequencyText) <= 100) {
+        settings.frequency = atof(state->inputFrequencyText);
+    } else {
+        strcpy(state->labelinfo, "Frequency: 0-100");
+        return;
+    }
+
+    if (atof(state->inputAmplitudeText) > 0 && atof(state->inputAmplitudeText) <= 100) {
+        settings.amplitude = atof(state->inputAmplitudeText);
+    } else {
+        strcpy(state->labelinfo, "Amplitude: 0-100");
+        return;
+    }
+
+    if (atof(state->inputLacunarityText) > 0 && atof(state->inputLacunarityText) <= 10000) {
+        settings.lacunarity = atof(state->inputLacunarityText);
+    } else {
+        strcpy(state->labelinfo, "Amplitude: 0-10000");
+        return;
+    }
+
+    settings.persistence = 1 / settings.lacunarity;
+
+    // Already has min and max value
+    settings.octaves = state->inputOctavesValue; // More = more blurry
+    state->city->GeneratePopulationHeatmap();
     // TODO: Implement control logic
 }
 static void ButtonCustomHeatmap()
@@ -423,8 +450,8 @@ void GuiMainGUI(GuiMainGUIState *state)
     GuiLabel((Rectangle){ state->anchorHeatmap.x + 8, state->anchorHeatmap.y + 56, 96, 24 }, "Lacunarity:");
     if (GuiTextBox((Rectangle){ state->anchorHeatmap.x + 104, state->anchorHeatmap.y + 56, 88, 24 }, state->inputLacunarityText, 128, state->inputLacunarityEditMode)) state->inputLacunarityEditMode = !state->inputLacunarityEditMode;
     GuiLabel((Rectangle){ state->anchorHeatmap.x + 8, state->anchorHeatmap.y + 80, 96, 24 }, "Octaves:");
-    if (GuiSpinner((Rectangle){ state->anchorHeatmap.x + 104, state->anchorHeatmap.y + 80, 88, 24 }, NULL, &state->inputOctavesValue, 0, 100, state->inputOctavesEditMode)) state->inputOctavesEditMode = !state->inputOctavesEditMode;
-    if (GuiButton((Rectangle){ state->anchorHeatmap.x + 104, state->anchorHeatmap.y + 104, 88, 24 }, "Generate")) ButtonGenerateHeatmap(); 
+    if (GuiSpinner((Rectangle){ state->anchorHeatmap.x + 104, state->anchorHeatmap.y + 80, 88, 24 }, NULL, &state->inputOctavesValue, 1, 100, state->inputOctavesEditMode)) state->inputOctavesEditMode = !state->inputOctavesEditMode;
+    if (GuiButton((Rectangle){ state->anchorHeatmap.x + 104, state->anchorHeatmap.y + 104, 88, 24 }, "Generate")) ButtonGenerateHeatmap(state); 
     GuiGroupBox((Rectangle){ state->anchorCustomHeatmap.x + 0, state->anchorCustomHeatmap.y + 0, 200, 72 }, "Custom Heatmap");
     GuiLabel((Rectangle){ state->anchorCustomHeatmap.x + 8, state->anchorCustomHeatmap.y + 8, 56, 24 }, "File name:");
     if (GuiTextBox((Rectangle){ state->anchorCustomHeatmap.x + 64, state->anchorCustomHeatmap.y + 8, 128, 24 }, state->inputCustomHeatmapText, 128, state->inputCustomHeatmapEditMode)) state->inputCustomHeatmapEditMode = !state->inputCustomHeatmapEditMode;

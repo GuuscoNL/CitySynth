@@ -127,7 +127,8 @@ void  City::GenerateCity(unsigned int amount) {
 
         if (accepted) {
             roads.push_back(minRoad);
-            std::vector<RoadSegment*> newRoads = GlobalGoals(minRoad);
+            std::vector<RoadSegment*> newRoads;
+            GlobalGoals(minRoad, newRoads);
 
             for (auto* newRoad : newRoads) {
                 newRoad->SetDelay(minRoad->GetDelay() + 1 + newRoad->GetDelay());
@@ -249,13 +250,12 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
     return true;
 }
 
-std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad) {
-    std::vector<RoadSegment*> newRoads;
+void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoads) {
     Node* newFromNode = rootRoad->GetTo();
 
     // If it is already split don't add new roads (there was already a conflict resolved)
     if (newFromNode->GetSize() >= 2) {
-        return newRoads;
+        return;
     }
 
     // Highways
@@ -314,7 +314,6 @@ std::vector<RoadSegment*> City::GlobalGoals(RoadSegment* rootRoad) {
             }
         }
     }
-    return newRoads;
 }
 
 Vector2 City::GetPosWithAngle(const Vector2& fromPos, float angle, float length) {

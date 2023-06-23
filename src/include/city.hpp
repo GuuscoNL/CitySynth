@@ -30,7 +30,7 @@ private:
 
     void UpdatePlaneTexture();
     bool LocalConstraints(RoadSegment* road);
-    std::vector<RoadSegment*> GlobalGoals(RoadSegment* road);
+    void GlobalGoals(RoadSegment* road, std::vector<RoadSegment*>& newRoads);
     Vector2 GetPosWithAngle(const Vector2& fromPos, float angle, float length);
     Vector2 HighwaySamples(const Vector2& fromPos, float OriginalAngle, float MaxAngle);
     int GetPopulationFromHeatmap(const Vector2& pos) const;
