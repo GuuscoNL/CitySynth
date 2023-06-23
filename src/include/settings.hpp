@@ -40,6 +40,9 @@ struct Settings {
     Model NodeModel;
     Shader shader;
 
+    // Misc
+    bool ShowNodes;
+
 private:
     int randomSeed;
 

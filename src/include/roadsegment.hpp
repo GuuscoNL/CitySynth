@@ -22,6 +22,7 @@ public:
     void SetDelay(int delay);
     void SetFrom(Node* node);
     void SetTo(Node* node);
+    void SetColor(Color color);
 
 protected:
     Model model;

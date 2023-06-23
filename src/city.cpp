@@ -51,8 +51,10 @@ void City::Draw() {
     for (auto*& road : roads) {
         road->Draw();
     }
-    for (auto*& node : nodes) {
-        node->Draw();
+    if (settings->ShowNodes) {
+        for (auto*& node : nodes) {
+            node->Draw();
+        }
     }
 
     DrawModel(plane, Vector3Zero(), 1.0f, WHITE);
@@ -478,4 +480,8 @@ Texture2D City::GetPopulationHeatmap() const {
 
 Model City::GetPlane() const {
     return plane;
+}
+
+std::vector<RoadSegment*> City::GetRoads() {
+    return roads;
 }

@@ -21,6 +21,7 @@
 
 #include "raylib.h"
 
+
 // WARNING: raygui implementation is expected to be defined before including this header
 #undef RAYGUI_IMPLEMENTATION
 #include "raygui.h"
@@ -29,6 +30,8 @@
 
 #ifndef GUI_MAINGUI_H
 #define GUI_MAINGUI_H
+
+#define PRINT(x) std::cout << x << std::endl
 
 typedef struct {
     Vector2 anchorMain;
@@ -85,6 +88,11 @@ typedef struct {
     int inputOctavesValue;
     bool inputCustomHeatmapEditMode;
     char inputCustomHeatmapText[128];
+    Settings* settings;
+    char labelDiscoRoads[13];
+    char labelShowNodes[11];
+    City* city;
+    bool DiscoRoads;
 
     // Custom state variables (depend on development software)
     // NOTE: This variables should be added manually if required
@@ -146,7 +154,7 @@ static void ButtonCustomHeatmap();
 //----------------------------------------------------------------------------------
 // Module Functions Definition
 //----------------------------------------------------------------------------------
-GuiMainGUIState InitGuiMainGUI(int screenWidth)
+GuiMainGUIState InitGuiMainGUI(int screenWidth, Settings* settings, City* city)
 {
     GuiMainGUIState state = { 0 };
 
@@ -204,18 +212,49 @@ GuiMainGUIState InitGuiMainGUI(int screenWidth)
     state.inputOctavesValue = 0;
     state.inputCustomHeatmapEditMode = false;
     strcpy(state.inputCustomHeatmapText, "");
+    state.settings = settings;
+    strcpy(state.labelShowNodes, "Show Nodes");
+    strcpy(state.labelDiscoRoads, "Disco Roads");
+    state.city = city;
+    state.DiscoRoads = false;
 
     // Custom variables initialization
 
     return state;
 }
-static void ButtonShowNodes()
+static void ButtonShowNodes(GuiMainGUIState* state)
 {
-    // TODO: Implement control logic
+    if (state->settings->ShowNodes) {
+        state->settings->ShowNodes = false; 
+        strcpy(state->labelShowNodes, "Show Nodes");
+    } else {
+        state->settings->ShowNodes = true; 
+        strcpy(state->labelShowNodes, "Hide Nodes");
+    }
 }
-static void ButtonDiscoRoads()
+static void ButtonDiscoRoads(GuiMainGUIState* state)
 {
-    // TODO: Implement control logic
+    if (state->DiscoRoads) {
+        state->DiscoRoads = false;
+        strcpy(state->labelDiscoRoads, "Disco Roads");
+        for (RoadSegment* road : state->city->GetRoads()) {
+            if (road->GetType() == RoadSegment::SIDEROAD) {
+                road->SetColor(GRAY);
+            } else if (road->GetType() == RoadSegment::HIGHWAY) {
+                road->SetColor(DARKGRAY);
+            }
+        }
+    } else {
+        state->DiscoRoads = true;
+        strcpy(state->labelDiscoRoads, "Normal Roads");
+        for (RoadSegment* road : state->city->GetRoads()) {
+            
+            road->SetColor(Color{ static_cast<unsigned char>(GetRandomValue(0,255)),
+                  static_cast<unsigned char>(GetRandomValue(0,255)),
+                  static_cast<unsigned char>(GetRandomValue(0,255)) });
+            
+        }
+    }
 }
 static void ButtonResetCity()
 {
@@ -248,8 +287,8 @@ void GuiMainGUI(GuiMainGUIState *state)
     if (state->windowDebugActive)
     {
         state->windowDebugActive = !GuiWindowBox((Rectangle){ state->anchorDebug.x + 0, state->anchorDebug.y + 0, 120, 96 }, "Debug");
-        if (GuiButton((Rectangle){ state->anchorDebug.x + 8, state->anchorDebug.y + 32, 104, 24 }, "Show Nodes")) ButtonShowNodes(); 
-        if (GuiButton((Rectangle){ state->anchorDebug.x + 8, state->anchorDebug.y + 64, 104, 24 }, "Disco Roads")) ButtonDiscoRoads(); 
+        if (GuiButton((Rectangle){ state->anchorDebug.x + 8, state->anchorDebug.y + 32, 104, 24 }, state->labelShowNodes)) ButtonShowNodes(state); 
+        if (GuiButton((Rectangle){ state->anchorDebug.x + 8, state->anchorDebug.y + 64, 104, 24 }, state->labelDiscoRoads)) ButtonDiscoRoads(state); 
     }
     GuiGroupBox((Rectangle){ state->anchorHighway.x + 0, state->anchorHighway.y + 0, 200, 184 }, "Highway");
     if (GuiTextBox((Rectangle){ state->anchorHighway.x + 104, state->anchorHighway.y + 8, 88, 24 }, state->inputHighwayLengthText, 128, state->inputHighwayLengthEditMode)) state->inputHighwayLengthEditMode = !state->inputHighwayLengthEditMode;

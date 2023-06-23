@@ -69,6 +69,10 @@ void RoadSegment::SetTo(Node* node) {
     CalculatePosAndAngle();
 }
 
+void RoadSegment::SetColor(Color color) {
+    this->color = color;
+}
+
 void RoadSegment::CalculatePosAndAngle() {
 
     float y = (GetFromPos().y + GetToPos().y) / 2;

@@ -102,13 +102,15 @@ int main() {
     settings.shader = lightingShader;
     settings.SetSeed(25);
 
+    settings.ShowNodes = false;
+
     // ----- City -----
     City city = City(300.f, &settings);
     city.GeneratePopulationHeatmap(20, 5, 0.9);
     city.City::GenerateCity(1000);
 
     // ----- GUI -----
-    GuiMainGUIState GUIState = InitGuiMainGUI(SCREEN_WIDTH);
+    GuiMainGUIState GUIState = InitGuiMainGUI(SCREEN_WIDTH, &settings, &city);
 
     // ----- Main draw loop -----
     while (!WindowShouldClose()) {

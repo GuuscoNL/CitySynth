@@ -12,9 +12,7 @@ Highway::Highway(int delay, Settings* settings, Node* from, Node* to) : RoadSegm
     type = HIGHWAY;
 
     CalculatePosAndAngle();
-    color = Color{ static_cast<unsigned char>(GetRandomValue(0,255)),
-                  static_cast<unsigned char>(GetRandomValue(0,255)),
-                  static_cast<unsigned char>(GetRandomValue(0,255)) };
+    color = DARKGRAY;
     from->AddRoad(this);
     to->AddRoad(this);
 }
