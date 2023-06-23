@@ -31,6 +31,7 @@
 #ifndef GUI_MAINGUI_H
 #define GUI_MAINGUI_H
 
+
 #define PRINT(x) std::cout << x << std::endl
 
 typedef struct {
@@ -141,6 +142,10 @@ static void ButtonCustomHeatmap();
 // #if defined(GUI_MAINGUI_IMPLEMENTATION)
 
 #include "raygui.h"
+#include <iostream>
+#include <fstream>
+#include "json.hpp"
+using json = nlohmann::json;
 
 //----------------------------------------------------------------------------------
 // Global Variables Definition
@@ -239,6 +244,7 @@ static void ButtonDiscoRoads(GuiMainGUIState* state)
     if (state->DiscoRoads) {
         state->DiscoRoads = false;
         strcpy(state->labelDiscoRoads, "Disco Roads");
+
         for (RoadSegment* road : state->city->GetRoads()) {
             if (road->GetType() == RoadSegment::SIDEROAD) {
                 road->SetColor(GRAY);
@@ -246,9 +252,11 @@ static void ButtonDiscoRoads(GuiMainGUIState* state)
                 road->SetColor(DARKGRAY);
             }
         }
+
     } else {
         state->DiscoRoads = true;
         strcpy(state->labelDiscoRoads, "Normal Roads");
+
         for (RoadSegment* road : state->city->GetRoads()) {
             
             road->SetColor(Color{ static_cast<unsigned char>(GetRandomValue(0,255)),
@@ -262,15 +270,64 @@ static void ButtonResetCity(GuiMainGUIState* state)
 {
     state->city->ResetCity();
 }
-static void ButtonExportCity()
+static void ButtonExportCity(GuiMainGUIState* state)
 {
-    PRINT("Export City: TODO");
-    // TODO: Implement control logic
+    const City& city = *state->city;
+    std::string CityName = std::string(state->inputCityNameText);
+
+    // Check if CityName is valid
+    if (city.GetRoadsSize() <= 0 || city.GetNodesSize() <= 0) {
+        strcpy(state->labelinfo, "No city to export");
+        return;
+    }
+
+    if (CityName.empty()) {
+        strcpy(state->labelinfo, "You must name the city");
+        return;
+    }
+    std::replace(CityName.begin(), CityName.end(), ' ', '_');
+
+    // Create Json
+    json jsonCity;
+    jsonCity["highways"] = json::array();
+    jsonCity["sideroads"] = json::array();
+    for (const auto* road : city.GetRoads()) {
+        // round to 3 decimals
+        
+        float fromX = road->GetFromPos().x;
+        float fromY = road->GetFromPos().y;
+        float toX = road->GetToPos().y;
+        float toY = road->GetToPos().y;
+
+        if (road->GetType() == RoadSegment::HIGHWAY) {
+        jsonCity["highways"].push_back({
+            {"from", {fromX, fromY}}, 
+            {"to", {toX, toY}}});
+
+        } else if (road->GetType() == RoadSegment::SIDEROAD) {
+            jsonCity["sideroads"].push_back({
+            {"from", {fromX, fromY}}, 
+            {"to", {toX, toY}}});
+        }
+    }
+    jsonCity["nodes"] = json::array();
+
+    for (const auto* node : city.GetNodes()) {
+        jsonCity["nodes"].push_back({node->GetPos().x, node->GetPos().x});
+    }
+
+    // Export to file
+    std::string fileName = CityName + ".json";
+    std::ofstream jsonOut(fileName);
+    jsonOut << jsonCity;
+
+    strcpy(state->labelinfo, "City exported!");
 }
 static void ButtonGenerateCity(GuiMainGUIState* state)
 {
     Settings& settings = *state->settings;
 
+    // Check if all the values are valid and set it to settings
     if (atof(state->inputHighwayLengthText) > 0 && atof(state->inputHighwayLengthText) <= 100) {
         settings.highwayLength = atof(state->inputHighwayLengthText);
     } else {
@@ -385,7 +442,7 @@ static void ButtonGenerateHeatmap(GuiMainGUIState* state)
     // Already has min and max value
     settings.octaves = state->inputOctavesValue; // More = more blurry
     state->city->GeneratePopulationHeatmap();
-    // TODO: Implement control logic
+    strcpy(state->labelinfo, "Heatmap generated!");
 }
 static void ButtonCustomHeatmap()
 {
@@ -429,7 +486,7 @@ void GuiMainGUI(GuiMainGUIState *state)
     if (GuiTextBox((Rectangle){ state->anchorGeneral.x + 64, state->anchorGeneral.y + 80, 128, 24 }, state->inputCityNameText, 128, state->inputCityNameEditMode)) state->inputCityNameEditMode = !state->inputCityNameEditMode;
     GuiGroupBox((Rectangle){ state->anchorControls.x + 0, state->anchorControls.y + 0, 200, 88 }, "Controls");
     if (GuiButton((Rectangle){ state->anchorControls.x + 8, state->anchorControls.y + 8, 72, 24 }, "Reset City")) ButtonResetCity(state); 
-    if (GuiButton((Rectangle){ state->anchorControls.x + 88, state->anchorControls.y + 8, 104, 24 }, "Export City")) ButtonExportCity(); 
+    if (GuiButton((Rectangle){ state->anchorControls.x + 88, state->anchorControls.y + 8, 104, 24 }, "Export City")) ButtonExportCity(state); 
     if (GuiButton((Rectangle){ state->anchorControls.x + 8, state->anchorControls.y + 40, 184, 40 }, "Generate City")) ButtonGenerateCity(state); 
     GuiGroupBox((Rectangle){ state->anchorSideRoad.x + 0, state->anchorSideRoad.y + 0, 200, 136 }, "SideRoad");
     GuiLabel((Rectangle){ state->anchorSideRoad.x + 8, state->anchorSideRoad.y + 8, 96, 24 }, "Length:");

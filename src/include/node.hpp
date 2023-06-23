@@ -10,7 +10,7 @@ public:
     Node(const Vector2& pos2D, Settings* settings);
     ~Node();
     void Draw();
-    Vector2 GetPos();
+    Vector2 GetPos() const;
     int GetSize();
     void AddRoad(RoadSegment* road);
     void RemoveRoad(RoadSegment* road);

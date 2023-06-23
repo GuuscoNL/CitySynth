@@ -54,7 +54,7 @@ float RoadSegment::GetAngle() const {
     return angle;
 }
 
-RoadSegment::RoadType RoadSegment::GetType() {
+RoadSegment::RoadType RoadSegment::GetType() const{
     return type;
 }
 

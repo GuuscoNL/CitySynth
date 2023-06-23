@@ -496,6 +496,17 @@ Model City::GetPlane() const {
     return plane;
 }
 
-std::vector<RoadSegment*> City::GetRoads() {
+std::vector<RoadSegment*> City::GetRoads() const{
     return roads;
+}
+
+std::vector<Node*> City::GetNodes() const{
+    return nodes;
+}
+
+int City::GetRoadsSize() const{
+    return roads.size();
+}
+int City::GetNodesSize() const{
+    return nodes.size();
 }

@@ -14,3 +14,4 @@ City generator
   - [How to install video](https://www.youtube.com/watch?v=PaAcVk5jUd8&ab_channel=ProgrammingWithNick)
 - Lighting shaders taken from [Basic lighting example](https://www.raylib.com/examples/shaders/loader.html?name=shaders_basic_lighting)
 - [Simplex noise](https://github.com/SRombauts/SimplexNoise)
+- [C++ json](https://github.com/nlohmann/json/tree/develop)

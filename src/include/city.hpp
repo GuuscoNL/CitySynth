@@ -14,7 +14,10 @@ public:
     void GenerateCity(unsigned int amount);
     Texture2D GetPopulationHeatmap() const;
     Model GetPlane() const;
-    std::vector<RoadSegment*> GetRoads();
+    std::vector<RoadSegment*> GetRoads() const;
+    std::vector<Node*> GetNodes() const;
+    int GetRoadsSize() const;
+    int GetNodesSize() const;
     void ResetCity();
     void SetSize(int size);
 

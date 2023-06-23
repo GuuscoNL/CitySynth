@@ -18,7 +18,7 @@ public:
     float GetAngle() const;
     Node* GetFrom();
     Node* GetTo();
-    RoadSegment::RoadType GetType();
+    RoadSegment::RoadType GetType() const;
     void SetDelay(int delay);
     void SetFrom(Node* node);
     void SetTo(Node* node);
