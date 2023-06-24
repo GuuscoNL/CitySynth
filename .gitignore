@@ -5,5 +5,9 @@
 *.code-workspace
 *desktop.ini*
 
+*.png
+*.json
+!.vscode/*
+
 html/
 latex/

@@ -55,7 +55,12 @@ void City::SetSize(int size) {
     plane = LoadModelFromMesh(GenMeshPlane(size, size, 3, 3));
     plane.materials[0].shader = settings->shader;
 
-    GeneratePopulationHeatmap();
+    if (settings->useCustomHeatmap) {
+        SetHeatmap(settings->customHeatmap);
+    }else{
+        GeneratePopulationHeatmap();
+    }
+
     heatmapCenter = Vector2{ (float)round(size / 2), (float)round(size / 2) };
 
     UpdatePlaneTexture();
@@ -76,10 +81,9 @@ void City::Draw() {
     DrawCylinder(Vector3{ 0, 0, 0 }, 0.3, 0.3, 0.2, 10, GRAY);
 }
 
-Texture2D City::GeneratePopulationHeatmap(int offsetX, int offsetY) {
+void City::GeneratePopulationHeatmap(int offsetX, int offsetY) {
 
-    UnloadImage(populationHeatmapImg);
-    populationHeatmapImg = GenImageColor(size, size, WHITE);
+    Image heatmap = GenImageColor(size, size, WHITE);
     SimplexNoise simplexNoise = SimplexNoise(
         settings->frequency,
         settings->amplitude,
@@ -92,18 +96,29 @@ Texture2D City::GeneratePopulationHeatmap(int offsetX, int offsetY) {
                                     static_cast<unsigned char>(noise),
                                     static_cast<unsigned char>(noise),
                                     255 };
-            ImageDrawPixel(&populationHeatmapImg, i, j, noiseColor);
+            ImageDrawPixel(&heatmap, i, j, noiseColor);
         }
     }
+
+    SetHeatmap(heatmap);
+}
+
+void City::SetHeatmap(Image heatmapImage) {
+
+    UnloadImage(populationHeatmapImg);
+    Image heatmapCopy = ImageCopy(heatmapImage);
+    ImageResizeNN(&heatmapCopy, size, size);
+    populationHeatmapImg = heatmapCopy;
+
     UnloadTexture(populationHeatmapTex);
-    populationHeatmapTex = LoadTextureFromImage(populationHeatmapImg);
+    populationHeatmapTex = LoadTextureFromImage(heatmapCopy);
 
     UpdatePlaneTexture();
-    return populationHeatmapTex;
 }
 
 void  City::GenerateCity(unsigned int amount) {
     ResetCity();
+
     roads.reserve(amount); // speed!
     nodes.reserve(amount/2); // speed!
     std::priority_queue<RoadSegment*, std::vector<RoadSegment*>, RoadSegmentGreaterThan> Q;

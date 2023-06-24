@@ -42,6 +42,8 @@ struct Settings {
 
     // Misc
     bool ShowNodes;
+    bool useCustomHeatmap;
+    Image customHeatmap;
 
 private:
     int randomSeed;

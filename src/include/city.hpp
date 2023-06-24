@@ -10,7 +10,7 @@ public:
     City(float size, Settings* settings);
     ~City();
     void Draw();
-    Texture2D GeneratePopulationHeatmap(int offsetX = 0, int offsetY = 0);
+    void GeneratePopulationHeatmap(int offsetX = 0, int offsetY = 0);
     void GenerateCity(unsigned int amount);
     Texture2D GetPopulationHeatmap() const;
     Model GetPlane() const;
@@ -20,6 +20,7 @@ public:
     int GetNodesSize() const;
     void ResetCity();
     void SetSize(int size);
+    void SetHeatmap(Image heatmapImage);
 
 private:
     std::vector<RoadSegment*> roads;

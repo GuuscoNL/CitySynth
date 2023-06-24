@@ -292,7 +292,6 @@ static void ButtonExportCity(GuiMainGUIState* state)
     jsonCity["highways"] = json::array();
     jsonCity["sideroads"] = json::array();
     for (const auto* road : city.GetRoads()) {
-        // round to 3 decimals
         
         float fromX = road->GetFromPos().x;
         float fromY = road->GetFromPos().y;
@@ -310,8 +309,8 @@ static void ButtonExportCity(GuiMainGUIState* state)
             {"to", {toX, toY}}});
         }
     }
-    jsonCity["nodes"] = json::array();
 
+    jsonCity["nodes"] = json::array();
     for (const auto* node : city.GetNodes()) {
         jsonCity["nodes"].push_back({node->GetPos().x, node->GetPos().x});
     }
@@ -438,16 +437,31 @@ static void ButtonGenerateHeatmap(GuiMainGUIState* state)
     }
 
     settings.persistence = 1 / settings.lacunarity;
+    settings.useCustomHeatmap = false;
 
     // Already has min and max value
     settings.octaves = state->inputOctavesValue; // More = more blurry
     state->city->GeneratePopulationHeatmap();
     strcpy(state->labelinfo, "Heatmap generated!");
 }
-static void ButtonCustomHeatmap()
+static void ButtonCustomHeatmap(GuiMainGUIState *state)
 {
-    PRINT("Custom heatmap: TODO");
-    // TODO: Implement control logic
+    Settings& settings = *state->settings;
+    char* fileName = state->inputCustomHeatmapText;
+
+    if (!FileExists(fileName)) {
+        strcpy(state->labelinfo, (std::string("Could not find file: ") + std::string(fileName)).c_str());
+        return;
+    }
+
+    UnloadImage(settings.customHeatmap);
+    Image heatmap = LoadImage(fileName);
+    ImageColorGrayscale(&heatmap);
+    settings.customHeatmap = heatmap;
+    settings.useCustomHeatmap = true;
+    state->city->SetHeatmap(heatmap);
+
+    strcpy(state->labelinfo, "Custom heatmap imported!");
 }
 
 
@@ -512,7 +526,7 @@ void GuiMainGUI(GuiMainGUIState *state)
     GuiGroupBox((Rectangle){ state->anchorCustomHeatmap.x + 0, state->anchorCustomHeatmap.y + 0, 200, 72 }, "Custom Heatmap");
     GuiLabel((Rectangle){ state->anchorCustomHeatmap.x + 8, state->anchorCustomHeatmap.y + 8, 56, 24 }, "File name:");
     if (GuiTextBox((Rectangle){ state->anchorCustomHeatmap.x + 64, state->anchorCustomHeatmap.y + 8, 128, 24 }, state->inputCustomHeatmapText, 128, state->inputCustomHeatmapEditMode)) state->inputCustomHeatmapEditMode = !state->inputCustomHeatmapEditMode;
-    if (GuiButton((Rectangle){ state->anchorCustomHeatmap.x + 72, state->anchorCustomHeatmap.y + 40, 120, 24 }, "Import")) ButtonCustomHeatmap(); 
+    if (GuiButton((Rectangle){ state->anchorCustomHeatmap.x + 72, state->anchorCustomHeatmap.y + 40, 120, 24 }, "Import")) ButtonCustomHeatmap(state); 
     GuiGroupBox((Rectangle){ state->anchorInfo.x + 0, state->anchorInfo.y + 0, 200, 40 }, "Info");
     GuiLabel((Rectangle){ state->anchorInfo.x + 8, state->anchorInfo.y + 8, 184, 24 }, state->labelinfo);
 

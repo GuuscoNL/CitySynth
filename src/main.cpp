@@ -102,6 +102,8 @@ int main() {
     settings.shader = lightingShader;
 
     settings.ShowNodes = false;
+    settings.useCustomHeatmap = false;
+    settings.customHeatmap = GenImageColor(10, 10, WHITE); // temp Image
 
     // ----- City -----
     City city = City(300.f, &settings);
