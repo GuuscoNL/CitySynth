@@ -15,7 +15,9 @@ public:
     void AddRoad(RoadSegment* road);
     void RemoveRoad(RoadSegment* road);
     std::vector<RoadSegment*> GetConnectedRoads();
-    Color color; // debug
+    Color color;
+    int id;
+    static int nextId;
 
 private:
     std::vector<RoadSegment*> connectedRoads;

@@ -289,30 +289,38 @@ static void ButtonExportCity(GuiMainGUIState* state)
 
     // Create Json
     json jsonCity;
+
+    jsonCity["settings"] = {
+        {"highwayLength", state->settings->highwayLength},
+        {"highwayWidth", state->settings->highwayWidth},
+        {"highwayHeight", state->settings->highwayHeight},
+        {"sideRoadLength", state->settings->sideRoadLength},
+        {"sideRoadWidth", state->settings->sideRoadWidth},
+        {"sideRoadHeight", state->settings->sideRoadHeight}
+    };
+
     jsonCity["highways"] = json::array();
     jsonCity["sideroads"] = json::array();
     for (const auto* road : city.GetRoads()) {
         
-        float fromX = road->GetFromPos().x;
-        float fromY = road->GetFromPos().y;
-        float toX = road->GetToPos().y;
-        float toY = road->GetToPos().y;
+        int fromID = road->GetFrom()->id;
+        int toID = road->GetTo()->id;
 
         if (road->GetType() == RoadSegment::HIGHWAY) {
         jsonCity["highways"].push_back({
-            {"from", {fromX, fromY}}, 
-            {"to", {toX, toY}}});
+            {"from", fromID}, 
+            {"to", toID}});
 
         } else if (road->GetType() == RoadSegment::SIDEROAD) {
             jsonCity["sideroads"].push_back({
-            {"from", {fromX, fromY}}, 
-            {"to", {toX, toY}}});
+            {"from", fromID}, 
+            {"to", toID}});
         }
     }
 
-    jsonCity["nodes"] = json::array();
+    jsonCity["nodes"] = json::object();
     for (const auto* node : city.GetNodes()) {
-        jsonCity["nodes"].push_back({node->GetPos().x, node->GetPos().x});
+        jsonCity["nodes"][std::to_string(node->id)] = {node->GetPos().x, node->GetPos().x};
     }
 
     // Export to file

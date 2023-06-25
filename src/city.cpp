@@ -156,7 +156,10 @@ void  City::GenerateCity(unsigned int amount) {
             roads.erase(remove(roads.begin(), roads.end(), minRoad), roads.end());
 
             delete minRoad;
-            delete nodeToRemove;
+            if (nodeToRemove->GetSize() <= 0) {
+                nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
+                delete nodeToRemove;
+            }
         }
     }
     // Make sure every non used road gets deleted
@@ -174,8 +177,8 @@ void  City::GenerateCity(unsigned int amount) {
         Q.pop();
     }
     nodes.shrink_to_fit();
-    PRINT("size: " << roads.size());
-    PRINT("size: " << nodes.size());
+    roads.shrink_to_fit();
+
 }
 
 bool City::LocalConstraints(RoadSegment* orgRoad) {

@@ -39,10 +39,10 @@ Vector2 RoadSegment::GetFromPos() const {
     return from->GetPos();
 }
 
-Node* RoadSegment::GetFrom() {
+Node* RoadSegment::GetFrom() const {
     return from;
 }
-Node* RoadSegment::GetTo() {
+Node* RoadSegment::GetTo() const {
     return to;
 }
 

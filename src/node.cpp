@@ -11,9 +11,12 @@ Node::Node(const Vector2& pos2D, Settings* settings) :
     model = settings->NodeModel;
     model.materials[0].shader = settings->shader;
     color = WHITE;
+    id = nextId++;
 
     pos3D = Vector3{ pos2D.y, 0, pos2D.x };
 }
+
+int Node::nextId = 0;
 
 Node::~Node() {
     // PRINT("Unloading Node");

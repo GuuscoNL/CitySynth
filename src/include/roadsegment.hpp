@@ -16,8 +16,8 @@ public:
     Vector2 GetToPos() const;
     Vector2 GetFromPos() const;
     float GetAngle() const;
-    Node* GetFrom();
-    Node* GetTo();
+    Node* GetFrom() const;
+    Node* GetTo() const;
     RoadSegment::RoadType GetType() const;
     void SetDelay(int delay);
     void SetFrom(Node* node);

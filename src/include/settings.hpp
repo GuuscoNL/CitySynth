@@ -50,7 +50,6 @@ private:
 
 public:
 
-
     void SetSeed(int seed) {
         randomSeed = seed;
         SetRandomSeed(seed);
