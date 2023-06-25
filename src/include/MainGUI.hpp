@@ -548,7 +548,12 @@ void GuiMainGUI(GuiMainGUIState *state)
 
     static bool WasEditingSize;
     if (WasEditingSize && !state->inputSizeEditMode) {
-        state->city->SetSize(state->inputSizeValue);
+        if (state->inputSizeValue > 0 && state->inputSizeValue <= 2000) {
+            state->city->SetSize(state->inputSizeValue);
+        } else {
+            state->city->SetSize(2000);
+            strcpy(state->labelinfo, "Size: 1-2000");
+        }
     }
 
     WasEditingSize = state->inputSizeEditMode;
