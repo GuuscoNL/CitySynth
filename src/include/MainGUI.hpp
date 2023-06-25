@@ -401,6 +401,13 @@ static void ButtonGenerateCity(GuiMainGUIState* state)
         return;
     }
 
+    if (atof(state->inputSideRoadBranchChanceText) > 0 && atof(state->inputSideRoadBranchChanceText) <= 100) {
+        settings.sideRoadBranchChance = atof(state->inputSideRoadBranchChanceText);
+    } else {
+        strcpy(state->labelinfo, "SideRoadBranchChance: 0-100");
+        return;
+    }
+
     if (atof(state->inputThresholdText) > 0 && atof(state->inputThresholdText) <= 1) {
         settings.sideRoadThreshold = atof(state->inputThresholdText);
     } else {
