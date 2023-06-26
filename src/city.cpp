@@ -28,7 +28,6 @@ City::City(float size, Settings* settings) :
     heatmapCenter = Vector2{ round(size / 2), round(size / 2) };
 
     SetSize(size);
-
 }
 
 City::~City() {
@@ -163,7 +162,7 @@ void  City::GenerateCity(unsigned int amount) {
             roads.erase(remove(roads.begin(), roads.end(), minRoad), roads.end());
 
             delete minRoad;
-            // Make sure the node is not used by other nodes before deleting
+            // Make sure the node is not used by other roads before deleting
             if (nodeToRemove->GetSize() <= 0) {
                 nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
                 delete nodeToRemove;
@@ -177,7 +176,7 @@ void  City::GenerateCity(unsigned int amount) {
         roads.erase(remove(roads.begin(), roads.end(), roadToRemove), roads.end());
         delete roadToRemove;
 
-        // Make sure the node is not used by other nodes before deleting
+        // Make sure the node is not used by other roads before deleting
         if (nodeToRemove->GetSize() <= 0) {
             nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
             delete nodeToRemove;
@@ -247,7 +246,7 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
             closestNode->color = RED;
 
             // Remove old node
-            // Make sure the node is not used by other nodes before deleting
+            // Make sure the node is not used by other roads before deleting
             if (nodeToRemove->GetSize() <= 0) {
                 nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
                 delete nodeToRemove;
@@ -315,35 +314,37 @@ void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoad
             newRoads.push_back(new Highway(1, settings, newFromNode, branchNode));
     
         } 
-        // Will this road branch to a nee Side road?
+        // Will this road branch to a new Side road?
         else if (GetRandomValue(0, 100) <= settings->highwaySideRoadBranchChance) {
-            // SIDEROADS
+            // Random angle 90 or -90
             float angle = 90;
             if (GetRandomValue(0, 1) == 0) {
                 angle = -90;
             }
             RoadSegment* newRoad = AddSideRoad(rootRoad, angle, newFromNode);
-            if (!(newRoad == nullptr)) {
+            if (newRoad != nullptr) {
                 newRoads.push_back(newRoad);
             }
         }
     }
     // Side roads
     else if (rootRoad->GetType() == RoadSegment::SIDEROAD) {
-        {    
+        {   // First get the next straight Side road 
             float angle = 0;
             RoadSegment* newRoad = AddSideRoad(rootRoad, angle, newFromNode);
-            if (!(newRoad == nullptr)) {
+            if (newRoad != nullptr) {
                 newRoads.push_back(newRoad);
             }
         }
+        // Will this Side road branch to new Side road?
         if (GetRandomValue(0, 100) <= settings->sideRoadBranchChance) {
+            // Random angle 90 or -90
             float angle = 90;
-            // if (GetRandomValue(0, 1) == 0) { // Does not look good
-            //     angle = -90;
-            // }
+            if (GetRandomValue(0, 1) == 0) {
+                angle = -90;
+            }
             RoadSegment* newRoad = AddSideRoad(rootRoad, angle, newFromNode);
-            if (!(newRoad == nullptr)) {
+            if (newRoad != nullptr) {
                 newRoads.push_back(newRoad);
             }
         }
@@ -352,6 +353,8 @@ void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoad
 
 RoadSegment* City::AddSideRoad(RoadSegment* rootRoad, float angle, Node* newFromNode) {
     Vector2 newPos = GetPosWithAngle(rootRoad->GetToPos(), rootRoad->GetAngle() + angle, settings->sideRoadLength);
+
+    // Check if the pop is high enough for a new Side Road
     if (GetPopulationFromHeatmap(newPos) / 255. >= settings->sideRoadThreshold) {
         Node* newToNode = new Node(newPos, settings);
         nodes.push_back(newToNode);
@@ -369,19 +372,23 @@ Vector2 City::GetPosWithAngle(const Vector2& fromPos, float angle, float length)
 
 Vector2 City::HighwaySamples(const Vector2& fromPos, float OriginalAngle, float MaxAngle) {
     std::vector<Vector2> positions;
-    positions.reserve(settings->highwaySampleAmount);
+    positions.reserve(settings->highwaySampleAmount); // Speed!
 
+    //  Get positions with random angles
     for (int i = 0; i < settings->highwaySampleAmount; i++) {
         positions.push_back(GetPosWithAngle(fromPos, GetRandomValue(-MaxAngle + OriginalAngle, MaxAngle + OriginalAngle), settings->highwayLength));
     }
 
+    // Check if the values of the pop for every postion
     std::vector<int> positionPopulations;
     positionPopulations.reserve(positions.size());
     for (const Vector2& pos : positions) {
         positionPopulations.push_back(GetPopulationFromHeatmap(pos));
     }
+    // Get highest pop
     int maxPop = *std::max_element(positionPopulations.begin(), positionPopulations.end());
     Vector2 result;
+    // Get the pos that has the highest pop
     for (unsigned int i = 0; i < positionPopulations.size(); i++) {
         if (positionPopulations[i] == maxPop) {
             result = positions[i];
@@ -402,7 +409,7 @@ Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, co
         if (Vector2Distance(fromNode->GetPos(), intersectionPos) < 0.2) {
             toAddRoad->SetTo(fromNode);
 
-            // Make sure the node is not used by other nodes before deleting
+            // Make sure the node is not used by other roads before deleting
             if (orgToNode->GetSize() <= 0) {
                 nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
                 delete orgToNode;
@@ -412,7 +419,7 @@ Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, co
 
         if (Vector2Distance(toNode->GetPos(), intersectionPos) < 0.2) {
             toAddRoad->SetTo(toNode);
-            // Make sure the node is not used by other nodes before deleting
+            // Make sure the node is not used by other roads before deleting
             if (orgToNode->GetSize() <= 0) {
                 nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
                 delete orgToNode;
@@ -442,7 +449,7 @@ Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, co
         roads.erase(remove(roads.begin(), roads.end(), toSplitRoad), roads.end());
 
         delete toSplitRoad;
-        // Make sure the node is not used by other nodes before deleting
+        // Make sure the node is not used by other roads before deleting
         if (orgToNode->GetSize() <= 0) {
             nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
             delete orgToNode;
@@ -500,16 +507,16 @@ float City::DistNodeToRoad(Node* node, RoadSegment* road, Vector2& intersection)
     Vector2 ab = Vector2Subtract(b, a);
     Vector2 ap = Vector2Subtract(p, a);
 
-    // calculate projection
+    // Calculate projection
     float proj = Vector2DotProduct(ap, ab);
     float abLenSqr = Vector2LengthSqr(ab);
-    float d = proj / abLenSqr; // normalize projection
+    float d = proj / abLenSqr; // Normalize projection
 
     if ( d <= 0) {
-        intersection = a; // closest point is the From node
+        intersection = a; // Closest point is the From node
     }
     else if (d >= 1) {
-        intersection = b; // closest point is the To node
+        intersection = b; // Closest point is the To node
     }
     else {
         intersection = Vector2Add(a, Vector2Scale(ab, d));
