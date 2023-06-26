@@ -1,13 +1,12 @@
 var searchData=
 [
-  ['less_3c_20_3a_3anlohmann_3a_3adetail_3a_3avalue_5ft_20_3e_0',['less&lt; ::nlohmann::detail::value_t &gt;',['../structstd_1_1less_3_01_1_1nlohmann_1_1detail_1_1value__t_01_4.html',1,'std']]],
-  ['lexer_1',['lexer',['../classdetail_1_1lexer.html',1,'detail']]],
-  ['lexer_5fbase_2',['lexer_base',['../classdetail_1_1lexer__base.html',1,'detail']]],
-  ['light_3',['Light',['../struct_light.html',1,'']]],
-  ['lines_5fread_4',['lines_read',['../structdetail_1_1position__t.html#a9ec1ac6600d1364f4d1c9f67de6a670b',1,'detail::position_t']]],
-  ['literal_5ffalse_5',['literal_false',['../classdetail_1_1lexer__base.html#add65fa7a85aa15052963809fbcc04540afab1694b1b3937a079f4625fe0b6108b',1,'detail::lexer_base']]],
-  ['literal_5fnull_6',['literal_null',['../classdetail_1_1lexer__base.html#add65fa7a85aa15052963809fbcc04540ab7ae4c0e46d86f884677768160b26e9e',1,'detail::lexer_base']]],
-  ['literal_5for_5fvalue_7',['literal_or_value',['../classdetail_1_1lexer__base.html#add65fa7a85aa15052963809fbcc04540ad2a8e6f6721cccec0b466301dd9495a5',1,'detail::lexer_base']]],
-  ['literal_5ftrue_8',['literal_true',['../classdetail_1_1lexer__base.html#add65fa7a85aa15052963809fbcc04540a85cc1a37b0aaa52de40e72f0ed4e0c0d',1,'detail::lexer_base']]],
-  ['loc_9',['loc',['../classdetail_1_1serializer.html#a80ca90565eec446d377ab65a023297ab',1,'detail::serializer']]]
+  ['setcolor_0',['SetColor',['../class_road_segment.html#af3d772d7dd496e0ba8220b8a41718a70',1,'RoadSegment']]],
+  ['setdelay_1',['SetDelay',['../class_road_segment.html#a4edb2d37f7054177dc5e752f42705301',1,'RoadSegment']]],
+  ['setfrom_2',['SetFrom',['../class_road_segment.html#a5039c122f2fc4702237c4914dbffdd9f',1,'RoadSegment']]],
+  ['setheatmap_3',['SetHeatmap',['../class_city.html#a97a71cc4cecd2407934ff88d0fecf9a3',1,'City']]],
+  ['setseed_4',['SetSeed',['../struct_settings.html#a584233f676e893baae35032c1e2336d1',1,'Settings']]],
+  ['setsize_5',['SetSize',['../class_city.html#a772cd4b07914bc379ebaebef42b2b6f4',1,'City']]],
+  ['settings_6',['Settings',['../struct_settings.html',1,'Settings'],['../struct_settings.html#a51db74889646d6913f28012fb637e678',1,'Settings::Settings()']]],
+  ['setto_7',['SetTo',['../class_road_segment.html#ac305c227f378c89ee249679af828006e',1,'RoadSegment']]],
+  ['sideroad_8',['SideRoad',['../class_side_road.html',1,'SideRoad'],['../class_side_road.html#ad099502d3c1ec26bb99e7f194970dd20',1,'SideRoad::SideRoad()']]]
 ];

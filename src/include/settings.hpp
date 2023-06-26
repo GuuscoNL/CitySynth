@@ -27,12 +27,12 @@ struct Settings {
     float CloseCrossing;
     float CloseRoad;
 
-    // Simplex
-    float frequency;// bigger = smaller patches
-    float amplitude;// ?
-    float lacunarity;// How "dense" the patches are?
-    float persistence;// 1/lacunarity
-    float octaves;// More = more blurry
+    // Simple
+    float frequency; //!< bigger = smaller patches
+    float amplitude; //!< Effect unkown
+    float lacunarity; //!< How "dense" the patches are?
+    float persistence; //!< 1 / lacunarity
+    float octaves; //!< 1 = smooth, otherwise rough?
 
     // Model
     Model highwayModel;

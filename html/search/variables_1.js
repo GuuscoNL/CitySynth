@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['byte_0',['byte',['../classdetail_1_1parse__error.html#a5bce7d135aa3a38d1d3f4ed7bf8615e1',1,'detail::parse_error']]]
+  ['frequency_0',['frequency',['../struct_settings.html#a3a3970ca903f0e63d5ea84921bee2a41',1,'Settings']]]
 ];

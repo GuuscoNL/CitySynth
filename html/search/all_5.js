@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['node_0',['Node',['../class_node.html',1,'Node'],['../class_node.html#a8e728c40e105330bf255d172011b6960',1,'Node::Node()']]]
+  ['highway_0',['Highway',['../class_highway.html',1,'Highway'],['../class_highway.html#af81670dec2498705f1efe5135d78aefb',1,'Highway::Highway()']]]
 ];

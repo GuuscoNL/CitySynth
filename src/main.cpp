@@ -2,7 +2,6 @@
 #include "raymath.h"
 #include "rcamera.h"
 #include <array>
-#include <iostream>
 #include "include/city.hpp"
 #include "include/roadsegment.hpp"
 #include "include/settings.hpp"
@@ -20,9 +19,6 @@
 #include "include/raygui.h"
 #define GUI_MAINGUI_IMPLEMENTATION
 #include "include/MainGUI.hpp"
-
-
-#define PRINT(x) std::cout << x << std::endl
 
 void handleCameraControls(Camera3D& camera) {
 

@@ -527,7 +527,7 @@ $(function() {
 <div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span> </div>
 <div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span>    <span class="comment">// ----- Check if all the input values are valid and set it to settings -----</span></div>
 <div class="line"><a id="l00451" name="l00451"></a><span class="lineno">  451</span>    <span class="keywordflow">if</span> (atof(state-&gt;inputFrequencyText) &gt; 0 &amp;&amp; atof(state-&gt;inputFrequencyText) &lt;= 100) {</div>
-<div class="line"><a id="l00452" name="l00452"></a><span class="lineno">  452</span>        settings.frequency = atof(state-&gt;inputFrequencyText);</div>
+<div class="line"><a id="l00452" name="l00452"></a><span class="lineno">  452</span>        settings.<a class="code hl_variable" href="struct_settings.html#a3a3970ca903f0e63d5ea84921bee2a41">frequency</a> = atof(state-&gt;inputFrequencyText);</div>
 <div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span>    }</div>
 <div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span>    <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span>        strcpy(state-&gt;labelinfo, <span class="stringliteral">&quot;Frequency: 0-100&quot;</span>);</div>
@@ -535,7 +535,7 @@ $(function() {
 <div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span>    }</div>
 <div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span> </div>
 <div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>    <span class="keywordflow">if</span> (atof(state-&gt;inputAmplitudeText) &gt; 0 &amp;&amp; atof(state-&gt;inputAmplitudeText) &lt;= 100) {</div>
-<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>        settings.amplitude = atof(state-&gt;inputAmplitudeText);</div>
+<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>        settings.<a class="code hl_variable" href="struct_settings.html#a8208dc958c35a02b488ae2a609b61326">amplitude</a> = atof(state-&gt;inputAmplitudeText);</div>
 <div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>    }</div>
 <div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>    <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>        strcpy(state-&gt;labelinfo, <span class="stringliteral">&quot;Amplitude: 0-100&quot;</span>);</div>
@@ -543,18 +543,18 @@ $(function() {
 <div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span>    }</div>
 <div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span> </div>
 <div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span>    <span class="keywordflow">if</span> (atof(state-&gt;inputLacunarityText) &gt; 0 &amp;&amp; atof(state-&gt;inputLacunarityText) &lt;= 10000) {</div>
-<div class="line"><a id="l00468" name="l00468"></a><span class="lineno">  468</span>        settings.lacunarity = atof(state-&gt;inputLacunarityText);</div>
+<div class="line"><a id="l00468" name="l00468"></a><span class="lineno">  468</span>        settings.<a class="code hl_variable" href="struct_settings.html#a53f2497472d949cb4a61804f8f76d1ae">lacunarity</a> = atof(state-&gt;inputLacunarityText);</div>
 <div class="line"><a id="l00469" name="l00469"></a><span class="lineno">  469</span>    }</div>
 <div class="line"><a id="l00470" name="l00470"></a><span class="lineno">  470</span>    <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00471" name="l00471"></a><span class="lineno">  471</span>        strcpy(state-&gt;labelinfo, <span class="stringliteral">&quot;Amplitude: 0-10000&quot;</span>);</div>
 <div class="line"><a id="l00472" name="l00472"></a><span class="lineno">  472</span>        <span class="keywordflow">return</span>;</div>
 <div class="line"><a id="l00473" name="l00473"></a><span class="lineno">  473</span>    }</div>
 <div class="line"><a id="l00474" name="l00474"></a><span class="lineno">  474</span> </div>
-<div class="line"><a id="l00475" name="l00475"></a><span class="lineno">  475</span>    settings.persistence = 1 / settings.lacunarity;</div>
+<div class="line"><a id="l00475" name="l00475"></a><span class="lineno">  475</span>    settings.<a class="code hl_variable" href="struct_settings.html#af3e03cbadbbfbc3a5a7ef3e110877b1e">persistence</a> = 1 / settings.<a class="code hl_variable" href="struct_settings.html#a53f2497472d949cb4a61804f8f76d1ae">lacunarity</a>;</div>
 <div class="line"><a id="l00476" name="l00476"></a><span class="lineno">  476</span>    settings.useCustomHeatmap = <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00477" name="l00477"></a><span class="lineno">  477</span> </div>
 <div class="line"><a id="l00478" name="l00478"></a><span class="lineno">  478</span>    <span class="comment">// Already has min and max value</span></div>
-<div class="line"><a id="l00479" name="l00479"></a><span class="lineno">  479</span>    settings.octaves = state-&gt;inputOctavesValue;</div>
+<div class="line"><a id="l00479" name="l00479"></a><span class="lineno">  479</span>    settings.<a class="code hl_variable" href="struct_settings.html#acec4551719b74fa8e4e5edbcb2e47d4e">octaves</a> = state-&gt;inputOctavesValue;</div>
 <div class="line"><a id="l00480" name="l00480"></a><span class="lineno">  480</span> </div>
 <div class="line"><a id="l00481" name="l00481"></a><span class="lineno">  481</span>    state-&gt;city-&gt;<a class="code hl_function" href="class_city.html#abd490b81a06fe5767df6d0bdeaf5cd9f">GeneratePopulationHeatmap</a>();</div>
 <div class="line"><a id="l00482" name="l00482"></a><span class="lineno">  482</span>    strcpy(state-&gt;labelinfo, <span class="stringliteral">&quot;Heatmap generated!&quot;</span>);</div>
@@ -677,7 +677,12 @@ $(function() {
 <div class="ttc" id="aclass_road_segment_html"><div class="ttname"><a href="class_road_segment.html">RoadSegment</a></div><div class="ttdef"><b>Definition:</b> roadsegment.hpp:8</div></div>
 <div class="ttc" id="astruct_gui_main_g_u_i_state_html"><div class="ttname"><a href="struct_gui_main_g_u_i_state.html">GuiMainGUIState</a></div><div class="ttdef"><b>Definition:</b> MainGUI.hpp:37</div></div>
 <div class="ttc" id="astruct_settings_html"><div class="ttname"><a href="struct_settings.html">Settings</a></div><div class="ttdef"><b>Definition:</b> settings.hpp:5</div></div>
+<div class="ttc" id="astruct_settings_html_a3a3970ca903f0e63d5ea84921bee2a41"><div class="ttname"><a href="struct_settings.html#a3a3970ca903f0e63d5ea84921bee2a41">Settings::frequency</a></div><div class="ttdeci">float frequency</div><div class="ttdoc">bigger = smaller patches</div><div class="ttdef"><b>Definition:</b> settings.hpp:31</div></div>
+<div class="ttc" id="astruct_settings_html_a53f2497472d949cb4a61804f8f76d1ae"><div class="ttname"><a href="struct_settings.html#a53f2497472d949cb4a61804f8f76d1ae">Settings::lacunarity</a></div><div class="ttdeci">float lacunarity</div><div class="ttdoc">How &quot;dense&quot; the patches are?</div><div class="ttdef"><b>Definition:</b> settings.hpp:33</div></div>
 <div class="ttc" id="astruct_settings_html_a584233f676e893baae35032c1e2336d1"><div class="ttname"><a href="struct_settings.html#a584233f676e893baae35032c1e2336d1">Settings::SetSeed</a></div><div class="ttdeci">void SetSeed(int seed)</div><div class="ttdoc">Set the Random Seed.</div><div class="ttdef"><b>Definition:</b> settings.hpp:65</div></div>
+<div class="ttc" id="astruct_settings_html_a8208dc958c35a02b488ae2a609b61326"><div class="ttname"><a href="struct_settings.html#a8208dc958c35a02b488ae2a609b61326">Settings::amplitude</a></div><div class="ttdeci">float amplitude</div><div class="ttdoc">Effect unkown.</div><div class="ttdef"><b>Definition:</b> settings.hpp:32</div></div>
+<div class="ttc" id="astruct_settings_html_acec4551719b74fa8e4e5edbcb2e47d4e"><div class="ttname"><a href="struct_settings.html#acec4551719b74fa8e4e5edbcb2e47d4e">Settings::octaves</a></div><div class="ttdeci">float octaves</div><div class="ttdoc">1 = smooth, otherwise rough?</div><div class="ttdef"><b>Definition:</b> settings.hpp:35</div></div>
+<div class="ttc" id="astruct_settings_html_af3e03cbadbbfbc3a5a7ef3e110877b1e"><div class="ttname"><a href="struct_settings.html#af3e03cbadbbfbc3a5a7ef3e110877b1e">Settings::persistence</a></div><div class="ttdeci">float persistence</div><div class="ttdoc">1 / lacunarity</div><div class="ttdef"><b>Definition:</b> settings.hpp:34</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

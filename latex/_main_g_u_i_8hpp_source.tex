@@ -453,7 +453,7 @@
 \DoxyCodeLine{00449\ }
 \DoxyCodeLine{00450\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/\ Check\ if\ all\ the\ input\ values\ are\ valid\ and\ set\ it\ to\ settings\ -\/-\/-\/-\/-\/}}
 \DoxyCodeLine{00451\ \ \ \ \ \textcolor{keywordflow}{if}\ (atof(state-\/>inputFrequencyText)\ >\ 0\ \&\&\ atof(state-\/>inputFrequencyText)\ <=\ 100)\ \{}
-\DoxyCodeLine{00452\ \ \ \ \ \ \ \ \ settings.frequency\ =\ atof(state-\/>inputFrequencyText);}
+\DoxyCodeLine{00452\ \ \ \ \ \ \ \ \ settings.\mbox{\hyperlink{struct_settings_a3a3970ca903f0e63d5ea84921bee2a41}{frequency}}\ =\ atof(state-\/>inputFrequencyText);}
 \DoxyCodeLine{00453\ \ \ \ \ \}}
 \DoxyCodeLine{00454\ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
 \DoxyCodeLine{00455\ \ \ \ \ \ \ \ \ strcpy(state-\/>labelinfo,\ \textcolor{stringliteral}{"{}Frequency:\ 0-\/100"{}});}
@@ -461,7 +461,7 @@
 \DoxyCodeLine{00457\ \ \ \ \ \}}
 \DoxyCodeLine{00458\ }
 \DoxyCodeLine{00459\ \ \ \ \ \textcolor{keywordflow}{if}\ (atof(state-\/>inputAmplitudeText)\ >\ 0\ \&\&\ atof(state-\/>inputAmplitudeText)\ <=\ 100)\ \{}
-\DoxyCodeLine{00460\ \ \ \ \ \ \ \ \ settings.amplitude\ =\ atof(state-\/>inputAmplitudeText);}
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \ \ settings.\mbox{\hyperlink{struct_settings_a8208dc958c35a02b488ae2a609b61326}{amplitude}}\ =\ atof(state-\/>inputAmplitudeText);}
 \DoxyCodeLine{00461\ \ \ \ \ \}}
 \DoxyCodeLine{00462\ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
 \DoxyCodeLine{00463\ \ \ \ \ \ \ \ \ strcpy(state-\/>labelinfo,\ \textcolor{stringliteral}{"{}Amplitude:\ 0-\/100"{}});}
@@ -469,18 +469,18 @@
 \DoxyCodeLine{00465\ \ \ \ \ \}}
 \DoxyCodeLine{00466\ }
 \DoxyCodeLine{00467\ \ \ \ \ \textcolor{keywordflow}{if}\ (atof(state-\/>inputLacunarityText)\ >\ 0\ \&\&\ atof(state-\/>inputLacunarityText)\ <=\ 10000)\ \{}
-\DoxyCodeLine{00468\ \ \ \ \ \ \ \ \ settings.lacunarity\ =\ atof(state-\/>inputLacunarityText);}
+\DoxyCodeLine{00468\ \ \ \ \ \ \ \ \ settings.\mbox{\hyperlink{struct_settings_a53f2497472d949cb4a61804f8f76d1ae}{lacunarity}}\ =\ atof(state-\/>inputLacunarityText);}
 \DoxyCodeLine{00469\ \ \ \ \ \}}
 \DoxyCodeLine{00470\ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
 \DoxyCodeLine{00471\ \ \ \ \ \ \ \ \ strcpy(state-\/>labelinfo,\ \textcolor{stringliteral}{"{}Amplitude:\ 0-\/10000"{}});}
 \DoxyCodeLine{00472\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{00473\ \ \ \ \ \}}
 \DoxyCodeLine{00474\ }
-\DoxyCodeLine{00475\ \ \ \ \ settings.persistence\ =\ 1\ /\ settings.lacunarity;}
+\DoxyCodeLine{00475\ \ \ \ \ settings.\mbox{\hyperlink{struct_settings_af3e03cbadbbfbc3a5a7ef3e110877b1e}{persistence}}\ =\ 1\ /\ settings.\mbox{\hyperlink{struct_settings_a53f2497472d949cb4a61804f8f76d1ae}{lacunarity}};}
 \DoxyCodeLine{00476\ \ \ \ \ settings.useCustomHeatmap\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00477\ }
 \DoxyCodeLine{00478\ \ \ \ \ \textcolor{comment}{//\ Already\ has\ min\ and\ max\ value}}
-\DoxyCodeLine{00479\ \ \ \ \ settings.octaves\ =\ state-\/>inputOctavesValue;}
+\DoxyCodeLine{00479\ \ \ \ \ settings.\mbox{\hyperlink{struct_settings_acec4551719b74fa8e4e5edbcb2e47d4e}{octaves}}\ =\ state-\/>inputOctavesValue;}
 \DoxyCodeLine{00480\ }
 \DoxyCodeLine{00481\ \ \ \ \ state-\/>city-\/>\mbox{\hyperlink{class_city_abd490b81a06fe5767df6d0bdeaf5cd9f}{GeneratePopulationHeatmap}}();}
 \DoxyCodeLine{00482\ \ \ \ \ strcpy(state-\/>labelinfo,\ \textcolor{stringliteral}{"{}Heatmap\ generated!"{}});}
