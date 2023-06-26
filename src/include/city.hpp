@@ -36,7 +36,7 @@ private:
     bool LocalConstraints(RoadSegment* road);
     void GlobalGoals(RoadSegment* road, std::vector<RoadSegment*>& newRoads);
     void DeleteNode(Node* node);
-    RoadSegment* AddSideRoad(RoadSegment* rootRoad, float angle, Node* newFromNode);
+    void AddSideRoad(RoadSegment* rootRoad, float angle, std::vector<RoadSegment*>& newRoads);
     Vector2 GetPosWithAngle(const Vector2& fromPos, float angle, float length) const;
     Vector2 HighwaySamples(const Vector2& fromPos, float OriginalAngle, float MaxAngle) const;
     int GetPopulationFromHeatmap(const Vector2& pos) const;

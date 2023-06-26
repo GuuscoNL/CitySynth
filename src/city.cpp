@@ -273,10 +273,9 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
 }
 
 void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoads) {
-    Node* newFromNode = rootRoad->GetTo();
 
     // If it is already split don't add new roads, because there was already a conflict resolved
-    if (newFromNode->GetSize() >= 2) {
+    if (rootRoad->GetTo()->GetSize() >= 2) {
         return;
     }
 
@@ -288,7 +287,7 @@ void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoad
             settings->highwayAngle);
         Node* toNode = new Node(newToPos, settings);
         nodes.push_back(toNode);
-        newRoads.push_back(new Highway(1, settings, newFromNode, toNode));
+        newRoads.push_back(new Highway(1, settings, rootRoad->GetTo(), toNode));
 
         // Will this highway branch to new highways?
         if (GetRandomValue(0, 10000) / 100.f <= settings->highwayBranchChance) {
@@ -300,7 +299,7 @@ void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoad
             Node* branchNode = new Node(GetPosWithAngle(rootRoad->GetToPos(), rootRoad->GetAngle() + angle, settings->highwayLength), settings);
             nodes.push_back(branchNode);
 
-            newRoads.push_back(new Highway(1, settings, newFromNode, branchNode));
+            newRoads.push_back(new Highway(1, settings, rootRoad->GetTo(), branchNode));
 
         }
         // Will this road branch to a new Side road?
@@ -310,29 +309,17 @@ void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoad
             if (GetRandomValue(0, 1) == 0) {
                 angle = -90;
             }
-            RoadSegment* newRoad = AddSideRoad(rootRoad, angle, newFromNode);
-            if (newRoad != nullptr) {
-                newRoads.push_back(newRoad);
-            }
+            AddSideRoad(rootRoad, angle, newRoads);
         }
     }
     // Side roads
     else if (rootRoad->GetType() == RoadSegment::SIDEROAD) {
-        {   // First get the next straight Side road 
-            float angle = 0;
-            RoadSegment* newRoad = AddSideRoad(rootRoad, angle, newFromNode);
-            if (newRoad != nullptr) {
-                newRoads.push_back(newRoad);
-            }
-        }
+        // First get the next straight Side road 
+        AddSideRoad(rootRoad, 0, newRoads);
+
         // Will this Side road branch to new Side road?
         if (GetRandomValue(0, 10000) / 100.f <= settings->sideRoadBranchChance) {
-            // Random angle 90 or -90
-            float angle = 90;
-            RoadSegment* newRoad = AddSideRoad(rootRoad, angle, newFromNode);
-            if (newRoad != nullptr) {
-                newRoads.push_back(newRoad);
-            }
+            AddSideRoad(rootRoad, 90, newRoads);
         }
     }
 }
@@ -345,14 +332,14 @@ void City::DeleteNode(Node* nodeToRemove){
     }
 }
 
-RoadSegment* City::AddSideRoad(RoadSegment* rootRoad, float angle, Node* newFromNode) {
+void City::AddSideRoad(RoadSegment* rootRoad, float angle, std::vector<RoadSegment*>& newRoads) {
     Vector2 newPos = GetPosWithAngle(rootRoad->GetToPos(), rootRoad->GetAngle() + angle, settings->sideRoadLength);
 
     // Check if the pop is high enough for a new Side Road
     if (GetPopulationFromHeatmap(newPos) / 255. >= settings->sideRoadThreshold) {
         Node* newToNode = new Node(newPos, settings);
         nodes.push_back(newToNode);
-        return new SideRoad(1, settings, newFromNode, newToNode);
+        newRoads.push_back(new SideRoad(1, settings, rootRoad->GetTo(), newToNode));
     }
     return nullptr;
 }
