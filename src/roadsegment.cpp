@@ -17,7 +17,7 @@ RoadSegment::~RoadSegment() {
     to->RemoveRoad(this);
 }
 
-void RoadSegment::Draw() {
+void RoadSegment::Draw() const {
     DrawModelEx(model, pos, { 0, 1, 0 }, angle, Vector3{ 1, 1, length / modelLength }, color);
 }
 
@@ -64,6 +64,7 @@ void RoadSegment::SetFrom(Node* node) {
     node->AddRoad(this);
     CalculatePosAndAngle();
 }
+
 void RoadSegment::SetTo(Node* node) {
     to->RemoveRoad(this);
     to = node;

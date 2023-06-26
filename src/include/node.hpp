@@ -8,12 +8,12 @@ class RoadSegment;
 class Node {
 public:
     Node(const Vector2& pos2D, Settings* settings);
-    void Draw();
+    void Draw() const;
     Vector2 GetPos() const;
-    int GetSize();
+    int GetSize() const;
     void AddRoad(RoadSegment* road);
-    void RemoveRoad(RoadSegment* road);
-    std::vector<RoadSegment*> GetConnectedRoads();
+    void RemoveRoad(const RoadSegment* road);
+    std::vector<RoadSegment*> GetConnectedRoads() const;
     Color color;
     int id;
     static int nextId;

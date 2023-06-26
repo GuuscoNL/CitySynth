@@ -59,7 +59,7 @@ void City::SetSize(int size) {
     UpdatePlaneTexture();
 }
 
-void City::Draw() {
+void City::Draw() const{
 
     for (auto*& road : roads) {
         road->Draw();
@@ -338,7 +338,7 @@ void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoad
     }
 }
 
-void City::DeleteNode(Node* nodeToRemove) {
+void City::DeleteNode(Node* nodeToRemove){
     // Make sure the node is not used by other roads before deleting
     if (nodeToRemove->GetSize() <= 0) {
         nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
@@ -358,14 +358,14 @@ RoadSegment* City::AddSideRoad(RoadSegment* rootRoad, float angle, Node* newFrom
     return nullptr;
 }
 
-Vector2 City::GetPosWithAngle(const Vector2& fromPos, float angle, float length) {
+Vector2 City::GetPosWithAngle(const Vector2& fromPos, float angle, float length) const {
     float angleRad = angle * DEG2RAD;
 
     return Vector2{ fromPos.x + cos(angleRad) * length,
                     fromPos.y + sin(angleRad) * length };
 }
 
-Vector2 City::HighwaySamples(const Vector2& fromPos, float OriginalAngle, float MaxAngle) {
+Vector2 City::HighwaySamples(const Vector2& fromPos, float OriginalAngle, float MaxAngle) const{
     std::vector<Vector2> positions;
     positions.reserve(settings->highwaySampleAmount); // Speed!
 
@@ -444,12 +444,12 @@ Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, co
     return intersectionNode;
 }
 
-float City::CrossProduct(const Vector2& v1, const Vector2& v2) {
+float City::CrossProduct(const Vector2& v1, const Vector2& v2) const {
     return v1.x * v2.y - v1.y * v2.x;
 }
 
 // This is done with the help of ChatGPT, I couldn't find any easy way anywhere else.
-bool City::RoadsCollide(RoadSegment* road1, RoadSegment* road2, Vector2& intersection) {
+bool City::RoadsCollide(RoadSegment* road1, RoadSegment* road2, Vector2& intersection) const {
     Vector2 p1 = road1->GetFromPos();
     Vector2 p2 = road1->GetToPos();
 
@@ -485,7 +485,7 @@ bool City::RoadsCollide(RoadSegment* road1, RoadSegment* road2, Vector2& interse
 
 // This algorithm was based on the algorithm explained in this video:
 // https://youtu.be/egmZJU-1zPU - Two-Bit Coding
-float City::DistNodeToRoad(Node* node, RoadSegment* road, Vector2& intersection) {
+float City::DistNodeToRoad(Node* node, RoadSegment* road, Vector2& intersection) const {
     Vector2 p = node->GetPos();
     Vector2 a = road->GetFromPos();
     Vector2 b = road->GetToPos();
