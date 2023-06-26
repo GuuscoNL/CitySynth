@@ -291,7 +291,7 @@ void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoad
         newRoads.push_back(new Highway(1, settings, newFromNode, toNode));
 
         // Will this highway branch to new highways?
-        if (GetRandomValue(0, 100) <= settings->highwayBranchChance) {
+        if (GetRandomValue(0, 10000) / 100.f <= settings->highwayBranchChance) {
             // Random angle 90 or -90
             float angle = 90;
             if (GetRandomValue(0, 1) == 0) {
@@ -304,7 +304,7 @@ void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoad
 
         }
         // Will this road branch to a new Side road?
-        else if (GetRandomValue(0, 100) <= settings->highwaySideRoadBranchChance) {
+        else if (GetRandomValue(0, 10000) / 100.f <= settings->highwaySideRoadBranchChance) {
             // Random angle 90 or -90
             float angle = 90;
             if (GetRandomValue(0, 1) == 0) {
@@ -326,7 +326,7 @@ void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoad
             }
         }
         // Will this Side road branch to new Side road?
-        if (GetRandomValue(0, 100) <= settings->sideRoadBranchChance) {
+        if (GetRandomValue(0, 10000) / 100.f <= settings->sideRoadBranchChance) {
             // Random angle 90 or -90
             float angle = 90;
             RoadSegment* newRoad = AddSideRoad(rootRoad, angle, newFromNode);
