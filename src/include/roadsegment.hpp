@@ -9,7 +9,7 @@ class RoadSegment {
 public:
     RoadSegment(int delay, Settings* settings, Node* from, Node* to);
     virtual ~RoadSegment();
-    enum RoadType {HIGHWAY, SIDEROAD};
+    enum RoadType { HIGHWAY, SIDEROAD };
     void Draw();
     friend std::ostream& operator<<(std::ostream& os, const RoadSegment& n);
     int GetDelay() const;

@@ -3,8 +3,8 @@
 #include "roadsegment.hpp"
 
 class SideRoad : public RoadSegment {
-    public:
+public:
     SideRoad(int delay, Settings* settings, Node* from, Node* to);
 
-    private:
+private:
 };

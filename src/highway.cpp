@@ -1,6 +1,6 @@
 #include "include/highway.hpp"
 
-Highway::Highway(int delay, Settings* settings, Node* from, Node* to) : RoadSegment(delay, settings, from, to){
+Highway::Highway(int delay, Settings* settings, Node* from, Node* to) : RoadSegment(delay, settings, from, to) {
 
     model = settings->highwayModel;
     model.materials[0].shader = settings->shader;

@@ -9,7 +9,8 @@ RoadSegment::RoadSegment(int delay, Settings* settings, Node* from, Node* to) :
     delay(delay),
     settings(settings),
     from(from),
-    to(to) {}
+    to(to) {
+}
 
 RoadSegment::~RoadSegment() {
     from->RemoveRoad(this);
@@ -53,7 +54,7 @@ float RoadSegment::GetAngle() const {
     return angle;
 }
 
-RoadSegment::RoadType RoadSegment::GetType() const{
+RoadSegment::RoadType RoadSegment::GetType() const {
     return type;
 }
 

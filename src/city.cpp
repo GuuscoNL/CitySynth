@@ -49,7 +49,8 @@ void City::SetSize(int size) {
     // Update heatmap based on new size
     if (settings->useCustomHeatmap) {
         SetHeatmap(settings->customHeatmap);
-    }else{
+    }
+    else {
         GeneratePopulationHeatmap();
     }
 
@@ -87,7 +88,7 @@ void City::GeneratePopulationHeatmap(int offsetX, int offsetY) {
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
             int noise = round(Remap(simplexNoise.fractal(settings->octaves, i, j), -1, 1, 0, 255));
-            Color noiseColor = Color{static_cast<unsigned char>(noise),
+            Color noiseColor = Color{ static_cast<unsigned char>(noise),
                                     static_cast<unsigned char>(noise),
                                     static_cast<unsigned char>(noise),
                                     255 };
@@ -117,7 +118,7 @@ void  City::GenerateCity(unsigned int amount) {
     ResetCity();
 
     roads.reserve(amount); // speed!
-    nodes.reserve(amount/2); // speed!
+    nodes.reserve(amount / 2); // speed!
     std::priority_queue<RoadSegment*, std::vector<RoadSegment*>, RoadSegmentGreaterThan> Q;
 
     // Make starting nodes
@@ -265,7 +266,7 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
         // Loop over all roads to get the closest road
         for (auto* road : roads) {
             float distance = DistNodeToRoad(orgToNode, road, intersectionPos);
-            if ( distance < smallestDistance && road != orgRoad) {
+            if (distance < smallestDistance && road != orgRoad) {
                 smallestDistance = distance;
                 closestRoad = road;
                 closestIntersectionPos = intersectionPos;
@@ -312,8 +313,8 @@ void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoad
             nodes.push_back(branchNode);
 
             newRoads.push_back(new Highway(1, settings, newFromNode, branchNode));
-    
-        } 
+
+        }
         // Will this road branch to a new Side road?
         else if (GetRandomValue(0, 100) <= settings->highwaySideRoadBranchChance) {
             // Random angle 90 or -90
@@ -398,64 +399,66 @@ Vector2 City::HighwaySamples(const Vector2& fromPos, float OriginalAngle, float 
 }
 
 Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, const Vector2& intersectionPos) {
-        Node* fromNode = toSplitRoad->GetFrom();
-        Node* toNode = toSplitRoad->GetTo();
+    Node* fromNode = toSplitRoad->GetFrom();
+    Node* toNode = toSplitRoad->GetTo();
 
-        // Remove old Node
-        Node* orgToNode = toAddRoad->GetTo();
+    // Remove old Node
+    Node* orgToNode = toAddRoad->GetTo();
 
-        // if the intersection pos is close to another road don't create an intersection,
-        // but extend road to the close node. This prevents extremely small roads.
-        if (Vector2Distance(fromNode->GetPos(), intersectionPos) < 0.2) {
-            toAddRoad->SetTo(fromNode);
+    // if the intersection pos is close to another road don't create an intersection,
+    // but extend road to the close node. This prevents extremely small roads.
+    if (Vector2Distance(fromNode->GetPos(), intersectionPos) < 0.2) {
+        toAddRoad->SetTo(fromNode);
 
-            // Make sure the node is not used by other roads before deleting
-            if (orgToNode->GetSize() <= 0) {
-                nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
-                delete orgToNode;
-            }
-            return fromNode;
-        }
-
-        if (Vector2Distance(toNode->GetPos(), intersectionPos) < 0.2) {
-            toAddRoad->SetTo(toNode);
-            // Make sure the node is not used by other roads before deleting
-            if (orgToNode->GetSize() <= 0) {
-                nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
-                delete orgToNode;
-            }
-            return toNode;
-        }
-
-        // Create new intersection node
-        Node* intersectionNode = new Node(intersectionPos, settings);
-        nodes.push_back(intersectionNode);
-
-        // Connect all roads to the intersect node and use the correct road type
-        toAddRoad->SetTo(intersectionNode);
-        if (toSplitRoad->GetType() == RoadSegment::HIGHWAY) {
-            roads.push_back(new Highway(1, settings, fromNode, intersectionNode));
-            roads.push_back(new Highway(1, settings, intersectionNode, toNode));
-
-        } else if (toSplitRoad->GetType() == RoadSegment::SIDEROAD) {
-            roads.push_back(new SideRoad(1, settings, fromNode, intersectionNode));
-            roads.push_back(new SideRoad(1, settings, intersectionNode, toNode));
-
-        } else {
-            PRINT("AddIntersection(): Unknown road type!");
-        }
-
-        // remove old road
-        roads.erase(remove(roads.begin(), roads.end(), toSplitRoad), roads.end());
-
-        delete toSplitRoad;
         // Make sure the node is not used by other roads before deleting
         if (orgToNode->GetSize() <= 0) {
             nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
             delete orgToNode;
         }
+        return fromNode;
+    }
 
-        return intersectionNode;
+    if (Vector2Distance(toNode->GetPos(), intersectionPos) < 0.2) {
+        toAddRoad->SetTo(toNode);
+        // Make sure the node is not used by other roads before deleting
+        if (orgToNode->GetSize() <= 0) {
+            nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
+            delete orgToNode;
+        }
+        return toNode;
+    }
+
+    // Create new intersection node
+    Node* intersectionNode = new Node(intersectionPos, settings);
+    nodes.push_back(intersectionNode);
+
+    // Connect all roads to the intersect node and use the correct road type
+    toAddRoad->SetTo(intersectionNode);
+    if (toSplitRoad->GetType() == RoadSegment::HIGHWAY) {
+        roads.push_back(new Highway(1, settings, fromNode, intersectionNode));
+        roads.push_back(new Highway(1, settings, intersectionNode, toNode));
+
+    }
+    else if (toSplitRoad->GetType() == RoadSegment::SIDEROAD) {
+        roads.push_back(new SideRoad(1, settings, fromNode, intersectionNode));
+        roads.push_back(new SideRoad(1, settings, intersectionNode, toNode));
+
+    }
+    else {
+        PRINT("AddIntersection(): Unknown road type!");
+    }
+
+    // remove old road
+    roads.erase(remove(roads.begin(), roads.end(), toSplitRoad), roads.end());
+
+    delete toSplitRoad;
+    // Make sure the node is not used by other roads before deleting
+    if (orgToNode->GetSize() <= 0) {
+        nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
+        delete orgToNode;
+    }
+
+    return intersectionNode;
 }
 
 float City::CrossProduct(const Vector2& v1, const Vector2& v2) {
@@ -512,7 +515,7 @@ float City::DistNodeToRoad(Node* node, RoadSegment* road, Vector2& intersection)
     float abLenSqr = Vector2LengthSqr(ab);
     float d = proj / abLenSqr; // Normalize projection
 
-    if ( d <= 0) {
+    if (d <= 0) {
         intersection = a; // Closest point is the From node
     }
     else if (d >= 1) {
@@ -560,17 +563,17 @@ Model City::GetPlane() const {
     return plane;
 }
 
-std::vector<RoadSegment*> City::GetRoads() const{
+std::vector<RoadSegment*> City::GetRoads() const {
     return roads;
 }
 
-std::vector<Node*> City::GetNodes() const{
+std::vector<Node*> City::GetNodes() const {
     return nodes;
 }
 
-int City::GetRoadsSize() const{
+int City::GetRoadsSize() const {
     return roads.size();
 }
-int City::GetNodesSize() const{
+int City::GetNodesSize() const {
     return nodes.size();
 }

@@ -44,8 +44,6 @@ int main() {
     camera.up = { 0.0f, 1.0f, 0.0f };
     camera.fovy = 45.0f;
     camera.projection = CAMERA_PERSPECTIVE;
-    
-
 
     // ----- lighting shaders -----
     Shader lightingShader = LoadShader("shaders/lighting.vs",
@@ -65,9 +63,6 @@ int main() {
                         255 };
     lights[0] = CreateLight(LIGHT_DIRECTIONAL, { -2, 1, -2 }, Vector3Zero(), sunColour, lightingShader);
     lights[1] = CreateLight(LIGHT_DIRECTIONAL, { 2, 1, 2 }, Vector3Zero(), sunColour2, lightingShader);
-
-
-    float totalTime = 0;
 
     // ----- Settings -----
     Settings settings;
@@ -144,7 +139,6 @@ int main() {
 
             EndDrawing();
         }
-        totalTime += GetFrameTime();
     }
 
     UnloadModel(settings.highwayModel);

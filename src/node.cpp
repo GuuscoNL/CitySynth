@@ -24,7 +24,7 @@ void Node::Draw() {
     DrawModel(model, pos3D, 1, color);
 }
 
-Vector2 Node::GetPos() const{
+Vector2 Node::GetPos() const {
     return pos2D;
 }
 
