@@ -523,7 +523,6 @@ float City::DistNodeToRoad(Node* node, RoadSegment* road, Vector2& intersection)
     }
 
     return Vector2Distance(p, intersection);
-
 }
 
 int City::GetPopulationFromHeatmap(const Vector2& pos) const {

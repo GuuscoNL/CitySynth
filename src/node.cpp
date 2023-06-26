@@ -8,19 +8,17 @@
 Node::Node(const Vector2& pos2D, Settings* settings) :
     pos2D(pos2D),
     settings(settings) {
+    // Set model
     model = settings->NodeModel;
     model.materials[0].shader = settings->shader;
+
     color = WHITE;
     id = nextId++;
 
     pos3D = Vector3{ pos2D.y, 0, pos2D.x };
 }
 
-int Node::nextId = 0;
-
-Node::~Node() {
-    // PRINT("Unloading Node");
-}
+int Node::nextId = 0; // Set nextId to 0 at start of program
 
 void Node::Draw() {
     DrawModel(model, pos3D, 1, color);
