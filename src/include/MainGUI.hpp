@@ -181,11 +181,11 @@ GuiMainGUIState InitGuiMainGUI(int screenWidth, Settings* settings, City* city) 
     state.inputHighwayHeightEditMode = false;
     strcpy(state.inputHighwayHeightText, "0.045");
     state.inputMaxAngleEditMode = false;
-    strcpy(state.inputMaxAngleText, "15");
+    strcpy(state.inputMaxAngleText, "20");
     state.inputSampleAmountEditMode = false;
     state.inputSampleAmountValue = 10;
     state.inputHighwayBranchChanceEditMode = false;
-    strcpy(state.inputHighwayBranchChanceText, "2");
+    strcpy(state.inputHighwayBranchChanceText, "4");
     state.inputHighwaySideRoadChanceEditMode = false;
     strcpy(state.inputHighwaySideRoadChanceText, "80");
     state.inputSeedEditMode = false;

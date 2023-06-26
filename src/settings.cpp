@@ -4,9 +4,9 @@ Settings::Settings(Shader lightingShader) {
     highwayLength = 1.4;
     highwayWidth = 0.25;
     highwaySampleAmount = 10;
-    highwayAngle = 15;
+    highwayAngle = 20;
     highwayHeight = 0.045;
-    highwayBranchChance = 2; // in procenten
+    highwayBranchChance = 4; // in procenten
     highwaySideRoadBranchChance = 80; // in procenten
 
     sideRoadLength = 0.7;
