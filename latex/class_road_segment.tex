@@ -17,59 +17,47 @@ enum {\bfseries Road\+Type} \{ {\bfseries HIGHWAY}
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{class_road_segment_a908b44b17de6c5f9a9db9608eef1fb48}\label{class_road_segment_a908b44b17de6c5f9a9db9608eef1fb48}} 
-{\bfseries Road\+Segment} (int delay, \mbox{\hyperlink{struct_settings}{Settings}} $\ast$settings, \mbox{\hyperlink{class_node}{Node}} $\ast$from, \mbox{\hyperlink{class_node}{Node}} $\ast$to)
-\item 
-\mbox{\Hypertarget{class_road_segment_a64e85c3384ec08579a00a847168dc2c0}\label{class_road_segment_a64e85c3384ec08579a00a847168dc2c0}} 
-void {\bfseries Draw} () const
-\item 
-\mbox{\Hypertarget{class_road_segment_a7bf32c39c5b1eeb83fdf873e7a7b4e0c}\label{class_road_segment_a7bf32c39c5b1eeb83fdf873e7a7b4e0c}} 
-int {\bfseries Get\+Delay} () const
-\item 
-\mbox{\Hypertarget{class_road_segment_a4b08305b3c7ebaed73b3a50db6a83784}\label{class_road_segment_a4b08305b3c7ebaed73b3a50db6a83784}} 
-Vector2 {\bfseries Get\+To\+Pos} () const
-\item 
-\mbox{\Hypertarget{class_road_segment_ad4d4eba6af3bc4d7f032533ec297b388}\label{class_road_segment_ad4d4eba6af3bc4d7f032533ec297b388}} 
-Vector2 {\bfseries Get\+From\+Pos} () const
-\item 
-\mbox{\Hypertarget{class_road_segment_a4bc9fcdb62262bd8a756d9643bda1040}\label{class_road_segment_a4bc9fcdb62262bd8a756d9643bda1040}} 
-float {\bfseries Get\+Angle} () const
-\item 
-\mbox{\Hypertarget{class_road_segment_a037f0f2e3851e66978c55800c9f77118}\label{class_road_segment_a037f0f2e3851e66978c55800c9f77118}} 
-\mbox{\hyperlink{class_node}{Node}} $\ast$ {\bfseries Get\+From} () const
-\item 
-\mbox{\Hypertarget{class_road_segment_a3383a1d763348c66ae5fa1ea802daa7d}\label{class_road_segment_a3383a1d763348c66ae5fa1ea802daa7d}} 
-\mbox{\hyperlink{class_node}{Node}} $\ast$ {\bfseries Get\+To} () const
-\item 
-\mbox{\Hypertarget{class_road_segment_a3015f137ad680f1341bb6c506d9ec17a}\label{class_road_segment_a3015f137ad680f1341bb6c506d9ec17a}} 
-Road\+Segment\+::\+Road\+Type {\bfseries Get\+Type} () const
-\item 
-\mbox{\Hypertarget{class_road_segment_a4edb2d37f7054177dc5e752f42705301}\label{class_road_segment_a4edb2d37f7054177dc5e752f42705301}} 
-void {\bfseries Set\+Delay} (int delay)
-\item 
-\mbox{\Hypertarget{class_road_segment_a5039c122f2fc4702237c4914dbffdd9f}\label{class_road_segment_a5039c122f2fc4702237c4914dbffdd9f}} 
-void {\bfseries Set\+From} (\mbox{\hyperlink{class_node}{Node}} $\ast$node)
-\item 
-\mbox{\Hypertarget{class_road_segment_ac305c227f378c89ee249679af828006e}\label{class_road_segment_ac305c227f378c89ee249679af828006e}} 
-void {\bfseries Set\+To} (\mbox{\hyperlink{class_node}{Node}} $\ast$node)
-\item 
-\mbox{\Hypertarget{class_road_segment_af3d772d7dd496e0ba8220b8a41718a70}\label{class_road_segment_af3d772d7dd496e0ba8220b8a41718a70}} 
-void {\bfseries Set\+Color} (Color color)
-\end{DoxyCompactItemize}
+\mbox{\hyperlink{class_road_segment_a908b44b17de6c5f9a9db9608eef1fb48}{Road\+Segment}} (int delay, \mbox{\hyperlink{struct_settings}{Settings}} $\ast$settings, \mbox{\hyperlink{class_node}{Node}} $\ast$from, \mbox{\hyperlink{class_node}{Node}} $\ast$to)
+\begin{DoxyCompactList}\small\item\em Construct a new Road Segment object. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_road_segment_a581dd6c74ac8e7f07c45c45c8b125c1b}{$\sim$\+Road\+Segment}} ()
+\begin{DoxyCompactList}\small\item\em Destroy the Road Segment object and remove this road from the {\ttfamily from} and {\ttfamily to} nodes. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_road_segment_a64e85c3384ec08579a00a847168dc2c0}{Draw}} () const
+\begin{DoxyCompactList}\small\item\em Draw this road. \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{class_road_segment_a8f8ab48fb995ed608a83aa2fe195547e}{Get\+Delay}} () const
+\begin{DoxyCompactList}\small\item\em Get the Delay of this road. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_road_segment_a037f0f2e3851e66978c55800c9f77118}{Get\+From}} () const
+\begin{DoxyCompactList}\small\item\em Get the {\ttfamily from} \mbox{\hyperlink{class_node}{Node}} of this road. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_node}{Node}} $\ast$ \mbox{\hyperlink{class_road_segment_a3383a1d763348c66ae5fa1ea802daa7d}{Get\+To}} () const
+\begin{DoxyCompactList}\small\item\em Get the {\ttfamily to} \mbox{\hyperlink{class_node}{Node}} of this road. \end{DoxyCompactList}\item 
+Vector2 \mbox{\hyperlink{class_road_segment_a4b08305b3c7ebaed73b3a50db6a83784}{Get\+To\+Pos}} () const
+\begin{DoxyCompactList}\small\item\em Get the position of the {\ttfamily to} \mbox{\hyperlink{class_node}{Node}} of this road. \end{DoxyCompactList}\item 
+Vector2 \mbox{\hyperlink{class_road_segment_ad4d4eba6af3bc4d7f032533ec297b388}{Get\+From\+Pos}} () const
+\begin{DoxyCompactList}\small\item\em Get the position of the {\ttfamily from} \mbox{\hyperlink{class_node}{Node}} of this road. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_road_segment_a4bc9fcdb62262bd8a756d9643bda1040}{Get\+Angle}} () const
+\begin{DoxyCompactList}\small\item\em Get the Angle of this road. \end{DoxyCompactList}\item 
+Road\+Segment\+::\+Road\+Type \mbox{\hyperlink{class_road_segment_a3015f137ad680f1341bb6c506d9ec17a}{Get\+Type}} () const
+\begin{DoxyCompactList}\small\item\em Get the Type of this road. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_road_segment_a4edb2d37f7054177dc5e752f42705301}{Set\+Delay}} (int delay)
+\begin{DoxyCompactList}\small\item\em Set the Delay of this road. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_road_segment_a5039c122f2fc4702237c4914dbffdd9f}{Set\+From}} (\mbox{\hyperlink{class_node}{Node}} $\ast$node)
+\begin{DoxyCompactList}\small\item\em Set the {\ttfamily from} \mbox{\hyperlink{class_node}{Node}} and remove this road from last {\ttfamily from} \mbox{\hyperlink{class_node}{Node}} and add it to the new {\ttfamily from} \mbox{\hyperlink{class_node}{Node}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_road_segment_ac305c227f378c89ee249679af828006e}{Set\+To}} (\mbox{\hyperlink{class_node}{Node}} $\ast$node)
+\begin{DoxyCompactList}\small\item\em Set the {\ttfamily to} \mbox{\hyperlink{class_node}{Node}} and remove this road from last {\ttfamily to} \mbox{\hyperlink{class_node}{Node}} and add it to the new {\ttfamily to} \mbox{\hyperlink{class_node}{Node}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_road_segment_af3d772d7dd496e0ba8220b8a41718a70}{Set\+Color}} (Color color)
+\begin{DoxyCompactList}\small\item\em Set the Color of this road. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{class_road_segment_a7c383be36c6d023a387c9c58520727e5}\label{class_road_segment_a7c383be36c6d023a387c9c58520727e5}} 
-void {\bfseries Calculate\+Pos\+And\+Angle} ()
-\end{DoxyCompactItemize}
+void \mbox{\hyperlink{class_road_segment_a7c383be36c6d023a387c9c58520727e5}{Calculate\+Pos\+And\+Angle}} ()
+\begin{DoxyCompactList}\small\item\em Calculate the position and angle based on the {\ttfamily from} \mbox{\hyperlink{class_node}{Node}} and the {\ttfamily to} \mbox{\hyperlink{class_node}{Node}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{class_road_segment_a1ea8d200d2e7be20acb33e87785e8c18}\label{class_road_segment_a1ea8d200d2e7be20acb33e87785e8c18}} 
 Model {\bfseries model}
 \item 
-\mbox{\Hypertarget{class_road_segment_aeb541a83511747b3bcb28d140304c394}\label{class_road_segment_aeb541a83511747b3bcb28d140304c394}} 
-int {\bfseries delay}
+\mbox{\Hypertarget{class_road_segment_a3445b894cc9d30ac6a30ca30a442c21e}\label{class_road_segment_a3445b894cc9d30ac6a30ca30a442c21e}} 
+unsigned int {\bfseries delay}
 \item 
 \mbox{\Hypertarget{class_road_segment_afc8236a8d707f9b680796042a59d6f51}\label{class_road_segment_afc8236a8d707f9b680796042a59d6f51}} 
 \mbox{\hyperlink{struct_settings}{Settings}} $\ast$ {\bfseries settings}
@@ -104,9 +92,239 @@ float {\bfseries height}
 \doxysubsection*{Friends}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{class_road_segment_a87b71ad35bf4f0e23cf155a487bfb989}\label{class_road_segment_a87b71ad35bf4f0e23cf155a487bfb989}} 
-std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&os, const \mbox{\hyperlink{class_road_segment}{Road\+Segment}} \&n)
-\end{DoxyCompactItemize}
+std\+::ostream \& \mbox{\hyperlink{class_road_segment_a67975d847b127d555b9706562281c990}{operator$<$$<$}} (std\+::ostream \&os, const \mbox{\hyperlink{class_road_segment}{Road\+Segment}} \&road)
+\begin{DoxyCompactList}\small\item\em Print the positions of the {\ttfamily from} \mbox{\hyperlink{class_node}{Node}} and the {\ttfamily to} \mbox{\hyperlink{class_node}{Node}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_road_segment_a908b44b17de6c5f9a9db9608eef1fb48}\label{class_road_segment_a908b44b17de6c5f9a9db9608eef1fb48}} 
+\index{RoadSegment@{RoadSegment}!RoadSegment@{RoadSegment}}
+\index{RoadSegment@{RoadSegment}!RoadSegment@{RoadSegment}}
+\doxysubsubsection{\texorpdfstring{RoadSegment()}{RoadSegment()}}
+{\footnotesize\ttfamily Road\+Segment\+::\+Road\+Segment (\begin{DoxyParamCaption}\item[{int}]{delay,  }\item[{\mbox{\hyperlink{struct_settings}{Settings}} $\ast$}]{settings,  }\item[{\mbox{\hyperlink{class_node}{Node}} $\ast$}]{from,  }\item[{\mbox{\hyperlink{class_node}{Node}} $\ast$}]{to }\end{DoxyParamCaption})}
+
+
+
+Construct a new Road Segment object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delay} & The delay. \\
+\hline
+{\em settings} & Pointer to \mbox{\hyperlink{struct_settings}{Settings}}. \\
+\hline
+{\em from} & The \mbox{\hyperlink{class_node}{Node}} where this \mbox{\hyperlink{class_road_segment}{Road\+Segment}} starts. \\
+\hline
+{\em to} & The \mbox{\hyperlink{class_node}{Node}} where this \mbox{\hyperlink{class_road_segment}{Road\+Segment}} ends. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_road_segment_a581dd6c74ac8e7f07c45c45c8b125c1b}\label{class_road_segment_a581dd6c74ac8e7f07c45c45c8b125c1b}} 
+\index{RoadSegment@{RoadSegment}!````~RoadSegment@{$\sim$RoadSegment}}
+\index{````~RoadSegment@{$\sim$RoadSegment}!RoadSegment@{RoadSegment}}
+\doxysubsubsection{\texorpdfstring{$\sim$RoadSegment()}{~RoadSegment()}}
+{\footnotesize\ttfamily virtual Road\+Segment\+::$\sim$\+Road\+Segment (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Destroy the Road Segment object and remove this road from the {\ttfamily from} and {\ttfamily to} nodes. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_road_segment_a7c383be36c6d023a387c9c58520727e5}\label{class_road_segment_a7c383be36c6d023a387c9c58520727e5}} 
+\index{RoadSegment@{RoadSegment}!CalculatePosAndAngle@{CalculatePosAndAngle}}
+\index{CalculatePosAndAngle@{CalculatePosAndAngle}!RoadSegment@{RoadSegment}}
+\doxysubsubsection{\texorpdfstring{CalculatePosAndAngle()}{CalculatePosAndAngle()}}
+{\footnotesize\ttfamily void Road\+Segment\+::\+Calculate\+Pos\+And\+Angle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Calculate the position and angle based on the {\ttfamily from} \mbox{\hyperlink{class_node}{Node}} and the {\ttfamily to} \mbox{\hyperlink{class_node}{Node}}. 
+
+\mbox{\Hypertarget{class_road_segment_a64e85c3384ec08579a00a847168dc2c0}\label{class_road_segment_a64e85c3384ec08579a00a847168dc2c0}} 
+\index{RoadSegment@{RoadSegment}!Draw@{Draw}}
+\index{Draw@{Draw}!RoadSegment@{RoadSegment}}
+\doxysubsubsection{\texorpdfstring{Draw()}{Draw()}}
+{\footnotesize\ttfamily void Road\+Segment\+::\+Draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Draw this road. 
+
+\mbox{\Hypertarget{class_road_segment_a4bc9fcdb62262bd8a756d9643bda1040}\label{class_road_segment_a4bc9fcdb62262bd8a756d9643bda1040}} 
+\index{RoadSegment@{RoadSegment}!GetAngle@{GetAngle}}
+\index{GetAngle@{GetAngle}!RoadSegment@{RoadSegment}}
+\doxysubsubsection{\texorpdfstring{GetAngle()}{GetAngle()}}
+{\footnotesize\ttfamily float Road\+Segment\+::\+Get\+Angle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the Angle of this road. 
+
+\begin{DoxyReturn}{Returns}
+float The angle in degrees. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_road_segment_a8f8ab48fb995ed608a83aa2fe195547e}\label{class_road_segment_a8f8ab48fb995ed608a83aa2fe195547e}} 
+\index{RoadSegment@{RoadSegment}!GetDelay@{GetDelay}}
+\index{GetDelay@{GetDelay}!RoadSegment@{RoadSegment}}
+\doxysubsubsection{\texorpdfstring{GetDelay()}{GetDelay()}}
+{\footnotesize\ttfamily unsigned int Road\+Segment\+::\+Get\+Delay (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the Delay of this road. 
+
+\begin{DoxyReturn}{Returns}
+unsigned int The delay. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_road_segment_a037f0f2e3851e66978c55800c9f77118}\label{class_road_segment_a037f0f2e3851e66978c55800c9f77118}} 
+\index{RoadSegment@{RoadSegment}!GetFrom@{GetFrom}}
+\index{GetFrom@{GetFrom}!RoadSegment@{RoadSegment}}
+\doxysubsubsection{\texorpdfstring{GetFrom()}{GetFrom()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_node}{Node}} $\ast$ Road\+Segment\+::\+Get\+From (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the {\ttfamily from} \mbox{\hyperlink{class_node}{Node}} of this road. 
+
+\begin{DoxyReturn}{Returns}
+Node$\ast$ The {\ttfamily from} \mbox{\hyperlink{class_node}{Node}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_road_segment_ad4d4eba6af3bc4d7f032533ec297b388}\label{class_road_segment_ad4d4eba6af3bc4d7f032533ec297b388}} 
+\index{RoadSegment@{RoadSegment}!GetFromPos@{GetFromPos}}
+\index{GetFromPos@{GetFromPos}!RoadSegment@{RoadSegment}}
+\doxysubsubsection{\texorpdfstring{GetFromPos()}{GetFromPos()}}
+{\footnotesize\ttfamily Vector2 Road\+Segment\+::\+Get\+From\+Pos (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the position of the {\ttfamily from} \mbox{\hyperlink{class_node}{Node}} of this road. 
+
+\begin{DoxyReturn}{Returns}
+Vector2 The position of the {\ttfamily from} \mbox{\hyperlink{class_node}{Node}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_road_segment_a3383a1d763348c66ae5fa1ea802daa7d}\label{class_road_segment_a3383a1d763348c66ae5fa1ea802daa7d}} 
+\index{RoadSegment@{RoadSegment}!GetTo@{GetTo}}
+\index{GetTo@{GetTo}!RoadSegment@{RoadSegment}}
+\doxysubsubsection{\texorpdfstring{GetTo()}{GetTo()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_node}{Node}} $\ast$ Road\+Segment\+::\+Get\+To (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the {\ttfamily to} \mbox{\hyperlink{class_node}{Node}} of this road. 
+
+\begin{DoxyReturn}{Returns}
+Node$\ast$ The {\ttfamily to} \mbox{\hyperlink{class_node}{Node}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_road_segment_a4b08305b3c7ebaed73b3a50db6a83784}\label{class_road_segment_a4b08305b3c7ebaed73b3a50db6a83784}} 
+\index{RoadSegment@{RoadSegment}!GetToPos@{GetToPos}}
+\index{GetToPos@{GetToPos}!RoadSegment@{RoadSegment}}
+\doxysubsubsection{\texorpdfstring{GetToPos()}{GetToPos()}}
+{\footnotesize\ttfamily Vector2 Road\+Segment\+::\+Get\+To\+Pos (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the position of the {\ttfamily to} \mbox{\hyperlink{class_node}{Node}} of this road. 
+
+\begin{DoxyReturn}{Returns}
+Vector2 The position of the {\ttfamily to} \mbox{\hyperlink{class_node}{Node}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_road_segment_a3015f137ad680f1341bb6c506d9ec17a}\label{class_road_segment_a3015f137ad680f1341bb6c506d9ec17a}} 
+\index{RoadSegment@{RoadSegment}!GetType@{GetType}}
+\index{GetType@{GetType}!RoadSegment@{RoadSegment}}
+\doxysubsubsection{\texorpdfstring{GetType()}{GetType()}}
+{\footnotesize\ttfamily Road\+Segment\+::\+Road\+Type Road\+Segment\+::\+Get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the Type of this road. 
+
+\begin{DoxyReturn}{Returns}
+Road\+Segment\+::\+Road\+Type 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_road_segment_af3d772d7dd496e0ba8220b8a41718a70}\label{class_road_segment_af3d772d7dd496e0ba8220b8a41718a70}} 
+\index{RoadSegment@{RoadSegment}!SetColor@{SetColor}}
+\index{SetColor@{SetColor}!RoadSegment@{RoadSegment}}
+\doxysubsubsection{\texorpdfstring{SetColor()}{SetColor()}}
+{\footnotesize\ttfamily void Road\+Segment\+::\+Set\+Color (\begin{DoxyParamCaption}\item[{Color}]{color }\end{DoxyParamCaption})}
+
+
+
+Set the Color of this road. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em color} & The new Color \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_road_segment_a4edb2d37f7054177dc5e752f42705301}\label{class_road_segment_a4edb2d37f7054177dc5e752f42705301}} 
+\index{RoadSegment@{RoadSegment}!SetDelay@{SetDelay}}
+\index{SetDelay@{SetDelay}!RoadSegment@{RoadSegment}}
+\doxysubsubsection{\texorpdfstring{SetDelay()}{SetDelay()}}
+{\footnotesize\ttfamily void Road\+Segment\+::\+Set\+Delay (\begin{DoxyParamCaption}\item[{int}]{delay }\end{DoxyParamCaption})}
+
+
+
+Set the Delay of this road. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delay} & The number to set the delay to. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_road_segment_a5039c122f2fc4702237c4914dbffdd9f}\label{class_road_segment_a5039c122f2fc4702237c4914dbffdd9f}} 
+\index{RoadSegment@{RoadSegment}!SetFrom@{SetFrom}}
+\index{SetFrom@{SetFrom}!RoadSegment@{RoadSegment}}
+\doxysubsubsection{\texorpdfstring{SetFrom()}{SetFrom()}}
+{\footnotesize\ttfamily void Road\+Segment\+::\+Set\+From (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_node}{Node}} $\ast$}]{node }\end{DoxyParamCaption})}
+
+
+
+Set the {\ttfamily from} \mbox{\hyperlink{class_node}{Node}} and remove this road from last {\ttfamily from} \mbox{\hyperlink{class_node}{Node}} and add it to the new {\ttfamily from} \mbox{\hyperlink{class_node}{Node}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{\hyperlink{class_node}{Node}}} & The new {\ttfamily from} \mbox{\hyperlink{class_node}{Node}}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_road_segment_ac305c227f378c89ee249679af828006e}\label{class_road_segment_ac305c227f378c89ee249679af828006e}} 
+\index{RoadSegment@{RoadSegment}!SetTo@{SetTo}}
+\index{SetTo@{SetTo}!RoadSegment@{RoadSegment}}
+\doxysubsubsection{\texorpdfstring{SetTo()}{SetTo()}}
+{\footnotesize\ttfamily void Road\+Segment\+::\+Set\+To (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_node}{Node}} $\ast$}]{node }\end{DoxyParamCaption})}
+
+
+
+Set the {\ttfamily to} \mbox{\hyperlink{class_node}{Node}} and remove this road from last {\ttfamily to} \mbox{\hyperlink{class_node}{Node}} and add it to the new {\ttfamily to} \mbox{\hyperlink{class_node}{Node}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{\hyperlink{class_node}{Node}}} & The new {\ttfamily to} \mbox{\hyperlink{class_node}{Node}}. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_road_segment_a67975d847b127d555b9706562281c990}\label{class_road_segment_a67975d847b127d555b9706562281c990}} 
+\index{RoadSegment@{RoadSegment}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!RoadSegment@{RoadSegment}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily std\+::ostream \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os,  }\item[{const \mbox{\hyperlink{class_road_segment}{Road\+Segment}} \&}]{road }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Print the positions of the {\ttfamily from} \mbox{\hyperlink{class_node}{Node}} and the {\ttfamily to} \mbox{\hyperlink{class_node}{Node}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em os} & iostream \\
+\hline
+{\em road} & \mbox{\hyperlink{class_road_segment}{Road\+Segment}} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::ostream\& 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

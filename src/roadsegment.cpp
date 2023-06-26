@@ -2,8 +2,6 @@
 #include "include/roadsegment.hpp"
 #include "raymath.h"
 
-#define PRINT(x) std::cout << x << std::endl
-
 RoadSegment::RoadSegment(int delay, Settings* settings, Node* from, Node* to) :
     delay(delay),
     settings(settings),
@@ -20,14 +18,17 @@ void RoadSegment::Draw() const {
     DrawModelEx(model, pos, { 0, 1, 0 }, angle, Vector3{ 1, 1, length / modelLength }, color);
 }
 
-std::ostream& operator<<(std::ostream& os, const RoadSegment& n) {
-    os << "FROM: " << n.GetFromPos().x << ", " << n.GetFromPos().y;
-    os << "  TO: " << n.GetToPos().x << ", " << n.GetToPos().y << std::endl;
-    return os;
+
+unsigned int RoadSegment::GetDelay() const {
+    return delay;
 }
 
-int RoadSegment::GetDelay() const {
-    return delay;
+Node* RoadSegment::GetFrom() const {
+    return from;
+}
+
+Node* RoadSegment::GetTo() const {
+    return to;
 }
 
 Vector2 RoadSegment::GetToPos() const {
@@ -36,13 +37,6 @@ Vector2 RoadSegment::GetToPos() const {
 
 Vector2 RoadSegment::GetFromPos() const {
     return from->GetPos();
-}
-
-Node* RoadSegment::GetFrom() const {
-    return from;
-}
-Node* RoadSegment::GetTo() const {
-    return to;
 }
 
 void RoadSegment::SetDelay(int delay) {
@@ -88,4 +82,10 @@ void RoadSegment::CalculatePosAndAngle() {
     angle = (RAD2DEG * Vector2Angle(GetFromPos(), GetToPos()));
 
     length = Vector2Distance(GetFromPos(), GetToPos());
+}
+
+std::ostream& operator<<(std::ostream& os, const RoadSegment& road) {
+    os << "FROM: " << road.GetFromPos().x << ", " << road.GetFromPos().y;
+    os << "  TO: " << road.GetToPos().x << ", " << road.GetToPos().y << std::endl;
+    return os;
 }

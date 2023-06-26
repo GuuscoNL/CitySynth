@@ -7,42 +7,58 @@
 \DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <vector>}}
 \DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <iostream>}}
 \DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}settings.hpp"{}}}
-\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}node.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Node.hpp"{}}}
 \DoxyCodeLine{00007\ }
 \DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_road_segment}{RoadSegment}}\ \{}
 \DoxyCodeLine{00009\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00010\ \ \ \ \ \mbox{\hyperlink{class_road_segment}{RoadSegment}}(\textcolor{keywordtype}{int}\ delay,\ \mbox{\hyperlink{struct_settings}{Settings}}*\ settings,\ \mbox{\hyperlink{class_node}{Node}}*\ from,\ \mbox{\hyperlink{class_node}{Node}}*\ to);}
-\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_road_segment}{\string~RoadSegment}}();}
-\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{enum}\ RoadType\ \{\ HIGHWAY,\ SIDEROAD\ \};}
-\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{void}\ Draw()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{friend}\ std::ostream\&\ operator<<(std::ostream\&\ os,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_road_segment}{RoadSegment}}\&\ n);}
-\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{int}\ GetDelay()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00016\ \ \ \ \ Vector2\ GetToPos()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00017\ \ \ \ \ Vector2\ GetFromPos()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{float}\ GetAngle()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{class_node}{Node}}*\ GetFrom()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{class_node}{Node}}*\ GetTo()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00021\ \ \ \ \ RoadSegment::RoadType\ GetType()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ SetDelay(\textcolor{keywordtype}{int}\ delay);}
-\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ SetFrom(\mbox{\hyperlink{class_node}{Node}}*\ node);}
-\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ SetTo(\mbox{\hyperlink{class_node}{Node}}*\ node);}
-\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ SetColor(Color\ color);}
-\DoxyCodeLine{00026\ }
-\DoxyCodeLine{00027\ \textcolor{keyword}{protected}:}
-\DoxyCodeLine{00028\ \ \ \ \ Model\ model;}
-\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{int}\ delay;}
-\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{struct_settings}{Settings}}*\ settings;}
-\DoxyCodeLine{00031\ \ \ \ \ Color\ color;}
-\DoxyCodeLine{00032\ \ \ \ \ RoadSegment::RoadType\ type;}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{enum}\ RoadType\ \{\ HIGHWAY,\ SIDEROAD\ \};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{class_road_segment_a908b44b17de6c5f9a9db9608eef1fb48}{RoadSegment}}(\textcolor{keywordtype}{int}\ delay,\ \mbox{\hyperlink{struct_settings}{Settings}}*\ settings,\ \mbox{\hyperlink{class_node}{Node}}*\ from,\ \mbox{\hyperlink{class_node}{Node}}*\ to);}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_road_segment_a581dd6c74ac8e7f07c45c45c8b125c1b}{\string~RoadSegment}}();}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_road_segment_a64e85c3384ec08579a00a847168dc2c0}{Draw}}()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00033\ }
-\DoxyCodeLine{00034\ \ \ \ \ Vector3\ pos;}
-\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{class_node}{Node}}*\ from;}
-\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{class_node}{Node}}*\ to;}
-\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{float}\ angle;}
-\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{float}\ length;}
-\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{float}\ modelLength;}
-\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{float}\ height;}
-\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ CalculatePosAndAngle();}
-\DoxyCodeLine{00042\ \};}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_road_segment_a8f8ab48fb995ed608a83aa2fe195547e}{GetDelay}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{class_node}{Node}}*\ \mbox{\hyperlink{class_road_segment_a037f0f2e3851e66978c55800c9f77118}{GetFrom}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{class_node}{Node}}*\ \mbox{\hyperlink{class_road_segment_a3383a1d763348c66ae5fa1ea802daa7d}{GetTo}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00060\ \ \ \ \ Vector2\ \mbox{\hyperlink{class_road_segment_a4b08305b3c7ebaed73b3a50db6a83784}{GetToPos}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00067\ \ \ \ \ Vector2\ \mbox{\hyperlink{class_road_segment_ad4d4eba6af3bc4d7f032533ec297b388}{GetFromPos}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_road_segment_a4bc9fcdb62262bd8a756d9643bda1040}{GetAngle}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00081\ \ \ \ \ RoadSegment::RoadType\ \mbox{\hyperlink{class_road_segment_a3015f137ad680f1341bb6c506d9ec17a}{GetType}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_road_segment_a4edb2d37f7054177dc5e752f42705301}{SetDelay}}(\textcolor{keywordtype}{int}\ delay);}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_road_segment_a5039c122f2fc4702237c4914dbffdd9f}{SetFrom}}(\mbox{\hyperlink{class_node}{Node}}*\ node);}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_road_segment_ac305c227f378c89ee249679af828006e}{SetTo}}(\mbox{\hyperlink{class_node}{Node}}*\ node);}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_road_segment_af3d772d7dd496e0ba8220b8a41718a70}{SetColor}}(Color\ color);}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keyword}{friend}\ std::ostream\&\ \mbox{\hyperlink{class_road_segment_a67975d847b127d555b9706562281c990}{operator<<}}(std::ostream\&\ os,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_road_segment}{RoadSegment}}\&\ road);}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00123\ \ \ \ \ Model\ model;}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ delay;}
+\DoxyCodeLine{00125\ \ \ \ \ \mbox{\hyperlink{struct_settings}{Settings}}*\ settings;}
+\DoxyCodeLine{00126\ \ \ \ \ Color\ color;}
+\DoxyCodeLine{00127\ \ \ \ \ RoadSegment::RoadType\ type;}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \ \ \ \ Vector3\ pos;}
+\DoxyCodeLine{00130\ \ \ \ \ \mbox{\hyperlink{class_node}{Node}}*\ from;}
+\DoxyCodeLine{00131\ \ \ \ \ \mbox{\hyperlink{class_node}{Node}}*\ to;}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{float}\ angle;}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{float}\ length;}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordtype}{float}\ modelLength;}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordtype}{float}\ height;}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_road_segment_a7c383be36c6d023a387c9c58520727e5}{CalculatePosAndAngle}}();}
+\DoxyCodeLine{00142\ \};}
 
 \end{DoxyCode}

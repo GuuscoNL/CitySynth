@@ -99,50 +99,53 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a908b44b17de6c5f9a9db9608eef1fb48"><td class="memItemLeft" align="right" valign="top"><a id="a908b44b17de6c5f9a9db9608eef1fb48" name="a908b44b17de6c5f9a9db9608eef1fb48"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>RoadSegment</b> (int delay, <a class="el" href="struct_settings.html">Settings</a> *settings, <a class="el" href="class_node.html">Node</a> *from, <a class="el" href="class_node.html">Node</a> *to)</td></tr>
+<tr class="memitem:a908b44b17de6c5f9a9db9608eef1fb48"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_road_segment.html#a908b44b17de6c5f9a9db9608eef1fb48">RoadSegment</a> (int delay, <a class="el" href="struct_settings.html">Settings</a> *settings, <a class="el" href="class_node.html">Node</a> *from, <a class="el" href="class_node.html">Node</a> *to)</td></tr>
+<tr class="memdesc:a908b44b17de6c5f9a9db9608eef1fb48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Road Segment object.  <br /></td></tr>
 <tr class="separator:a908b44b17de6c5f9a9db9608eef1fb48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64e85c3384ec08579a00a847168dc2c0"><td class="memItemLeft" align="right" valign="top"><a id="a64e85c3384ec08579a00a847168dc2c0" name="a64e85c3384ec08579a00a847168dc2c0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Draw</b> () const</td></tr>
+<tr class="memitem:a581dd6c74ac8e7f07c45c45c8b125c1b"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_road_segment.html#a581dd6c74ac8e7f07c45c45c8b125c1b">~RoadSegment</a> ()</td></tr>
+<tr class="memdesc:a581dd6c74ac8e7f07c45c45c8b125c1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the Road Segment object and remove this road from the <code>from</code> and <code>to</code> nodes.  <br /></td></tr>
+<tr class="separator:a581dd6c74ac8e7f07c45c45c8b125c1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64e85c3384ec08579a00a847168dc2c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_road_segment.html#a64e85c3384ec08579a00a847168dc2c0">Draw</a> () const</td></tr>
+<tr class="memdesc:a64e85c3384ec08579a00a847168dc2c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw this road.  <br /></td></tr>
 <tr class="separator:a64e85c3384ec08579a00a847168dc2c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7bf32c39c5b1eeb83fdf873e7a7b4e0c"><td class="memItemLeft" align="right" valign="top"><a id="a7bf32c39c5b1eeb83fdf873e7a7b4e0c" name="a7bf32c39c5b1eeb83fdf873e7a7b4e0c"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>GetDelay</b> () const</td></tr>
-<tr class="separator:a7bf32c39c5b1eeb83fdf873e7a7b4e0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b08305b3c7ebaed73b3a50db6a83784"><td class="memItemLeft" align="right" valign="top"><a id="a4b08305b3c7ebaed73b3a50db6a83784" name="a4b08305b3c7ebaed73b3a50db6a83784"></a>
-Vector2&#160;</td><td class="memItemRight" valign="bottom"><b>GetToPos</b> () const</td></tr>
-<tr class="separator:a4b08305b3c7ebaed73b3a50db6a83784"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4d4eba6af3bc4d7f032533ec297b388"><td class="memItemLeft" align="right" valign="top"><a id="ad4d4eba6af3bc4d7f032533ec297b388" name="ad4d4eba6af3bc4d7f032533ec297b388"></a>
-Vector2&#160;</td><td class="memItemRight" valign="bottom"><b>GetFromPos</b> () const</td></tr>
-<tr class="separator:ad4d4eba6af3bc4d7f032533ec297b388"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4bc9fcdb62262bd8a756d9643bda1040"><td class="memItemLeft" align="right" valign="top"><a id="a4bc9fcdb62262bd8a756d9643bda1040" name="a4bc9fcdb62262bd8a756d9643bda1040"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>GetAngle</b> () const</td></tr>
-<tr class="separator:a4bc9fcdb62262bd8a756d9643bda1040"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a037f0f2e3851e66978c55800c9f77118"><td class="memItemLeft" align="right" valign="top"><a id="a037f0f2e3851e66978c55800c9f77118" name="a037f0f2e3851e66978c55800c9f77118"></a>
-<a class="el" href="class_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetFrom</b> () const</td></tr>
+<tr class="memitem:a8f8ab48fb995ed608a83aa2fe195547e"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_road_segment.html#a8f8ab48fb995ed608a83aa2fe195547e">GetDelay</a> () const</td></tr>
+<tr class="memdesc:a8f8ab48fb995ed608a83aa2fe195547e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Delay of this road.  <br /></td></tr>
+<tr class="separator:a8f8ab48fb995ed608a83aa2fe195547e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a037f0f2e3851e66978c55800c9f77118"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_road_segment.html#a037f0f2e3851e66978c55800c9f77118">GetFrom</a> () const</td></tr>
+<tr class="memdesc:a037f0f2e3851e66978c55800c9f77118"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <code>from</code> <a class="el" href="class_node.html">Node</a> of this road.  <br /></td></tr>
 <tr class="separator:a037f0f2e3851e66978c55800c9f77118"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3383a1d763348c66ae5fa1ea802daa7d"><td class="memItemLeft" align="right" valign="top"><a id="a3383a1d763348c66ae5fa1ea802daa7d" name="a3383a1d763348c66ae5fa1ea802daa7d"></a>
-<a class="el" href="class_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetTo</b> () const</td></tr>
+<tr class="memitem:a3383a1d763348c66ae5fa1ea802daa7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_road_segment.html#a3383a1d763348c66ae5fa1ea802daa7d">GetTo</a> () const</td></tr>
+<tr class="memdesc:a3383a1d763348c66ae5fa1ea802daa7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <code>to</code> <a class="el" href="class_node.html">Node</a> of this road.  <br /></td></tr>
 <tr class="separator:a3383a1d763348c66ae5fa1ea802daa7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3015f137ad680f1341bb6c506d9ec17a"><td class="memItemLeft" align="right" valign="top"><a id="a3015f137ad680f1341bb6c506d9ec17a" name="a3015f137ad680f1341bb6c506d9ec17a"></a>
-RoadSegment::RoadType&#160;</td><td class="memItemRight" valign="bottom"><b>GetType</b> () const</td></tr>
+<tr class="memitem:a4b08305b3c7ebaed73b3a50db6a83784"><td class="memItemLeft" align="right" valign="top">Vector2&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_road_segment.html#a4b08305b3c7ebaed73b3a50db6a83784">GetToPos</a> () const</td></tr>
+<tr class="memdesc:a4b08305b3c7ebaed73b3a50db6a83784"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the position of the <code>to</code> <a class="el" href="class_node.html">Node</a> of this road.  <br /></td></tr>
+<tr class="separator:a4b08305b3c7ebaed73b3a50db6a83784"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4d4eba6af3bc4d7f032533ec297b388"><td class="memItemLeft" align="right" valign="top">Vector2&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_road_segment.html#ad4d4eba6af3bc4d7f032533ec297b388">GetFromPos</a> () const</td></tr>
+<tr class="memdesc:ad4d4eba6af3bc4d7f032533ec297b388"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the position of the <code>from</code> <a class="el" href="class_node.html">Node</a> of this road.  <br /></td></tr>
+<tr class="separator:ad4d4eba6af3bc4d7f032533ec297b388"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bc9fcdb62262bd8a756d9643bda1040"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_road_segment.html#a4bc9fcdb62262bd8a756d9643bda1040">GetAngle</a> () const</td></tr>
+<tr class="memdesc:a4bc9fcdb62262bd8a756d9643bda1040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Angle of this road.  <br /></td></tr>
+<tr class="separator:a4bc9fcdb62262bd8a756d9643bda1040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3015f137ad680f1341bb6c506d9ec17a"><td class="memItemLeft" align="right" valign="top">RoadSegment::RoadType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_road_segment.html#a3015f137ad680f1341bb6c506d9ec17a">GetType</a> () const</td></tr>
+<tr class="memdesc:a3015f137ad680f1341bb6c506d9ec17a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Type of this road.  <br /></td></tr>
 <tr class="separator:a3015f137ad680f1341bb6c506d9ec17a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4edb2d37f7054177dc5e752f42705301"><td class="memItemLeft" align="right" valign="top"><a id="a4edb2d37f7054177dc5e752f42705301" name="a4edb2d37f7054177dc5e752f42705301"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetDelay</b> (int delay)</td></tr>
+<tr class="memitem:a4edb2d37f7054177dc5e752f42705301"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_road_segment.html#a4edb2d37f7054177dc5e752f42705301">SetDelay</a> (int delay)</td></tr>
+<tr class="memdesc:a4edb2d37f7054177dc5e752f42705301"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Delay of this road.  <br /></td></tr>
 <tr class="separator:a4edb2d37f7054177dc5e752f42705301"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5039c122f2fc4702237c4914dbffdd9f"><td class="memItemLeft" align="right" valign="top"><a id="a5039c122f2fc4702237c4914dbffdd9f" name="a5039c122f2fc4702237c4914dbffdd9f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetFrom</b> (<a class="el" href="class_node.html">Node</a> *node)</td></tr>
+<tr class="memitem:a5039c122f2fc4702237c4914dbffdd9f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_road_segment.html#a5039c122f2fc4702237c4914dbffdd9f">SetFrom</a> (<a class="el" href="class_node.html">Node</a> *node)</td></tr>
+<tr class="memdesc:a5039c122f2fc4702237c4914dbffdd9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the <code>from</code> <a class="el" href="class_node.html">Node</a> and remove this road from last <code>from</code> <a class="el" href="class_node.html">Node</a> and add it to the new <code>from</code> <a class="el" href="class_node.html">Node</a>.  <br /></td></tr>
 <tr class="separator:a5039c122f2fc4702237c4914dbffdd9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac305c227f378c89ee249679af828006e"><td class="memItemLeft" align="right" valign="top"><a id="ac305c227f378c89ee249679af828006e" name="ac305c227f378c89ee249679af828006e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetTo</b> (<a class="el" href="class_node.html">Node</a> *node)</td></tr>
+<tr class="memitem:ac305c227f378c89ee249679af828006e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_road_segment.html#ac305c227f378c89ee249679af828006e">SetTo</a> (<a class="el" href="class_node.html">Node</a> *node)</td></tr>
+<tr class="memdesc:ac305c227f378c89ee249679af828006e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the <code>to</code> <a class="el" href="class_node.html">Node</a> and remove this road from last <code>to</code> <a class="el" href="class_node.html">Node</a> and add it to the new <code>to</code> <a class="el" href="class_node.html">Node</a>.  <br /></td></tr>
 <tr class="separator:ac305c227f378c89ee249679af828006e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3d772d7dd496e0ba8220b8a41718a70"><td class="memItemLeft" align="right" valign="top"><a id="af3d772d7dd496e0ba8220b8a41718a70" name="af3d772d7dd496e0ba8220b8a41718a70"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetColor</b> (Color color)</td></tr>
+<tr class="memitem:af3d772d7dd496e0ba8220b8a41718a70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_road_segment.html#af3d772d7dd496e0ba8220b8a41718a70">SetColor</a> (Color color)</td></tr>
+<tr class="memdesc:af3d772d7dd496e0ba8220b8a41718a70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Color of this road.  <br /></td></tr>
 <tr class="separator:af3d772d7dd496e0ba8220b8a41718a70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a7c383be36c6d023a387c9c58520727e5"><td class="memItemLeft" align="right" valign="top"><a id="a7c383be36c6d023a387c9c58520727e5" name="a7c383be36c6d023a387c9c58520727e5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>CalculatePosAndAngle</b> ()</td></tr>
+<tr class="memitem:a7c383be36c6d023a387c9c58520727e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_road_segment.html#a7c383be36c6d023a387c9c58520727e5">CalculatePosAndAngle</a> ()</td></tr>
+<tr class="memdesc:a7c383be36c6d023a387c9c58520727e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the position and angle based on the <code>from</code> <a class="el" href="class_node.html">Node</a> and the <code>to</code> <a class="el" href="class_node.html">Node</a>.  <br /></td></tr>
 <tr class="separator:a7c383be36c6d023a387c9c58520727e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
@@ -150,9 +153,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a1ea8d200d2e7be20acb33e87785e8c18"><td class="memItemLeft" align="right" valign="top"><a id="a1ea8d200d2e7be20acb33e87785e8c18" name="a1ea8d200d2e7be20acb33e87785e8c18"></a>
 Model&#160;</td><td class="memItemRight" valign="bottom"><b>model</b></td></tr>
 <tr class="separator:a1ea8d200d2e7be20acb33e87785e8c18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb541a83511747b3bcb28d140304c394"><td class="memItemLeft" align="right" valign="top"><a id="aeb541a83511747b3bcb28d140304c394" name="aeb541a83511747b3bcb28d140304c394"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>delay</b></td></tr>
-<tr class="separator:aeb541a83511747b3bcb28d140304c394"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3445b894cc9d30ac6a30ca30a442c21e"><td class="memItemLeft" align="right" valign="top"><a id="a3445b894cc9d30ac6a30ca30a442c21e" name="a3445b894cc9d30ac6a30ca30a442c21e"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>delay</b></td></tr>
+<tr class="separator:a3445b894cc9d30ac6a30ca30a442c21e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc8236a8d707f9b680796042a59d6f51"><td class="memItemLeft" align="right" valign="top"><a id="afc8236a8d707f9b680796042a59d6f51" name="afc8236a8d707f9b680796042a59d6f51"></a>
 <a class="el" href="struct_settings.html">Settings</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>settings</b></td></tr>
 <tr class="separator:afc8236a8d707f9b680796042a59d6f51"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -186,10 +189,427 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>height</b></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
-<tr class="memitem:a87b71ad35bf4f0e23cf155a487bfb989"><td class="memItemLeft" align="right" valign="top"><a id="a87b71ad35bf4f0e23cf155a487bfb989" name="a87b71ad35bf4f0e23cf155a487bfb989"></a>
-std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (std::ostream &amp;os, const <a class="el" href="class_road_segment.html">RoadSegment</a> &amp;n)</td></tr>
-<tr class="separator:a87b71ad35bf4f0e23cf155a487bfb989"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67975d847b127d555b9706562281c990"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_road_segment.html#a67975d847b127d555b9706562281c990">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="class_road_segment.html">RoadSegment</a> &amp;road)</td></tr>
+<tr class="memdesc:a67975d847b127d555b9706562281c990"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print the positions of the <code>from</code> <a class="el" href="class_node.html">Node</a> and the <code>to</code> <a class="el" href="class_node.html">Node</a>.  <br /></td></tr>
+<tr class="separator:a67975d847b127d555b9706562281c990"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a908b44b17de6c5f9a9db9608eef1fb48" name="a908b44b17de6c5f9a9db9608eef1fb48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a908b44b17de6c5f9a9db9608eef1fb48">&#9670;&#160;</a></span>RoadSegment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RoadSegment::RoadSegment </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>delay</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_settings.html">Settings</a> *&#160;</td>
+          <td class="paramname"><em>settings</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>from</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>to</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Construct a new Road Segment object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">delay</td><td>The delay. </td></tr>
+    <tr><td class="paramname">settings</td><td>Pointer to <a class="el" href="struct_settings.html">Settings</a>. </td></tr>
+    <tr><td class="paramname">from</td><td>The <a class="el" href="class_node.html">Node</a> where this <a class="el" href="class_road_segment.html">RoadSegment</a> starts. </td></tr>
+    <tr><td class="paramname">to</td><td>The <a class="el" href="class_node.html">Node</a> where this <a class="el" href="class_road_segment.html">RoadSegment</a> ends. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a581dd6c74ac8e7f07c45c45c8b125c1b" name="a581dd6c74ac8e7f07c45c45c8b125c1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a581dd6c74ac8e7f07c45c45c8b125c1b">&#9670;&#160;</a></span>~RoadSegment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual RoadSegment::~RoadSegment </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Destroy the Road Segment object and remove this road from the <code>from</code> and <code>to</code> nodes. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7c383be36c6d023a387c9c58520727e5" name="a7c383be36c6d023a387c9c58520727e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c383be36c6d023a387c9c58520727e5">&#9670;&#160;</a></span>CalculatePosAndAngle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RoadSegment::CalculatePosAndAngle </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculate the position and angle based on the <code>from</code> <a class="el" href="class_node.html">Node</a> and the <code>to</code> <a class="el" href="class_node.html">Node</a>. </p>
+
+</div>
+</div>
+<a id="a64e85c3384ec08579a00a847168dc2c0" name="a64e85c3384ec08579a00a847168dc2c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64e85c3384ec08579a00a847168dc2c0">&#9670;&#160;</a></span>Draw()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RoadSegment::Draw </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Draw this road. </p>
+
+</div>
+</div>
+<a id="a4bc9fcdb62262bd8a756d9643bda1040" name="a4bc9fcdb62262bd8a756d9643bda1040"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4bc9fcdb62262bd8a756d9643bda1040">&#9670;&#160;</a></span>GetAngle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float RoadSegment::GetAngle </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the Angle of this road. </p>
+<dl class="section return"><dt>Returns</dt><dd>float The angle in degrees. </dd></dl>
+
+</div>
+</div>
+<a id="a8f8ab48fb995ed608a83aa2fe195547e" name="a8f8ab48fb995ed608a83aa2fe195547e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f8ab48fb995ed608a83aa2fe195547e">&#9670;&#160;</a></span>GetDelay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int RoadSegment::GetDelay </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the Delay of this road. </p>
+<dl class="section return"><dt>Returns</dt><dd>unsigned int The delay. </dd></dl>
+
+</div>
+</div>
+<a id="a037f0f2e3851e66978c55800c9f77118" name="a037f0f2e3851e66978c55800c9f77118"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a037f0f2e3851e66978c55800c9f77118">&#9670;&#160;</a></span>GetFrom()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_node.html">Node</a> * RoadSegment::GetFrom </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the <code>from</code> <a class="el" href="class_node.html">Node</a> of this road. </p>
+<dl class="section return"><dt>Returns</dt><dd>Node* The <code>from</code> <a class="el" href="class_node.html">Node</a>. </dd></dl>
+
+</div>
+</div>
+<a id="ad4d4eba6af3bc4d7f032533ec297b388" name="ad4d4eba6af3bc4d7f032533ec297b388"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4d4eba6af3bc4d7f032533ec297b388">&#9670;&#160;</a></span>GetFromPos()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector2 RoadSegment::GetFromPos </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the position of the <code>from</code> <a class="el" href="class_node.html">Node</a> of this road. </p>
+<dl class="section return"><dt>Returns</dt><dd>Vector2 The position of the <code>from</code> <a class="el" href="class_node.html">Node</a>. </dd></dl>
+
+</div>
+</div>
+<a id="a3383a1d763348c66ae5fa1ea802daa7d" name="a3383a1d763348c66ae5fa1ea802daa7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3383a1d763348c66ae5fa1ea802daa7d">&#9670;&#160;</a></span>GetTo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_node.html">Node</a> * RoadSegment::GetTo </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the <code>to</code> <a class="el" href="class_node.html">Node</a> of this road. </p>
+<dl class="section return"><dt>Returns</dt><dd>Node* The <code>to</code> <a class="el" href="class_node.html">Node</a>. </dd></dl>
+
+</div>
+</div>
+<a id="a4b08305b3c7ebaed73b3a50db6a83784" name="a4b08305b3c7ebaed73b3a50db6a83784"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b08305b3c7ebaed73b3a50db6a83784">&#9670;&#160;</a></span>GetToPos()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector2 RoadSegment::GetToPos </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the position of the <code>to</code> <a class="el" href="class_node.html">Node</a> of this road. </p>
+<dl class="section return"><dt>Returns</dt><dd>Vector2 The position of the <code>to</code> <a class="el" href="class_node.html">Node</a>. </dd></dl>
+
+</div>
+</div>
+<a id="a3015f137ad680f1341bb6c506d9ec17a" name="a3015f137ad680f1341bb6c506d9ec17a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3015f137ad680f1341bb6c506d9ec17a">&#9670;&#160;</a></span>GetType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RoadSegment::RoadType RoadSegment::GetType </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the Type of this road. </p>
+<dl class="section return"><dt>Returns</dt><dd>RoadSegment::RoadType </dd></dl>
+
+</div>
+</div>
+<a id="af3d772d7dd496e0ba8220b8a41718a70" name="af3d772d7dd496e0ba8220b8a41718a70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3d772d7dd496e0ba8220b8a41718a70">&#9670;&#160;</a></span>SetColor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RoadSegment::SetColor </td>
+          <td>(</td>
+          <td class="paramtype">Color&#160;</td>
+          <td class="paramname"><em>color</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the Color of this road. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">color</td><td>The new Color </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4edb2d37f7054177dc5e752f42705301" name="a4edb2d37f7054177dc5e752f42705301"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4edb2d37f7054177dc5e752f42705301">&#9670;&#160;</a></span>SetDelay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RoadSegment::SetDelay </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>delay</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the Delay of this road. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">delay</td><td>The number to set the delay to. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5039c122f2fc4702237c4914dbffdd9f" name="a5039c122f2fc4702237c4914dbffdd9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5039c122f2fc4702237c4914dbffdd9f">&#9670;&#160;</a></span>SetFrom()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RoadSegment::SetFrom </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the <code>from</code> <a class="el" href="class_node.html">Node</a> and remove this road from last <code>from</code> <a class="el" href="class_node.html">Node</a> and add it to the new <code>from</code> <a class="el" href="class_node.html">Node</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="class_node.html">Node</a></td><td>The new <code>from</code> <a class="el" href="class_node.html">Node</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac305c227f378c89ee249679af828006e" name="ac305c227f378c89ee249679af828006e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac305c227f378c89ee249679af828006e">&#9670;&#160;</a></span>SetTo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RoadSegment::SetTo </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the <code>to</code> <a class="el" href="class_node.html">Node</a> and remove this road from last <code>to</code> <a class="el" href="class_node.html">Node</a> and add it to the new <code>to</code> <a class="el" href="class_node.html">Node</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="class_node.html">Node</a></td><td>The new <code>to</code> <a class="el" href="class_node.html">Node</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="a67975d847b127d555b9706562281c990" name="a67975d847b127d555b9706562281c990"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67975d847b127d555b9706562281c990">&#9670;&#160;</a></span>operator&lt;&lt;</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream &amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_road_segment.html">RoadSegment</a> &amp;&#160;</td>
+          <td class="paramname"><em>road</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Print the positions of the <code>from</code> <a class="el" href="class_node.html">Node</a> and the <code>to</code> <a class="el" href="class_node.html">Node</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">os</td><td>iostream </td></tr>
+    <tr><td class="paramname">road</td><td><a class="el" href="class_road_segment.html">RoadSegment</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::ostream&amp; </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/include/<a class="el" href="roadsegment_8hpp_source.html">roadsegment.hpp</a></li>
 </ul>
