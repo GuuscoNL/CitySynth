@@ -61,12 +61,12 @@ void City::SetSize(int size) {
 
 void City::Draw() const{
 
-    for (auto*& road : roads) {
+    for (const auto* const road : roads) {
         road->Draw();
     }
 
     if (settings->ShowNodes) {
-        for (auto*& node : nodes) {
+        for (const auto* const node : nodes) {
             node->Draw();
         }
     }
