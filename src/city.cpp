@@ -329,9 +329,6 @@ void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoad
         if (GetRandomValue(0, 100) <= settings->sideRoadBranchChance) {
             // Random angle 90 or -90
             float angle = 90;
-            if (GetRandomValue(0, 1) == 0) {
-                angle = -90;
-            }
             RoadSegment* newRoad = AddSideRoad(rootRoad, angle, newFromNode);
             if (newRoad != nullptr) {
                 newRoads.push_back(newRoad);
