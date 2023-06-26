@@ -159,15 +159,10 @@ void  City::GenerateCity(unsigned int amount) {
         else {
             // Road has been rejected, remove it
             Node* nodeToRemove = minRoad->GetTo();
-            nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
             roads.erase(remove(roads.begin(), roads.end(), minRoad), roads.end());
 
             delete minRoad;
-            // Make sure the node is not used by other roads before deleting
-            if (nodeToRemove->GetSize() <= 0) {
-                nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
-                delete nodeToRemove;
-            }
+            DeleteNode(nodeToRemove);
         }
     }
     // Make sure every non used road gets deleted
@@ -177,11 +172,7 @@ void  City::GenerateCity(unsigned int amount) {
         roads.erase(remove(roads.begin(), roads.end(), roadToRemove), roads.end());
         delete roadToRemove;
 
-        // Make sure the node is not used by other roads before deleting
-        if (nodeToRemove->GetSize() <= 0) {
-            nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
-            delete nodeToRemove;
-        }
+        DeleteNode(nodeToRemove);
         Q.pop();
     }
     // Keep memory minimal
@@ -242,16 +233,11 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
         if (smallestDistance < settings->CloseCrossing) {
 
             Node* nodeToRemove = orgRoad->GetTo();
-            nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
             orgRoad->SetTo(closestNode);
             closestNode->color = RED;
 
             // Remove old node
-            // Make sure the node is not used by other roads before deleting
-            if (nodeToRemove->GetSize() <= 0) {
-                nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
-                delete nodeToRemove;
-            }
+            DeleteNode(nodeToRemove);
             return true;
         }
     }
@@ -352,6 +338,14 @@ void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoad
     }
 }
 
+void City::DeleteNode(Node* nodeToRemove) {
+    // Make sure the node is not used by other roads before deleting
+    if (nodeToRemove->GetSize() <= 0) {
+        nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
+        delete nodeToRemove;
+    }
+}
+
 RoadSegment* City::AddSideRoad(RoadSegment* rootRoad, float angle, Node* newFromNode) {
     Vector2 newPos = GetPosWithAngle(rootRoad->GetToPos(), rootRoad->GetAngle() + angle, settings->sideRoadLength);
 
@@ -410,21 +404,14 @@ Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, co
     if (Vector2Distance(fromNode->GetPos(), intersectionPos) < 0.2) {
         toAddRoad->SetTo(fromNode);
 
-        // Make sure the node is not used by other roads before deleting
-        if (orgToNode->GetSize() <= 0) {
-            nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
-            delete orgToNode;
-        }
+        DeleteNode(orgToNode);
         return fromNode;
     }
 
     if (Vector2Distance(toNode->GetPos(), intersectionPos) < 0.2) {
         toAddRoad->SetTo(toNode);
-        // Make sure the node is not used by other roads before deleting
-        if (orgToNode->GetSize() <= 0) {
-            nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
-            delete orgToNode;
-        }
+
+        DeleteNode(orgToNode);
         return toNode;
     }
 
@@ -452,11 +439,7 @@ Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, co
     roads.erase(remove(roads.begin(), roads.end(), toSplitRoad), roads.end());
 
     delete toSplitRoad;
-    // Make sure the node is not used by other roads before deleting
-    if (orgToNode->GetSize() <= 0) {
-        nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
-        delete orgToNode;
-    }
+    DeleteNode(orgToNode);
 
     return intersectionNode;
 }

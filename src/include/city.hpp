@@ -35,6 +35,7 @@ private:
     void UpdatePlaneTexture();
     bool LocalConstraints(RoadSegment* road);
     void GlobalGoals(RoadSegment* road, std::vector<RoadSegment*>& newRoads);
+    void DeleteNode(Node* node);
     RoadSegment* AddSideRoad(RoadSegment* rootRoad, float angle, Node* newFromNode);
     Vector2 GetPosWithAngle(const Vector2& fromPos, float angle, float length);
     Vector2 HighwaySamples(const Vector2& fromPos, float OriginalAngle, float MaxAngle);
