@@ -1,0 +1,67 @@
+\hypertarget{class_simplex_noise}{}\doxysection{Simplex\+Noise Class Reference}
+\label{class_simplex_noise}\index{SimplexNoise@{SimplexNoise}}
+
+
+A Perlin Simplex Noise C++ Implementation (1D, 2D, 3D, 4D).  
+
+
+
+
+{\ttfamily \#include $<$simplexnoise.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_simplex_noise_a868146cbed0ee0137b641b5b828a4c75}\label{class_simplex_noise_a868146cbed0ee0137b641b5b828a4c75}} 
+float {\bfseries fractal} (size\+\_\+t octaves, float x) const
+\item 
+\mbox{\Hypertarget{class_simplex_noise_a4914fce2d033b3ed90d84b2602df362f}\label{class_simplex_noise_a4914fce2d033b3ed90d84b2602df362f}} 
+float {\bfseries fractal} (size\+\_\+t octaves, float x, float y) const
+\item 
+\mbox{\Hypertarget{class_simplex_noise_a6081db3a6e38029897928d72ef715297}\label{class_simplex_noise_a6081db3a6e38029897928d72ef715297}} 
+float {\bfseries fractal} (size\+\_\+t octaves, float x, float y, float z) const
+\item 
+\mbox{\hyperlink{class_simplex_noise_a6981510da521395c25be9e9ad2fdbda0}{Simplex\+Noise}} (float frequency=1.\+0f, float amplitude=1.\+0f, float lacunarity=2.\+0f, float persistence=0.\+5f)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_simplex_noise_a6c88f6fdbe6d8945955f5eaacdeacb3a}\label{class_simplex_noise_a6c88f6fdbe6d8945955f5eaacdeacb3a}} 
+static float {\bfseries noise} (float x)
+\item 
+\mbox{\Hypertarget{class_simplex_noise_ace9d1ebf2f6a1fc3bc9203c95ec87375}\label{class_simplex_noise_ace9d1ebf2f6a1fc3bc9203c95ec87375}} 
+static float {\bfseries noise} (float x, float y)
+\item 
+\mbox{\Hypertarget{class_simplex_noise_a871d2492439f3934e1b12930eb70a081}\label{class_simplex_noise_a871d2492439f3934e1b12930eb70a081}} 
+static float {\bfseries noise} (float x, float y, float z)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A Perlin Simplex Noise C++ Implementation (1D, 2D, 3D, 4D). 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_simplex_noise_a6981510da521395c25be9e9ad2fdbda0}\label{class_simplex_noise_a6981510da521395c25be9e9ad2fdbda0}} 
+\index{SimplexNoise@{SimplexNoise}!SimplexNoise@{SimplexNoise}}
+\index{SimplexNoise@{SimplexNoise}!SimplexNoise@{SimplexNoise}}
+\doxysubsubsection{\texorpdfstring{SimplexNoise()}{SimplexNoise()}}
+{\footnotesize\ttfamily Simplex\+Noise\+::\+Simplex\+Noise (\begin{DoxyParamCaption}\item[{float}]{frequency = {\ttfamily 1.0f},  }\item[{float}]{amplitude = {\ttfamily 1.0f},  }\item[{float}]{lacunarity = {\ttfamily 2.0f},  }\item[{float}]{persistence = {\ttfamily 0.5f} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+Constructor of to initialize a fractal noise summation
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em frequency} & Frequency (\char`\"{}width\char`\"{}) of the first octave of noise (default to 1.\+0) \\
+\hline
+\mbox{\texttt{ in}}  & {\em amplitude} & Amplitude (\char`\"{}height\char`\"{}) of the first octave of noise (default to 1.\+0) \\
+\hline
+\mbox{\texttt{ in}}  & {\em lacunarity} & Lacunarity specifies the frequency multiplier between successive octaves (default to 2.\+0). \\
+\hline
+\mbox{\texttt{ in}}  & {\em persistence} & Persistence is the loss of amplitude between successive octaves (usually 1/lacunarity) \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/include/simplexnoise.\+hpp\end{DoxyCompactItemize}

@@ -8,6 +8,3 @@
 *.png
 *.json
 !.vscode/*
-
-html/
-latex/

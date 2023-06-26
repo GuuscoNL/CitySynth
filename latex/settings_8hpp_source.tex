@@ -1,0 +1,63 @@
+\hypertarget{settings_8hpp_source}{}\doxysection{settings.\+hpp}
+\label{settings_8hpp_source}\index{src/include/settings.hpp@{src/include/settings.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <raylib.h>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}simplexnoise.hpp"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_settings}{Settings}}\ \{}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \ \ \ \ \textcolor{comment}{//\ Highway}}
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keywordtype}{float}\ highwayLength;}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keywordtype}{float}\ highwayWidth;}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordtype}{float}\ highwayHeight;}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{float}\ highwayAngle;}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{int}\ highwaySampleAmount;}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{float}\ highwayBranchChance;}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{float}\ highwaySideRoadBranchChance;}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{comment}{//\ SideRoad}}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{float}\ sideRoadLength;}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{float}\ sideRoadWidth;}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{float}\ sideRoadHeight;}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{float}\ sideRoadBranchChance;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{float}\ sideRoadBranchDelay;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{float}\ sideRoadCloseCrossing;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{float}\ sideRoadCloseRoad;}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{float}\ sideRoadThreshold;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//\ Road\ conflicts}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{float}\ CloseCrossing;}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{float}\ CloseRoad;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{comment}{//\ Simplex}}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{float}\ frequency;\textcolor{comment}{//\ bigger\ =\ smaller\ patches}}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{float}\ amplitude;\textcolor{comment}{//\ ?}}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{float}\ lacunarity;\textcolor{comment}{//\ How\ "{}dense"{}\ the\ patches\ are?}}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{float}\ persistence;\textcolor{comment}{//\ 1/lacunarity}}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{float}\ octaves;\textcolor{comment}{//\ More\ =\ more\ blurry}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{comment}{//\ Model}}
+\DoxyCodeLine{00038\ \ \ \ \ Model\ highwayModel;}
+\DoxyCodeLine{00039\ \ \ \ \ Model\ sideRoadModel;}
+\DoxyCodeLine{00040\ \ \ \ \ Model\ NodeModel;}
+\DoxyCodeLine{00041\ \ \ \ \ Shader\ shader;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//\ Misc}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{bool}\ ShowNodes;}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{bool}\ useCustomHeatmap;}
+\DoxyCodeLine{00046\ \ \ \ \ Image\ customHeatmap;}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{int}\ randomSeed;}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00052\ \ \ \ \ \mbox{\hyperlink{struct_settings}{Settings}}(Shader\ lightingShader);}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ SetSeed(\textcolor{keywordtype}{int}\ seed)\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ randomSeed\ =\ seed;}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ SetRandomSeed(seed);}
+\DoxyCodeLine{00056\ \ \ \ \ \}}
+\DoxyCodeLine{00057\ \};}
+
+\end{DoxyCode}

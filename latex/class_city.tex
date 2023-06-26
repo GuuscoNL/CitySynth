@@ -1,0 +1,194 @@
+\hypertarget{class_city}{}\doxysection{City Class Reference}
+\label{class_city}\index{City@{City}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_city_a97859c9d685205c3b17c81534962e5c3}{City}} (float size, \mbox{\hyperlink{struct_settings}{Settings}} $\ast$settings)
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{class_city}{City}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_city_ae95feee8a1d4e1f14ea41ec89b47304f}{$\sim$\+City}} ()
+\begin{DoxyCompactList}\small\item\em Destroy the \mbox{\hyperlink{class_city}{City}} object. Including the roads and nodes. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_city_ac0e528d7b69f95f09e90d28b5a432793}{Draw}} () const
+\begin{DoxyCompactList}\small\item\em Draw the plane, the roads and the nodes of the city. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_city_abd490b81a06fe5767df6d0bdeaf5cd9f}{Generate\+Population\+Heatmap}} ()
+\begin{DoxyCompactList}\small\item\em Generate a population heatmap based on Simplex noise and apply it to the plane. The settings for the generator are in the \mbox{\hyperlink{struct_settings}{Settings}} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_city_adb2cb2efdc19aec0d2270685cbf9396a}{Generate\+City}} (unsigned int segment\+Limit)
+\begin{DoxyCompactList}\small\item\em Generate the city based on the settings in the \mbox{\hyperlink{struct_settings}{Settings}} class and the population heatmap. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_city_a46b8238291760e8bd338dfb05c6bfdd4}{Reset\+City}} ()
+\begin{DoxyCompactList}\small\item\em Delete all roads an nodes. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_city_a772cd4b07914bc379ebaebef42b2b6f4}{Set\+Size}} (int size)
+\begin{DoxyCompactList}\small\item\em Set the new size of the city. This will also update the heatmap. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_city_a97a71cc4cecd2407934ff88d0fecf9a3}{Set\+Heatmap}} (Image heatmap\+Image)
+\begin{DoxyCompactList}\small\item\em Set the new Heatmap the city is based on. The city will {\itshape not} regenerate. The heatmap must be grayscale. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{class_road_segment}{Road\+Segment}} $\ast$ $>$ \mbox{\hyperlink{class_city_a88725f62b4254f96979dae28f6fed1f5}{Get\+Roads}} () const
+\begin{DoxyCompactList}\small\item\em Get the vector with all the pointers to \mbox{\hyperlink{class_road_segment}{Road\+Segment}} objects that are in the city. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{class_node}{Node}} $\ast$ $>$ \mbox{\hyperlink{class_city_a15ea79429696357c17848a110e691d0f}{Get\+Nodes}} () const
+\begin{DoxyCompactList}\small\item\em Get the vector with all the pointers to \mbox{\hyperlink{class_node}{Node}} objects that are in the city. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_city_a1522627491b733cf79205150ab12876b}{Get\+Roads\+Size}} () const
+\begin{DoxyCompactList}\small\item\em Get the size of the roads vector. AKA the amount of roads in the city. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_city_a116e9cc0d866ee92c20dbd32deff98fb}{Get\+Nodes\+Size}} () const
+\begin{DoxyCompactList}\small\item\em Get the size of the nodes vector. AKA the amount of Nodes in the city. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_city_a97859c9d685205c3b17c81534962e5c3}\label{class_city_a97859c9d685205c3b17c81534962e5c3}} 
+\index{City@{City}!City@{City}}
+\index{City@{City}!City@{City}}
+\doxysubsubsection{\texorpdfstring{City()}{City()}}
+{\footnotesize\ttfamily City\+::\+City (\begin{DoxyParamCaption}\item[{float}]{size,  }\item[{\mbox{\hyperlink{struct_settings}{Settings}} $\ast$}]{settings }\end{DoxyParamCaption})}
+
+
+
+Construct a new \mbox{\hyperlink{class_city}{City}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em size} & Size of city. \\
+\hline
+{\em settings} & Pointer to the settings class. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_city_ae95feee8a1d4e1f14ea41ec89b47304f}\label{class_city_ae95feee8a1d4e1f14ea41ec89b47304f}} 
+\index{City@{City}!````~City@{$\sim$City}}
+\index{````~City@{$\sim$City}!City@{City}}
+\doxysubsubsection{\texorpdfstring{$\sim$City()}{~City()}}
+{\footnotesize\ttfamily City\+::$\sim$\+City (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destroy the \mbox{\hyperlink{class_city}{City}} object. Including the roads and nodes. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_city_ac0e528d7b69f95f09e90d28b5a432793}\label{class_city_ac0e528d7b69f95f09e90d28b5a432793}} 
+\index{City@{City}!Draw@{Draw}}
+\index{Draw@{Draw}!City@{City}}
+\doxysubsubsection{\texorpdfstring{Draw()}{Draw()}}
+{\footnotesize\ttfamily void City\+::\+Draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Draw the plane, the roads and the nodes of the city. 
+
+\mbox{\Hypertarget{class_city_adb2cb2efdc19aec0d2270685cbf9396a}\label{class_city_adb2cb2efdc19aec0d2270685cbf9396a}} 
+\index{City@{City}!GenerateCity@{GenerateCity}}
+\index{GenerateCity@{GenerateCity}!City@{City}}
+\doxysubsubsection{\texorpdfstring{GenerateCity()}{GenerateCity()}}
+{\footnotesize\ttfamily void City\+::\+Generate\+City (\begin{DoxyParamCaption}\item[{unsigned int}]{segment\+Limit }\end{DoxyParamCaption})}
+
+
+
+Generate the city based on the settings in the \mbox{\hyperlink{struct_settings}{Settings}} class and the population heatmap. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em segment\+Limit} & The amount of roads to generate. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_city_abd490b81a06fe5767df6d0bdeaf5cd9f}\label{class_city_abd490b81a06fe5767df6d0bdeaf5cd9f}} 
+\index{City@{City}!GeneratePopulationHeatmap@{GeneratePopulationHeatmap}}
+\index{GeneratePopulationHeatmap@{GeneratePopulationHeatmap}!City@{City}}
+\doxysubsubsection{\texorpdfstring{GeneratePopulationHeatmap()}{GeneratePopulationHeatmap()}}
+{\footnotesize\ttfamily void City\+::\+Generate\+Population\+Heatmap (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Generate a population heatmap based on Simplex noise and apply it to the plane. The settings for the generator are in the \mbox{\hyperlink{struct_settings}{Settings}} class. 
+
+\mbox{\Hypertarget{class_city_a15ea79429696357c17848a110e691d0f}\label{class_city_a15ea79429696357c17848a110e691d0f}} 
+\index{City@{City}!GetNodes@{GetNodes}}
+\index{GetNodes@{GetNodes}!City@{City}}
+\doxysubsubsection{\texorpdfstring{GetNodes()}{GetNodes()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_node}{Node}} $\ast$ $>$ City\+::\+Get\+Nodes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the vector with all the pointers to \mbox{\hyperlink{class_node}{Node}} objects that are in the city. 
+
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$\+Node$\ast$$>$ All the pointers to \mbox{\hyperlink{class_node}{Node}} objects that are in the city. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_city_a116e9cc0d866ee92c20dbd32deff98fb}\label{class_city_a116e9cc0d866ee92c20dbd32deff98fb}} 
+\index{City@{City}!GetNodesSize@{GetNodesSize}}
+\index{GetNodesSize@{GetNodesSize}!City@{City}}
+\doxysubsubsection{\texorpdfstring{GetNodesSize()}{GetNodesSize()}}
+{\footnotesize\ttfamily int City\+::\+Get\+Nodes\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the size of the nodes vector. AKA the amount of Nodes in the city. 
+
+\begin{DoxyReturn}{Returns}
+int The vector size. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_city_a88725f62b4254f96979dae28f6fed1f5}\label{class_city_a88725f62b4254f96979dae28f6fed1f5}} 
+\index{City@{City}!GetRoads@{GetRoads}}
+\index{GetRoads@{GetRoads}!City@{City}}
+\doxysubsubsection{\texorpdfstring{GetRoads()}{GetRoads()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_road_segment}{Road\+Segment}} $\ast$ $>$ City\+::\+Get\+Roads (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the vector with all the pointers to \mbox{\hyperlink{class_road_segment}{Road\+Segment}} objects that are in the city. 
+
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$\+Road\+Segment$\ast$$>$ All the pointers to \mbox{\hyperlink{class_road_segment}{Road\+Segment}} objects that are in the city. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_city_a1522627491b733cf79205150ab12876b}\label{class_city_a1522627491b733cf79205150ab12876b}} 
+\index{City@{City}!GetRoadsSize@{GetRoadsSize}}
+\index{GetRoadsSize@{GetRoadsSize}!City@{City}}
+\doxysubsubsection{\texorpdfstring{GetRoadsSize()}{GetRoadsSize()}}
+{\footnotesize\ttfamily int City\+::\+Get\+Roads\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the size of the roads vector. AKA the amount of roads in the city. 
+
+\begin{DoxyReturn}{Returns}
+int The vector size. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_city_a46b8238291760e8bd338dfb05c6bfdd4}\label{class_city_a46b8238291760e8bd338dfb05c6bfdd4}} 
+\index{City@{City}!ResetCity@{ResetCity}}
+\index{ResetCity@{ResetCity}!City@{City}}
+\doxysubsubsection{\texorpdfstring{ResetCity()}{ResetCity()}}
+{\footnotesize\ttfamily void City\+::\+Reset\+City (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Delete all roads an nodes. 
+
+\mbox{\Hypertarget{class_city_a97a71cc4cecd2407934ff88d0fecf9a3}\label{class_city_a97a71cc4cecd2407934ff88d0fecf9a3}} 
+\index{City@{City}!SetHeatmap@{SetHeatmap}}
+\index{SetHeatmap@{SetHeatmap}!City@{City}}
+\doxysubsubsection{\texorpdfstring{SetHeatmap()}{SetHeatmap()}}
+{\footnotesize\ttfamily void City\+::\+Set\+Heatmap (\begin{DoxyParamCaption}\item[{Image}]{heatmap\+Image }\end{DoxyParamCaption})}
+
+
+
+Set the new Heatmap the city is based on. The city will {\itshape not} regenerate. The heatmap must be grayscale. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em heatmap\+Image} & The Image of the new heatmap \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_city_a772cd4b07914bc379ebaebef42b2b6f4}\label{class_city_a772cd4b07914bc379ebaebef42b2b6f4}} 
+\index{City@{City}!SetSize@{SetSize}}
+\index{SetSize@{SetSize}!City@{City}}
+\doxysubsubsection{\texorpdfstring{SetSize()}{SetSize()}}
+{\footnotesize\ttfamily void City\+::\+Set\+Size (\begin{DoxyParamCaption}\item[{int}]{size }\end{DoxyParamCaption})}
+
+
+
+Set the new size of the city. This will also update the heatmap. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em size} & The new size \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/include/city.\+hpp\end{DoxyCompactItemize}

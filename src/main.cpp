@@ -23,7 +23,6 @@
 
 
 #define PRINT(x) std::cout << x << std::endl
-#define PRINTVEC3(vec) std::cout << vec.x << ", " << vec.y << ", " << vec.z << std::endl
 
 void handleCameraControls(Camera3D& camera) {
 

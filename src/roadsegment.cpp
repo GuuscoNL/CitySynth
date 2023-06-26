@@ -3,7 +3,6 @@
 #include "raymath.h"
 
 #define PRINT(x) std::cout << x << std::endl
-#define PRINTVEC3(vec) std::cout << vec.x << ", " << vec.y << ", " << vec.z << std::endl
 
 RoadSegment::RoadSegment(int delay, Settings* settings, Node* from, Node* to) :
     delay(delay),

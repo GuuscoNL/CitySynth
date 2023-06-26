@@ -1,0 +1,33 @@
+\hypertarget{node_8hpp_source}{}\doxysection{node.\+hpp}
+\label{node_8hpp_source}\index{src/include/node.hpp@{src/include/node.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}raylib.h"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}settings.hpp"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_road_segment}{RoadSegment}};}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_node}{Node}}\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00010\ \ \ \ \ \mbox{\hyperlink{class_node}{Node}}(\textcolor{keyword}{const}\ Vector2\&\ pos2D,\ \mbox{\hyperlink{struct_settings}{Settings}}*\ settings);}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{void}\ Draw()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00012\ \ \ \ \ Vector2\ GetPos()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{int}\ GetSize()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{void}\ AddRoad(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ road);}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{void}\ RemoveRoad(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ road);}
+\DoxyCodeLine{00016\ \ \ \ \ std::vector<RoadSegment*>\ GetConnectedRoads()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00017\ \ \ \ \ Color\ color;}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{int}\ id;}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ nextId;}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00022\ \ \ \ \ std::vector<RoadSegment*>\ connectedRoads;}
+\DoxyCodeLine{00023\ \ \ \ \ Vector2\ pos2D;}
+\DoxyCodeLine{00024\ \ \ \ \ Vector3\ pos3D;}
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{struct_settings}{Settings}}*\ settings;}
+\DoxyCodeLine{00026\ \ \ \ \ Model\ model;}
+\DoxyCodeLine{00027\ \};}
+
+\end{DoxyCode}

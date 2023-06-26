@@ -1,0 +1,73 @@
+\hypertarget{city_8hpp_source}{}\doxysection{city.\+hpp}
+\label{city_8hpp_source}\index{src/include/city.hpp@{src/include/city.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <raylib.h>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}roadsegment.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}settings.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}node.hpp"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_city}{City}}\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{class_city_a97859c9d685205c3b17c81534962e5c3}{City}}(\textcolor{keywordtype}{float}\ size,\ \mbox{\hyperlink{struct_settings}{Settings}}*\ settings);}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{class_city_ae95feee8a1d4e1f14ea41ec89b47304f}{\string~City}}();}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_city_ac0e528d7b69f95f09e90d28b5a432793}{Draw}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_city_abd490b81a06fe5767df6d0bdeaf5cd9f}{GeneratePopulationHeatmap}}();}
+\DoxyCodeLine{00036\ \ \ \ \ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_city_adb2cb2efdc19aec0d2270685cbf9396a}{GenerateCity}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ segmentLimit);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_city_a46b8238291760e8bd338dfb05c6bfdd4}{ResetCity}}();}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_city_a772cd4b07914bc379ebaebef42b2b6f4}{SetSize}}(\textcolor{keywordtype}{int}\ size);}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_city_a97a71cc4cecd2407934ff88d0fecf9a3}{SetHeatmap}}(Image\ heatmapImage);}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00070\ \ \ \ \ std::vector<RoadSegment*>\ \mbox{\hyperlink{class_city_a88725f62b4254f96979dae28f6fed1f5}{GetRoads}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00077\ \ \ \ \ std::vector<Node*>\ \mbox{\hyperlink{class_city_a15ea79429696357c17848a110e691d0f}{GetNodes}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_city_a1522627491b733cf79205150ab12876b}{GetRoadsSize}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_city_a116e9cc0d866ee92c20dbd32deff98fb}{GetNodesSize}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00094\ \ \ \ \ std::vector<RoadSegment*>\ roads;}
+\DoxyCodeLine{00095\ \ \ \ \ std::vector<Node*>\ nodes;}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{int}\ size;}
+\DoxyCodeLine{00097\ \ \ \ \ Texture2D\ populationHeatmapTex;}
+\DoxyCodeLine{00098\ \ \ \ \ Image\ populationHeatmapImg;}
+\DoxyCodeLine{00099\ \ \ \ \ Vector2\ heatmapCenter;}
+\DoxyCodeLine{00100\ \ \ \ \ Model\ plane;}
+\DoxyCodeLine{00101\ \ \ \ \ \mbox{\hyperlink{struct_settings}{Settings}}*\ settings;}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdatePlaneTexture();}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{bool}\ LocalConstraints(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ road);}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{void}\ GlobalGoals(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ rootRoad,\ std::vector<RoadSegment*>\&\ newRoads);}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{void}\ DeleteNode(\mbox{\hyperlink{class_node}{Node}}*\ node);}
+\DoxyCodeLine{00133\ \ \ \ \ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordtype}{void}\ AddSideRoad(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ rootRoad,\ \textcolor{keywordtype}{float}\ angle,\ std::vector<RoadSegment*>\&\ newRoads);}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00151\ \ \ \ \ Vector2\ CalcPosWithAngle(\textcolor{keyword}{const}\ Vector2\&\ \textcolor{keyword}{const}\ fromPos,\ \textcolor{keywordtype}{float}\ angle,\ \textcolor{keywordtype}{float}\ length)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00161\ \ \ \ \ Vector2\ HighwaySamples(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ \textcolor{keyword}{const}\ rootRoad,\ \textcolor{keywordtype}{float}\ MaxAngle)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keywordtype}{int}\ GetPopulationFromHeatmap(\textcolor{keyword}{const}\ Vector2\&\ pos)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keywordtype}{bool}\ RoadsCollide(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ road1,\ \mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ road2,\ Vector2\&\ intersection)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{float}\ CrossProduct(\textcolor{keyword}{const}\ Vector2\&\ v1,\ \textcolor{keyword}{const}\ Vector2\&\ v2)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keywordtype}{float}\ DistNodeToRoad(\mbox{\hyperlink{class_node}{Node}}*\ node,\ \mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ road,\ Vector2\&\ closestPoint)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00209\ \ \ \ \ \mbox{\hyperlink{class_node}{Node}}*\ AddIntersection(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ toSplitRoad,\ \mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ toAddRoad,\ \textcolor{keyword}{const}\ Vector2\&\ intersectionPos);}
+\DoxyCodeLine{00210\ \};}
+
+\end{DoxyCode}

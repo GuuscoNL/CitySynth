@@ -1,0 +1,48 @@
+\hypertarget{roadsegment_8hpp_source}{}\doxysection{roadsegment.\+hpp}
+\label{roadsegment_8hpp_source}\index{src/include/roadsegment.hpp@{src/include/roadsegment.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <raylib.h>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}settings.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}node.hpp"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_road_segment}{RoadSegment}}\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00010\ \ \ \ \ \mbox{\hyperlink{class_road_segment}{RoadSegment}}(\textcolor{keywordtype}{int}\ delay,\ \mbox{\hyperlink{struct_settings}{Settings}}*\ settings,\ \mbox{\hyperlink{class_node}{Node}}*\ from,\ \mbox{\hyperlink{class_node}{Node}}*\ to);}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_road_segment}{\string~RoadSegment}}();}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{enum}\ RoadType\ \{\ HIGHWAY,\ SIDEROAD\ \};}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{void}\ Draw()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{friend}\ std::ostream\&\ operator<<(std::ostream\&\ os,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_road_segment}{RoadSegment}}\&\ n);}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{int}\ GetDelay()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00016\ \ \ \ \ Vector2\ GetToPos()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00017\ \ \ \ \ Vector2\ GetFromPos()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{float}\ GetAngle()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{class_node}{Node}}*\ GetFrom()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{class_node}{Node}}*\ GetTo()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00021\ \ \ \ \ RoadSegment::RoadType\ GetType()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ SetDelay(\textcolor{keywordtype}{int}\ delay);}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ SetFrom(\mbox{\hyperlink{class_node}{Node}}*\ node);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ SetTo(\mbox{\hyperlink{class_node}{Node}}*\ node);}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ SetColor(Color\ color);}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00028\ \ \ \ \ Model\ model;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{int}\ delay;}
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{struct_settings}{Settings}}*\ settings;}
+\DoxyCodeLine{00031\ \ \ \ \ Color\ color;}
+\DoxyCodeLine{00032\ \ \ \ \ RoadSegment::RoadType\ type;}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ Vector3\ pos;}
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{class_node}{Node}}*\ from;}
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{class_node}{Node}}*\ to;}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{float}\ angle;}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{float}\ length;}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{float}\ modelLength;}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{float}\ height;}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ CalculatePosAndAngle();}
+\DoxyCodeLine{00042\ \};}
+
+\end{DoxyCode}
