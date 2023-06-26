@@ -3,9 +3,33 @@
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+bool \mbox{\hyperlink{struct_road_segment_greater_than_abe1d89694e9188721ca7e338477cd452}{operator()}} (const \mbox{\hyperlink{class_road_segment}{Road\+Segment}} $\ast$lhs, const \mbox{\hyperlink{class_road_segment}{Road\+Segment}} $\ast$rhs) const
+\begin{DoxyCompactList}\small\item\em Based on the delay of the \mbox{\hyperlink{class_road_segment}{Road\+Segment}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{struct_road_segment_greater_than_abe1d89694e9188721ca7e338477cd452}\label{struct_road_segment_greater_than_abe1d89694e9188721ca7e338477cd452}} 
-bool {\bfseries operator()} (const \mbox{\hyperlink{class_road_segment}{Road\+Segment}} $\ast$lhs, const \mbox{\hyperlink{class_road_segment}{Road\+Segment}} $\ast$rhs) const
-\end{DoxyCompactItemize}
+\index{RoadSegmentGreaterThan@{RoadSegmentGreaterThan}!operator()@{operator()}}
+\index{operator()@{operator()}!RoadSegmentGreaterThan@{RoadSegmentGreaterThan}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily bool Road\+Segment\+Greater\+Than\+::operator() (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_road_segment}{Road\+Segment}} $\ast$}]{lhs,  }\item[{const \mbox{\hyperlink{class_road_segment}{Road\+Segment}} $\ast$}]{rhs }\end{DoxyParamCaption}) const}
+
+
+
+Based on the delay of the \mbox{\hyperlink{class_road_segment}{Road\+Segment}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lhs} & Left Hand Side \mbox{\hyperlink{class_road_segment}{Road\+Segment}} \\
+\hline
+{\em rhs} & Right Hand Side \mbox{\hyperlink{class_road_segment}{Road\+Segment}} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true lhs \texorpdfstring{$>$}{>} rhs (Based on delay attribute) 
+
+false lhs \texorpdfstring{$<$}{<}= rhs (Based on delay attribute) 
+\end{DoxyReturn}
 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}

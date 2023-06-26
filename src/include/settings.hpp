@@ -49,7 +49,19 @@ private:
     int randomSeed;
 
 public:
+    /**
+     * @brief Construct a new Settings class, this will contain all the settings for
+     * the City class.
+     *
+     * @param lightingShader The shader the RoadSegment and Node models will use.
+     */
     Settings(Shader lightingShader);
+
+    /**
+     * @brief Set the Random Seed.
+     * 
+     * @param seed The seed
+     */
     void SetSeed(int seed) {
         randomSeed = seed;
         SetRandomSeed(seed);
