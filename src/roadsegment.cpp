@@ -59,11 +59,13 @@ RoadSegment::RoadType RoadSegment::GetType() const{
 }
 
 void RoadSegment::SetFrom(Node* node) {
+    from->RemoveRoad(this);
     from = node;
     node->AddRoad(this);
     CalculatePosAndAngle();
 }
 void RoadSegment::SetTo(Node* node) {
+    to->RemoveRoad(this);
     to = node;
     node->AddRoad(this);
     CalculatePosAndAngle();

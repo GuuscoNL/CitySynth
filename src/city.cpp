@@ -396,17 +396,27 @@ Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, co
 
         // Remove old Node
         Node* orgToNode = toAddRoad->GetTo();
-        nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
 
         // if the intersection pos is close to another road don't create an intersection,
         // but extend road to the close node. This prevents extremely small roads.
         if (Vector2Distance(fromNode->GetPos(), intersectionPos) < 0.2) {
             toAddRoad->SetTo(fromNode);
+
+            // Make sure the node is not used by other nodes before deleting
+            if (orgToNode->GetSize() <= 0) {
+                nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
+                delete orgToNode;
+            }
             return fromNode;
         }
 
         if (Vector2Distance(toNode->GetPos(), intersectionPos) < 0.2) {
             toAddRoad->SetTo(toNode);
+            // Make sure the node is not used by other nodes before deleting
+            if (orgToNode->GetSize() <= 0) {
+                nodes.erase(remove(nodes.begin(), nodes.end(), orgToNode), nodes.end());
+                delete orgToNode;
+            }
             return toNode;
         }
 
