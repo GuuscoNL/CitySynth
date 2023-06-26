@@ -65,40 +65,7 @@ int main() {
     lights[1] = CreateLight(LIGHT_DIRECTIONAL, { 2, 1, 2 }, Vector3Zero(), sunColour2, lightingShader);
 
     // ----- Settings -----
-    Settings settings;
-    settings.highwayLength = 1.4;
-    settings.highwayWidth = 0.25;
-    settings.highwaySampleAmount = 10;
-    settings.highwayAngle = 15;
-    settings.highwayHeight = 0.041;
-    settings.highwayBranchChance = 2; // in procenten
-    settings.highwaySideRoadBranchChance = 80; // in procenten
-
-    settings.sideRoadLength = 0.7;
-    settings.sideRoadWidth = 0.1;
-    settings.sideRoadHeight = 0.04;
-    settings.sideRoadBranchChance = 80;
-    settings.sideRoadBranchDelay = 7;
-    settings.sideRoadThreshold = 0.5; // 0..1
-
-    settings.CloseCrossing = 0.3;
-    settings.CloseRoad = 0.2;
-
-    settings.frequency = 0.04; // bigger = smaller patches
-    settings.amplitude = 0.5; // ?
-    settings.lacunarity = 25; // How "dense" the patches are?
-    settings.persistence = 1 / settings.lacunarity; // ?
-    settings.octaves = 4; // Less is more smooth?
-
-    settings.highwayModel = LoadModelFromMesh(GenMeshCube(settings.highwayWidth, settings.highwayHeight, settings.highwayLength));
-    settings.sideRoadModel = LoadModelFromMesh(GenMeshCube(settings.sideRoadWidth, settings.sideRoadHeight, settings.sideRoadLength));
-    settings.NodeModel = LoadModelFromMesh(GenMeshCylinder(0.1, 0.07, 10));
-
-    settings.shader = lightingShader;
-
-    settings.ShowNodes = false;
-    settings.useCustomHeatmap = false;
-    settings.customHeatmap = GenImageColor(10, 10, WHITE); // temp Image
+    Settings settings(lightingShader);
 
     // ----- City -----
     City city = City(300.f, &settings);

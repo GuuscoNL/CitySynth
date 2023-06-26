@@ -49,7 +49,7 @@ private:
     int randomSeed;
 
 public:
-
+    Settings(Shader lightingShader);
     void SetSeed(int seed) {
         randomSeed = seed;
         SetRandomSeed(seed);
