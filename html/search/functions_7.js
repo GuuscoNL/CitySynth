@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['has_5fsubtype_0',['has_subtype',['../classbyte__container__with__subtype.html#a793fab04ad06741b6909dde032d9ea35',1,'byte_container_with_subtype']]],
-  ['hash_1',['hash',['../namespacedetail.html#a9dd43d16a6a490b032ceaca358755a29',1,'detail']]]
+  ['_7ecity_0',['~City',['../class_city.html#ae95feee8a1d4e1f14ea41ec89b47304f',1,'City']]]
 ];

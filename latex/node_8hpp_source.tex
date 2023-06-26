@@ -11,23 +11,32 @@
 \DoxyCodeLine{00007\ }
 \DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_node}{Node}}\ \{}
 \DoxyCodeLine{00009\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00010\ \ \ \ \ \mbox{\hyperlink{class_node}{Node}}(\textcolor{keyword}{const}\ Vector2\&\ pos2D,\ \mbox{\hyperlink{struct_settings}{Settings}}*\ settings);}
-\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{void}\ Draw()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00012\ \ \ \ \ Vector2\ GetPos()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{int}\ GetSize()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{void}\ AddRoad(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ road);}
-\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{void}\ RemoveRoad(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ road);}
-\DoxyCodeLine{00016\ \ \ \ \ std::vector<RoadSegment*>\ GetConnectedRoads()\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00017\ \ \ \ \ Color\ color;}
-\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{int}\ id;}
-\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ nextId;}
-\DoxyCodeLine{00020\ }
-\DoxyCodeLine{00021\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00022\ \ \ \ \ std::vector<RoadSegment*>\ connectedRoads;}
-\DoxyCodeLine{00023\ \ \ \ \ Vector2\ pos2D;}
-\DoxyCodeLine{00024\ \ \ \ \ Vector3\ pos3D;}
-\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{struct_settings}{Settings}}*\ settings;}
-\DoxyCodeLine{00026\ \ \ \ \ Model\ model;}
-\DoxyCodeLine{00027\ \};}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{class_node_a8e728c40e105330bf255d172011b6960}{Node}}(\textcolor{keyword}{const}\ Vector2\&\ pos2D,\ \mbox{\hyperlink{struct_settings}{Settings}}*\ settings);}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_node_af8cc2e6eb892f1e4c6825dfea726a533}{Draw}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00029\ \ \ \ \ Vector2\ \mbox{\hyperlink{class_node_a34356b7d9850030f712f3a03dffd8f19}{GetPos}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_node_a300e82d80082ac0a0bc1e9bc727b3614}{GetAmountConnectedRoads}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_node_ae77273023e7f31344d418b12a1c41bd2}{AddRoad}}(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ \textcolor{keyword}{const}\ road);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_node_aa584361b301b58aded729eb51855d5b4}{RemoveRoad}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ \textcolor{keyword}{const}\ road);}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00057\ \ \ \ \ std::vector<RoadSegment*>\ \mbox{\hyperlink{class_node_afa58c9c8784f980bc6ae95c40a89bcca}{GetConnectedRoads}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_node_a262910822ad2abc6b821dc0c29d02980}{GetId}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ Color\ color;}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{int}\ id;}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ nextId;}
+\DoxyCodeLine{00071\ \ \ \ \ std::vector<RoadSegment*>\ connectedRoads;}
+\DoxyCodeLine{00072\ \ \ \ \ Vector2\ pos2D;}
+\DoxyCodeLine{00073\ \ \ \ \ Vector3\ pos3D;}
+\DoxyCodeLine{00074\ \ \ \ \ \mbox{\hyperlink{struct_settings}{Settings}}*\ settings;}
+\DoxyCodeLine{00075\ \ \ \ \ Model\ model;}
+\DoxyCodeLine{00076\ \};}
 
 \end{DoxyCode}

@@ -72,7 +72,6 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="class_node-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Node Class Reference</div></div>
 </div><!--header-->
@@ -80,43 +79,227 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8e728c40e105330bf255d172011b6960"><td class="memItemLeft" align="right" valign="top"><a id="a8e728c40e105330bf255d172011b6960" name="a8e728c40e105330bf255d172011b6960"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Node</b> (const Vector2 &amp;pos2D, <a class="el" href="struct_settings.html">Settings</a> *settings)</td></tr>
+<tr class="memitem:a8e728c40e105330bf255d172011b6960"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_node.html#a8e728c40e105330bf255d172011b6960">Node</a> (const Vector2 &amp;pos2D, <a class="el" href="struct_settings.html">Settings</a> *settings)</td></tr>
+<tr class="memdesc:a8e728c40e105330bf255d172011b6960"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="class_node.html">Node</a> object.  <br /></td></tr>
 <tr class="separator:a8e728c40e105330bf255d172011b6960"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8cc2e6eb892f1e4c6825dfea726a533"><td class="memItemLeft" align="right" valign="top"><a id="af8cc2e6eb892f1e4c6825dfea726a533" name="af8cc2e6eb892f1e4c6825dfea726a533"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Draw</b> () const</td></tr>
+<tr class="memitem:af8cc2e6eb892f1e4c6825dfea726a533"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_node.html#af8cc2e6eb892f1e4c6825dfea726a533">Draw</a> () const</td></tr>
+<tr class="memdesc:af8cc2e6eb892f1e4c6825dfea726a533"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw <a class="el" href="class_node.html">Node</a>.  <br /></td></tr>
 <tr class="separator:af8cc2e6eb892f1e4c6825dfea726a533"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34356b7d9850030f712f3a03dffd8f19"><td class="memItemLeft" align="right" valign="top"><a id="a34356b7d9850030f712f3a03dffd8f19" name="a34356b7d9850030f712f3a03dffd8f19"></a>
-Vector2&#160;</td><td class="memItemRight" valign="bottom"><b>GetPos</b> () const</td></tr>
+<tr class="memitem:a34356b7d9850030f712f3a03dffd8f19"><td class="memItemLeft" align="right" valign="top">Vector2&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_node.html#a34356b7d9850030f712f3a03dffd8f19">GetPos</a> () const</td></tr>
+<tr class="memdesc:a34356b7d9850030f712f3a03dffd8f19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the position of the <a class="el" href="class_node.html">Node</a>.  <br /></td></tr>
 <tr class="separator:a34356b7d9850030f712f3a03dffd8f19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24bfd877b14eac7b902604d44fb66ee5"><td class="memItemLeft" align="right" valign="top"><a id="a24bfd877b14eac7b902604d44fb66ee5" name="a24bfd877b14eac7b902604d44fb66ee5"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>GetSize</b> () const</td></tr>
-<tr class="separator:a24bfd877b14eac7b902604d44fb66ee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad50c6873d17aea059e70abe5e61862f5"><td class="memItemLeft" align="right" valign="top"><a id="ad50c6873d17aea059e70abe5e61862f5" name="ad50c6873d17aea059e70abe5e61862f5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>AddRoad</b> (<a class="el" href="class_road_segment.html">RoadSegment</a> *road)</td></tr>
-<tr class="separator:ad50c6873d17aea059e70abe5e61862f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb9b9bb7fd037bda92158e2ba8123a9b"><td class="memItemLeft" align="right" valign="top"><a id="aeb9b9bb7fd037bda92158e2ba8123a9b" name="aeb9b9bb7fd037bda92158e2ba8123a9b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>RemoveRoad</b> (const <a class="el" href="class_road_segment.html">RoadSegment</a> *road)</td></tr>
-<tr class="separator:aeb9b9bb7fd037bda92158e2ba8123a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa58c9c8784f980bc6ae95c40a89bcca"><td class="memItemLeft" align="right" valign="top"><a id="afa58c9c8784f980bc6ae95c40a89bcca" name="afa58c9c8784f980bc6ae95c40a89bcca"></a>
-std::vector&lt; <a class="el" href="class_road_segment.html">RoadSegment</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetConnectedRoads</b> () const</td></tr>
+<tr class="memitem:a300e82d80082ac0a0bc1e9bc727b3614"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_node.html#a300e82d80082ac0a0bc1e9bc727b3614">GetAmountConnectedRoads</a> () const</td></tr>
+<tr class="memdesc:a300e82d80082ac0a0bc1e9bc727b3614"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the amount of connected Roads to this <a class="el" href="class_node.html">Node</a>.  <br /></td></tr>
+<tr class="separator:a300e82d80082ac0a0bc1e9bc727b3614"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae77273023e7f31344d418b12a1c41bd2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_node.html#ae77273023e7f31344d418b12a1c41bd2">AddRoad</a> (<a class="el" href="class_road_segment.html">RoadSegment</a> *const road)</td></tr>
+<tr class="memdesc:ae77273023e7f31344d418b12a1c41bd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add road to this <a class="el" href="class_node.html">Node</a>.  <br /></td></tr>
+<tr class="separator:ae77273023e7f31344d418b12a1c41bd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa584361b301b58aded729eb51855d5b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_node.html#aa584361b301b58aded729eb51855d5b4">RemoveRoad</a> (const <a class="el" href="class_road_segment.html">RoadSegment</a> *const road)</td></tr>
+<tr class="memdesc:aa584361b301b58aded729eb51855d5b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove road from this <a class="el" href="class_node.html">Node</a>.  <br /></td></tr>
+<tr class="separator:aa584361b301b58aded729eb51855d5b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa58c9c8784f980bc6ae95c40a89bcca"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_road_segment.html">RoadSegment</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_node.html#afa58c9c8784f980bc6ae95c40a89bcca">GetConnectedRoads</a> () const</td></tr>
+<tr class="memdesc:afa58c9c8784f980bc6ae95c40a89bcca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Connected Roads.  <br /></td></tr>
 <tr class="separator:afa58c9c8784f980bc6ae95c40a89bcca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a262910822ad2abc6b821dc0c29d02980"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_node.html#a262910822ad2abc6b821dc0c29d02980">GetId</a> () const</td></tr>
+<tr class="memdesc:a262910822ad2abc6b821dc0c29d02980"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Id of this <a class="el" href="class_node.html">Node</a>.  <br /></td></tr>
+<tr class="separator:a262910822ad2abc6b821dc0c29d02980"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ae8152345487a4ebed55af7fd35d29303"><td class="memItemLeft" align="right" valign="top"><a id="ae8152345487a4ebed55af7fd35d29303" name="ae8152345487a4ebed55af7fd35d29303"></a>
 Color&#160;</td><td class="memItemRight" valign="bottom"><b>color</b></td></tr>
 <tr class="separator:ae8152345487a4ebed55af7fd35d29303"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59a543130a10c95f1e8642cf8c5645e8"><td class="memItemLeft" align="right" valign="top"><a id="a59a543130a10c95f1e8642cf8c5645e8" name="a59a543130a10c95f1e8642cf8c5645e8"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
-<tr class="separator:a59a543130a10c95f1e8642cf8c5645e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
-Static Public Attributes</h2></td></tr>
-<tr class="memitem:aba8331830bb7b57d1c5d6356e83b42e9"><td class="memItemLeft" align="right" valign="top"><a id="aba8331830bb7b57d1c5d6356e83b42e9" name="aba8331830bb7b57d1c5d6356e83b42e9"></a>
-static int&#160;</td><td class="memItemRight" valign="bottom"><b>nextId</b></td></tr>
-<tr class="separator:aba8331830bb7b57d1c5d6356e83b42e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a8e728c40e105330bf255d172011b6960" name="a8e728c40e105330bf255d172011b6960"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e728c40e105330bf255d172011b6960">&#9670;&#160;</a></span>Node()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Node::Node </td>
+          <td>(</td>
+          <td class="paramtype">const Vector2 &amp;&#160;</td>
+          <td class="paramname"><em>pos2D</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_settings.html">Settings</a> *&#160;</td>
+          <td class="paramname"><em>settings</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Construct a new <a class="el" href="class_node.html">Node</a> object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos2D</td><td>Position of the node. </td></tr>
+    <tr><td class="paramname">settings</td><td>Pointer the <a class="el" href="struct_settings.html">Settings</a> class. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae77273023e7f31344d418b12a1c41bd2" name="ae77273023e7f31344d418b12a1c41bd2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae77273023e7f31344d418b12a1c41bd2">&#9670;&#160;</a></span>AddRoad()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Node::AddRoad </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_road_segment.html">RoadSegment</a> *const&#160;</td>
+          <td class="paramname"><em>road</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add road to this <a class="el" href="class_node.html">Node</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">road</td><td>Road to add </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af8cc2e6eb892f1e4c6825dfea726a533" name="af8cc2e6eb892f1e4c6825dfea726a533"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8cc2e6eb892f1e4c6825dfea726a533">&#9670;&#160;</a></span>Draw()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Node::Draw </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Draw <a class="el" href="class_node.html">Node</a>. </p>
+
+</div>
+</div>
+<a id="a300e82d80082ac0a0bc1e9bc727b3614" name="a300e82d80082ac0a0bc1e9bc727b3614"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a300e82d80082ac0a0bc1e9bc727b3614">&#9670;&#160;</a></span>GetAmountConnectedRoads()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Node::GetAmountConnectedRoads </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the amount of connected Roads to this <a class="el" href="class_node.html">Node</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>int Amount of connected roads. </dd></dl>
+
+</div>
+</div>
+<a id="afa58c9c8784f980bc6ae95c40a89bcca" name="afa58c9c8784f980bc6ae95c40a89bcca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa58c9c8784f980bc6ae95c40a89bcca">&#9670;&#160;</a></span>GetConnectedRoads()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_road_segment.html">RoadSegment</a> * &gt; Node::GetConnectedRoads </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the Connected Roads. </p>
+<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;RoadSegment*&gt; vector with pointers to connected <a class="el" href="class_road_segment.html">RoadSegment</a> objects. </dd></dl>
+
+</div>
+</div>
+<a id="a262910822ad2abc6b821dc0c29d02980" name="a262910822ad2abc6b821dc0c29d02980"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a262910822ad2abc6b821dc0c29d02980">&#9670;&#160;</a></span>GetId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Node::GetId </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the Id of this <a class="el" href="class_node.html">Node</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>int The Id </dd></dl>
+
+</div>
+</div>
+<a id="a34356b7d9850030f712f3a03dffd8f19" name="a34356b7d9850030f712f3a03dffd8f19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34356b7d9850030f712f3a03dffd8f19">&#9670;&#160;</a></span>GetPos()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Vector2 Node::GetPos </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the position of the <a class="el" href="class_node.html">Node</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>Vector2 The Position </dd></dl>
+
+</div>
+</div>
+<a id="aa584361b301b58aded729eb51855d5b4" name="aa584361b301b58aded729eb51855d5b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa584361b301b58aded729eb51855d5b4">&#9670;&#160;</a></span>RemoveRoad()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Node::RemoveRoad </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_road_segment.html">RoadSegment</a> *const&#160;</td>
+          <td class="paramname"><em>road</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Remove road from this <a class="el" href="class_node.html">Node</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">road</td><td>Road to remove. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/include/<a class="el" href="node_8hpp_source.html">node.hpp</a></li>
 </ul>

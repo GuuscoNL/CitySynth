@@ -305,8 +305,8 @@ static void ButtonExportCity(GuiMainGUIState* state) {
     // Create Json for roads
     for (const auto* road : city.GetRoads()) {
 
-        int fromID = road->GetFrom()->id;
-        int toID = road->GetTo()->id;
+        int fromID = road->GetFrom()->GetId();
+        int toID = road->GetTo()->GetId();
 
         if (road->GetType() == RoadSegment::HIGHWAY) {
             jsonCity["highways"].push_back({
@@ -325,7 +325,7 @@ static void ButtonExportCity(GuiMainGUIState* state) {
 
     // Create Json for Nodes
     for (const auto* node : city.GetNodes()) {
-        jsonCity["nodes"][std::to_string(node->id)] = { node->GetPos().x, node->GetPos().x };
+        jsonCity["nodes"][std::to_string(node->GetId())] = { node->GetPos().x, node->GetPos().x };
     }
 
     // Export to file

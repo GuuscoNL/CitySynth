@@ -1,9 +1,6 @@
 
-#include <iostream>
 #include "include/node.hpp"
 #include <algorithm>
-
-#define PRINT(x) std::cout << x << std::endl
 
 Node::Node(const Vector2& pos2D, Settings* settings) :
     pos2D(pos2D),
@@ -28,19 +25,23 @@ Vector2 Node::GetPos() const {
     return pos2D;
 }
 
-int Node::GetSize() const {
+int Node::GetAmountConnectedRoads() const {
     return connectedRoads.size();
 }
 
-void Node::AddRoad(RoadSegment* road) {
+void Node::AddRoad(RoadSegment* const road) {
     connectedRoads.push_back(road);
 }
 
-void Node::RemoveRoad(const RoadSegment* road) {
+void Node::RemoveRoad(const RoadSegment* const road) {
     connectedRoads.erase(remove(connectedRoads.begin(), connectedRoads.end(), road), connectedRoads.end());
     connectedRoads.shrink_to_fit();
 }
 
 std::vector<RoadSegment*> Node::GetConnectedRoads() const {
     return connectedRoads;
+}
+
+int Node::GetId() const {
+    return id;
 }

@@ -383,8 +383,8 @@ $(function() {
 <div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    <span class="comment">// Create Json for roads</span></div>
 <div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>* road : city.<a class="code hl_function" href="class_city.html#a88725f62b4254f96979dae28f6fed1f5">GetRoads</a>()) {</div>
 <div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span> </div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>        <span class="keywordtype">int</span> fromID = road-&gt;GetFrom()-&gt;id;</div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>        <span class="keywordtype">int</span> toID = road-&gt;GetTo()-&gt;id;</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>        <span class="keywordtype">int</span> fromID = road-&gt;GetFrom()-&gt;GetId();</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>        <span class="keywordtype">int</span> toID = road-&gt;GetTo()-&gt;GetId();</div>
 <div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> </div>
 <div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>        <span class="keywordflow">if</span> (road-&gt;GetType() == RoadSegment::HIGHWAY) {</div>
 <div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>            jsonCity[<span class="stringliteral">&quot;highways&quot;</span>].push_back({</div>
@@ -403,7 +403,7 @@ $(function() {
 <div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span> </div>
 <div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>    <span class="comment">// Create Json for Nodes</span></div>
 <div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>* node : city.<a class="code hl_function" href="class_city.html#a15ea79429696357c17848a110e691d0f">GetNodes</a>()) {</div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>        jsonCity[<span class="stringliteral">&quot;nodes&quot;</span>][std::to_string(node-&gt;id)] = { node-&gt;GetPos().x, node-&gt;GetPos().x };</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>        jsonCity[<span class="stringliteral">&quot;nodes&quot;</span>][std::to_string(node-&gt;GetId())] = { node-&gt;GetPos().x, node-&gt;GetPos().x };</div>
 <div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>    }</div>
 <div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span> </div>
 <div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>    <span class="comment">// Export to file</span></div>

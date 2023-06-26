@@ -274,7 +274,7 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
 void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoads) {
 
     // If it is already split don't add new roads, because there was already a conflict resolved
-    if (rootRoad->GetTo()->GetSize() >= 2) {
+    if (rootRoad->GetTo()->GetAmountConnectedRoads() >= 2) {
         return;
     }
 
@@ -324,7 +324,7 @@ void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoad
 
 void City::DeleteNode(Node* nodeToRemove){
     // Make sure the node is not used by other roads before deleting
-    if (nodeToRemove->GetSize() <= 0) {
+    if (nodeToRemove->GetAmountConnectedRoads() <= 0) {
         nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
         delete nodeToRemove;
     }

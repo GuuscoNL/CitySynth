@@ -309,8 +309,8 @@
 \DoxyCodeLine{00305\ \ \ \ \ \textcolor{comment}{//\ Create\ Json\ for\ roads}}
 \DoxyCodeLine{00306\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}*\ road\ :\ city.\mbox{\hyperlink{class_city_a88725f62b4254f96979dae28f6fed1f5}{GetRoads}}())\ \{}
 \DoxyCodeLine{00307\ }
-\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ fromID\ =\ road-\/>GetFrom()-\/>id;}
-\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ toID\ =\ road-\/>GetTo()-\/>id;}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ fromID\ =\ road-\/>GetFrom()-\/>GetId();}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ toID\ =\ road-\/>GetTo()-\/>GetId();}
 \DoxyCodeLine{00310\ }
 \DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (road-\/>GetType()\ ==\ RoadSegment::HIGHWAY)\ \{}
 \DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ \ \ \ \ jsonCity[\textcolor{stringliteral}{"{}highways"{}}].push\_back(\{}
@@ -329,7 +329,7 @@
 \DoxyCodeLine{00325\ }
 \DoxyCodeLine{00326\ \ \ \ \ \textcolor{comment}{//\ Create\ Json\ for\ Nodes}}
 \DoxyCodeLine{00327\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}*\ node\ :\ city.\mbox{\hyperlink{class_city_a15ea79429696357c17848a110e691d0f}{GetNodes}}())\ \{}
-\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ jsonCity[\textcolor{stringliteral}{"{}nodes"{}}][std::to\_string(node-\/>id)]\ =\ \{\ node-\/>GetPos().x,\ node-\/>GetPos().x\ \};}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ jsonCity[\textcolor{stringliteral}{"{}nodes"{}}][std::to\_string(node-\/>GetId())]\ =\ \{\ node-\/>GetPos().x,\ node-\/>GetPos().x\ \};}
 \DoxyCodeLine{00329\ \ \ \ \ \}}
 \DoxyCodeLine{00330\ }
 \DoxyCodeLine{00331\ \ \ \ \ \textcolor{comment}{//\ Export\ to\ file}}
