@@ -139,7 +139,6 @@ extern "C" {            // Prevents name mangling of functions
 *   GUI_MAINGUI IMPLEMENTATION
 *
 ************************************************************************************/
-// #if defined(GUI_MAINGUI_IMPLEMENTATION)
 
 #include "raygui.h"
 #include <iostream>
@@ -228,21 +227,22 @@ GuiMainGUIState InitGuiMainGUI(int screenWidth, Settings* settings, City* city) 
 
     return state;
 }
+
 static void ButtonShowNodes(GuiMainGUIState* state) {
     if (state->settings->ShowNodes) {
-        state->settings->ShowNodes = false;
         strcpy(state->labelShowNodes, "Show Nodes");
     }
     else {
-        state->settings->ShowNodes = true;
         strcpy(state->labelShowNodes, "Hide Nodes");
     }
+    state->settings->ShowNodes = !state->settings->ShowNodes;
 }
+
 static void ButtonDiscoRoads(GuiMainGUIState* state) {
     if (state->DiscoRoads) {
-        state->DiscoRoads = false;
         strcpy(state->labelDiscoRoads, "Disco Roads");
 
+        // Set all roads to default color
         for (RoadSegment* road : state->city->GetRoads()) {
             if (road->GetType() == RoadSegment::SIDEROAD) {
                 road->SetColor(GRAY);
@@ -254,21 +254,23 @@ static void ButtonDiscoRoads(GuiMainGUIState* state) {
 
     }
     else {
-        state->DiscoRoads = true;
         strcpy(state->labelDiscoRoads, "Normal Roads");
 
+        // Set color to random for all roads
         for (RoadSegment* road : state->city->GetRoads()) {
-
             road->SetColor(Color{ static_cast<unsigned char>(GetRandomValue(0,255)),
                   static_cast<unsigned char>(GetRandomValue(0,255)),
                   static_cast<unsigned char>(GetRandomValue(0,255)) });
 
         }
     }
+    state->DiscoRoads = !state->DiscoRoads;
 }
+
 static void ButtonResetCity(GuiMainGUIState* state) {
     state->city->ResetCity();
 }
+
 static void ButtonExportCity(GuiMainGUIState* state) {
     const City& city = *state->city;
     std::string CityName = std::string(state->inputCityNameText);
@@ -299,6 +301,8 @@ static void ButtonExportCity(GuiMainGUIState* state) {
 
     jsonCity["highways"] = json::array();
     jsonCity["sideroads"] = json::array();
+
+    // Create Json for roads
     for (const auto* road : city.GetRoads()) {
 
         int fromID = road->GetFrom()->id;
@@ -318,6 +322,8 @@ static void ButtonExportCity(GuiMainGUIState* state) {
     }
 
     jsonCity["nodes"] = json::object();
+
+    // Create Json for Nodes
     for (const auto* node : city.GetNodes()) {
         jsonCity["nodes"][std::to_string(node->id)] = { node->GetPos().x, node->GetPos().x };
     }
@@ -329,10 +335,11 @@ static void ButtonExportCity(GuiMainGUIState* state) {
 
     strcpy(state->labelinfo, "City exported!");
 }
+
 static void ButtonGenerateCity(GuiMainGUIState* state) {
     Settings& settings = *state->settings;
 
-    // Check if all the values are valid and set it to settings
+    // ----- Check if all the input values are valid and set it to settings -----
     if (atof(state->inputHighwayLengthText) > 0 && atof(state->inputHighwayLengthText) <= 100) {
         settings.highwayLength = atof(state->inputHighwayLengthText);
     }
@@ -430,14 +437,17 @@ static void ButtonGenerateCity(GuiMainGUIState* state) {
 
     UnloadModel(settings.highwayModel);
     settings.highwayModel = LoadModelFromMesh(GenMeshCube(settings.highwayWidth, settings.highwayHeight, settings.highwayLength));
+
     UnloadModel(settings.sideRoadModel);
     settings.sideRoadModel = LoadModelFromMesh(GenMeshCube(settings.sideRoadWidth, settings.sideRoadHeight, settings.sideRoadLength));
-    state->city->GenerateCity(state->inputSegmentLimitValue);
 
+    state->city->GenerateCity(state->inputSegmentLimitValue);
 }
+
 static void ButtonGenerateHeatmap(GuiMainGUIState* state) {
     Settings& settings = *state->settings;
 
+    // ----- Check if all the input values are valid and set it to settings -----
     if (atof(state->inputFrequencyText) > 0 && atof(state->inputFrequencyText) <= 100) {
         settings.frequency = atof(state->inputFrequencyText);
     }
@@ -466,10 +476,12 @@ static void ButtonGenerateHeatmap(GuiMainGUIState* state) {
     settings.useCustomHeatmap = false;
 
     // Already has min and max value
-    settings.octaves = state->inputOctavesValue; // More = more blurry
+    settings.octaves = state->inputOctavesValue;
+
     state->city->GeneratePopulationHeatmap();
     strcpy(state->labelinfo, "Heatmap generated!");
 }
+
 static void ButtonCustomHeatmap(GuiMainGUIState* state) {
     Settings& settings = *state->settings;
     char* fileName = state->inputCustomHeatmapText;
@@ -480,10 +492,13 @@ static void ButtonCustomHeatmap(GuiMainGUIState* state) {
     }
 
     UnloadImage(settings.customHeatmap);
+
     Image heatmap = LoadImage(fileName);
     ImageColorGrayscale(&heatmap);
+
     settings.customHeatmap = heatmap;
     settings.useCustomHeatmap = true;
+
     state->city->SetHeatmap(heatmap);
 
     strcpy(state->labelinfo, "Custom heatmap imported!");
@@ -556,7 +571,10 @@ void GuiMainGUI(GuiMainGUIState* state) {
 
 
     static bool WasEditingSize;
+    // Did the user unselect the input box for size?
     if (WasEditingSize && !state->inputSizeEditMode) {
+        // Check if the size is valid, there is a limit of 2000,
+        // because beyond that it hangs too long
         if (state->inputSizeValue > 0 && state->inputSizeValue <= 2000) {
             state->city->SetSize(state->inputSizeValue);
         }
@@ -568,5 +586,3 @@ void GuiMainGUI(GuiMainGUIState* state) {
 
     WasEditingSize = state->inputSizeEditMode;
 }
-
-// #endif // GUI_MAINGUI_IMPLEMENTATION
