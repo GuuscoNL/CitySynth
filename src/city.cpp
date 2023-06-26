@@ -215,14 +215,15 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
     }
 
     { // if “ends close to an existing crossing” then “extend street, to reach the crossing”        
-        Node* closestNode;
+        Node* closestNode = nullptr;
 
         Vector2 endNodePos = orgRoad->GetToPos();
         float smallestDistance = std::numeric_limits<float>::max();
 
         // Loop over all nodes and and check which one is the closest
         for (auto* node : nodes) {
-            float distance = Vector2Distance(endNodePos, node->GetPos());
+            // Distance in sqr
+            float distance = Vector2DistanceSqr(endNodePos, node->GetPos());
             if (distance < smallestDistance && node != orgRoad->GetTo()) {
                 smallestDistance = distance;
                 closestNode = node;
@@ -230,7 +231,7 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
         }
 
         // If the closest node is closer than `CloseCrossing` then extend street to reach the crossing
-        if (smallestDistance < settings->CloseCrossing) {
+        if (smallestDistance < settings->CloseCrossing * settings->CloseCrossing && closestNode != nullptr) {
 
             Node* nodeToRemove = orgRoad->GetTo();
             orgRoad->SetTo(closestNode);
@@ -246,11 +247,12 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
         Node* orgToNode = orgRoad->GetTo();
         Vector2 intersectionPos;
         Vector2 closestIntersectionPos;
-        RoadSegment* closestRoad;
+        RoadSegment* closestRoad = nullptr;
         float smallestDistance = std::numeric_limits<float>::max();
 
         // Loop over all roads to get the closest road
         for (auto* road : roads) {
+            // Distance in sqr
             float distance = DistNodeToRoad(orgToNode, road, intersectionPos);
             if (distance < smallestDistance && road != orgRoad) {
                 smallestDistance = distance;
@@ -260,7 +262,7 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
         }
 
         //  Make an intersection if the two roads are close enough
-        if (smallestDistance < settings->CloseRoad) {
+        if (smallestDistance < settings->CloseRoad * settings->CloseRoad && closestRoad != nullptr) {
             Node* intersectionNode = AddIntersection(closestRoad, orgRoad, closestIntersectionPos);
             intersectionNode->color = BLUE;
             return true;
@@ -401,14 +403,14 @@ Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, co
 
     // if the intersection pos is close to another road don't create an intersection,
     // but extend road to the close node. This prevents extremely small roads.
-    if (Vector2Distance(fromNode->GetPos(), intersectionPos) < 0.2) {
+    if (Vector2DistanceSqr(fromNode->GetPos(), intersectionPos) < 0.2*0.2) {
         toAddRoad->SetTo(fromNode);
 
         DeleteNode(orgToNode);
         return fromNode;
     }
 
-    if (Vector2Distance(toNode->GetPos(), intersectionPos) < 0.2) {
+    if (Vector2DistanceSqr(toNode->GetPos(), intersectionPos) < 0.2*0.2) {
         toAddRoad->SetTo(toNode);
 
         DeleteNode(orgToNode);
@@ -508,7 +510,7 @@ float City::DistNodeToRoad(Node* node, RoadSegment* road, Vector2& intersection)
         intersection = Vector2Add(a, Vector2Scale(ab, d));
     }
 
-    return Vector2Distance(p, intersection);
+    return Vector2DistanceSqr(p, intersection);
 }
 
 int City::GetPopulationFromHeatmap(const Vector2& pos) const {
