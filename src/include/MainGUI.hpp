@@ -120,13 +120,13 @@ extern "C" {            // Prevents name mangling of functions
     //----------------------------------------------------------------------------------
     GuiMainGUIState InitGuiMainGUI(void);
     void GuiMainGUI(GuiMainGUIState* state);
-    static void ButtonShowNodes();
-    static void ButtonDiscoRoads();
-    static void ButtonResetCity();
-    static void ButtonExportCity();
-    static void ButtonGenerateCity();
-    static void ButtonGenerateHeatmap();
-    static void ButtonCustomHeatmap();
+    static void ButtonShowNodes(GuiMainGUIState* state);
+    static void ButtonDiscoRoads(GuiMainGUIState* state);
+    static void ButtonResetCity(GuiMainGUIState* state);
+    static void ButtonExportCity(GuiMainGUIState* state);
+    static void ButtonGenerateCity(GuiMainGUIState* state);
+    static void ButtonGenerateHeatmap(GuiMainGUIState* state);
+    static void ButtonCustomHeatmap(GuiMainGUIState* state);
 
 #ifdef __cplusplus
 }
