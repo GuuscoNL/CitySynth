@@ -101,7 +101,7 @@ You can find the full documentation after cloning this repo and by opening the [
 - Github template for raylib in VS code.
   - [Github template:](https://github.com/educ8s/Raylib-CPP-Starter-Template-for-VSCODE-V2) The github template this repo is based on. (Raylib for C++ in VS Code) - educ8s 
   - [How to install video:](https://youtu.be/PaAcVk5jUd8) The how to install video I follow to start this project. - Programming With Nick
-- [Lighting shaders](shaders) and [rlight.h](src/include/rlights.h) taken from [Basic lighting example](https://www.raylib.com/examples/shaders/loader.html?name=shaders_basic_lighting) - Chris Camacho (@codifies)
+- [Lighting shaders](shaders) and [rlight.h](src/include/rlights.h) taken from [Basic lighting example](https://www.raylib.com/examples/shaders/loader.html?name=shaders_basic_lighting) - Chris Camacho (@codifies) & Victor Fisac (@victorfisac)
 - [Simplex noise C++](https://github.com/SRombauts/SimplexNoise) - Sébastien Rombauts
 - [C++ json](https://github.com/nlohmann/json/tree/develop) - Niels Lohmann
 - Sources used for the Algorithm:
