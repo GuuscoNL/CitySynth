@@ -523,7 +523,7 @@ void GuiMainGUI(GuiMainGUIState* state) {
     GuiLabel((Rectangle) { state->anchorHighway.x + 8, state->anchorHighway.y + 80, 96, 24 }, "Max angle:");
     if (GuiTextBox((Rectangle) { state->anchorHighway.x + 104, state->anchorHighway.y + 80, 88, 24 }, state->inputMaxAngleText, 128, state->inputMaxAngleEditMode)) state->inputMaxAngleEditMode = !state->inputMaxAngleEditMode;
     GuiLabel((Rectangle) { state->anchorHighway.x + 8, state->anchorHighway.y + 104, 96, 24 }, "Sample amount:");
-    if (GuiValueBox((Rectangle) { state->anchorHighway.x + 104, state->anchorHighway.y + 104, 88, 24 }, NULL, & state->inputSampleAmountValue, 0, 100, state->inputSampleAmountEditMode)) state->inputSampleAmountEditMode = !state->inputSampleAmountEditMode;
+    if (GuiValueBox((Rectangle) { state->anchorHighway.x + 104, state->anchorHighway.y + 104, 88, 24 }, NULL, & state->inputSampleAmountValue, 1, 100, state->inputSampleAmountEditMode)) state->inputSampleAmountEditMode = !state->inputSampleAmountEditMode;
     GuiLabel((Rectangle) { state->anchorHighway.x + 8, state->anchorHighway.y + 128, 96, 24 }, "Branch chance:");
     if (GuiTextBox((Rectangle) { state->anchorHighway.x + 104, state->anchorHighway.y + 128, 88, 24 }, state->inputHighwayBranchChanceText, 128, state->inputHighwayBranchChanceEditMode)) state->inputHighwayBranchChanceEditMode = !state->inputHighwayBranchChanceEditMode;
     GuiLabel((Rectangle) { state->anchorHighway.x + 8, state->anchorHighway.y + 152, 96, 24 }, "SideRoad chance:");
