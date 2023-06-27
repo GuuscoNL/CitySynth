@@ -354,14 +354,14 @@ Vector2 City::HighwaySamples(const RoadSegment* const rootRoad, float MaxAngle) 
 
     //  Get positions with random angles
     for (int i = 0; i < settings->highwaySampleAmount; i++) {
-        positions.push_back(CalcPosWithAngle(rootRoad->GetToPos(), GetRandomValue(-MaxAngle + rootRoad->GetAngle(), MaxAngle + rootRoad->GetAngle()), settings->highwayLength));
+        positions.emplace_back(CalcPosWithAngle(rootRoad->GetToPos(), GetRandomValue(-MaxAngle + rootRoad->GetAngle(), MaxAngle + rootRoad->GetAngle()), settings->highwayLength));
     }
 
     // Check if the values of the pop for every postion
     std::vector<int> positionPopulations;
     positionPopulations.reserve(positions.size());
     for (const Vector2& pos : positions) {
-        positionPopulations.push_back(GetPopulationFromHeatmap(pos));
+        positionPopulations.emplace_back(GetPopulationFromHeatmap(pos));
     }
     // Get highest pop
     int maxPop = *std::max_element(positionPopulations.begin(), positionPopulations.end());
