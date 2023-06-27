@@ -514,6 +514,10 @@ void City::ResetCity() {
     roads.clear();
     roads.resize(0);
 
+    // Reset next ID
+    if (nodes.size() > 0) {
+        nodes[0]->ResetId();
+    }
     for (auto* node : nodes) {
         delete node;
     }

@@ -45,3 +45,7 @@ std::vector<RoadSegment*> Node::GetConnectedRoads() const {
 int Node::GetId() const {
     return id;
 }
+
+void Node::ResetId() {
+    nextId = 0;
+}

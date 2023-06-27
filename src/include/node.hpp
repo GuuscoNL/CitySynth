@@ -63,6 +63,12 @@ public:
      */
     int GetId() const;
 
+    /**
+     * @brief Reset nextId to 0
+     * 
+     */
+    void ResetId();
+
     Color color;
 
 private:
