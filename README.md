@@ -2,7 +2,7 @@
 
 City Synth is a tool made in C++ using the raylib library where you can generate procedural cities based on a population heatmap. The generated cities can be exported to a JSON file and imported into Blender, Unity, Unreal Engine, ect.
 <br><br>
-This project was created for my IPASS (Individual Propedeuse Assessment)
+This project was created in 2 weeks for my IPASS (Individual Propedeuse Assessment)
 
 ## Usage
 The tool is mainly created for game developers or artist that need a quick city layout for there game or scene. However this tool can also be used for other means, for example a piping system with a heatmap that is based on real life data or for irrigation perhaps.
@@ -92,6 +92,11 @@ Here is an example of a small city exported to a JSON file:
 
 ## Documentation
 You can find the full documentation after cloning this repo and by opening the [html/index.html](html/index.html) file in the browser.
+
+## Possible improvements
+- Generating 10,000 segments currently takes about 10 seconds, and the generation time increases exponentially as more segments are wa. This is due to each RoadSegment needing to check for collisions with every other segment, which can be time consuming. One potential solution is to implement a Quadtree data structure, which would allow the segment to quickly identify and check collisions only with its close neighbors, but sadly I didn't have time to actually implement this. 
+- Another improvement could be made to the rendering of roads, as there is a noticeable performance drop after generating 10,000 roads. One way to address this is by implementing the technique of Drawing Meshes Instanced, which allows rendering multiple instances with just a single draw call. Unfortunately, I didn't have enough time to implement this.
+
 ## Tools used / sources used
 - Raylib library used for the rendering of the city and the GUI.
   - [Raylib website](https://www.raylib.com/) - Ramon Santamaria (@raysan5)
