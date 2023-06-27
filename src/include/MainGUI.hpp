@@ -576,7 +576,13 @@ void GuiMainGUI(GuiMainGUIState* state) {
         // Check if the size is valid, there is a limit of 2000,
         // because beyond that it hangs too long
         if (state->inputSizeValue > 0 && state->inputSizeValue <= 2000) {
-            state->city->SetSize(state->inputSizeValue);
+            if (state->inputSizeValue % 2 == 0) {
+                state->city->SetSize(state->inputSizeValue);
+                strcpy(state->labelinfo, "");
+            }
+            else {
+                strcpy(state->labelinfo, "Size must be even");
+            }
         }
         else {
             state->city->SetSize(2000);
