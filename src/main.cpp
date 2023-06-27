@@ -30,7 +30,7 @@ void handleCameraControls(Camera3D& camera) {
 int main() {
     SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_VSYNC_HINT);
 
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "raylib [shaders] example - basic lighting");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "City Synth");
 
     // ----- Camera -----
     Camera3D camera{};
