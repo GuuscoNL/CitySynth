@@ -23,7 +23,7 @@ Settings::Settings(Shader lightingShader) {
     amplitude = 0.5; // ?
     lacunarity = 30; // How "dense" the patches are?
     persistence = 2 / lacunarity; // ?
-    octaves = 4; // Less is more smooth?
+    octaves = 2; // Less is more smooth?
 
     highwayModel = LoadModelFromMesh(GenMeshCube(highwayWidth, highwayHeight, highwayLength));
     sideRoadModel = LoadModelFromMesh(GenMeshCube(sideRoadWidth, sideRoadHeight, sideRoadLength));

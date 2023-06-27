@@ -22,9 +22,11 @@
 
 void handleCameraControls(Camera3D& camera) {
 
-    if (!IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) return; // Update camera only when right mouse button is held down
+    // Update camera only when right mouse button is held down
+    if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON) || IsKeyDown(KEY_LEFT_SHIFT)) {
+        UpdateCamera(&camera, CAMERA_THIRD_PERSON);
+    }
 
-    UpdateCamera(&camera, CAMERA_THIRD_PERSON);
 }
 
 int main() {
