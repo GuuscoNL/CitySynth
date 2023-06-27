@@ -98,7 +98,7 @@ int main() {
 
             // ----- UI -----
             DrawFPS(10, 10);
-            DrawText("Hold down right mouse button to move the camera", 10, 60, 20, DARKGRAY);
+            DrawText("Hold down right mouse button or L-shift to move the camera", 10, 60, 20, DARKGRAY);
             GuiMainGUI(&GUIState);
 
             EndDrawing();
