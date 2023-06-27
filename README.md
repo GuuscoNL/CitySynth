@@ -116,6 +116,7 @@ You can find the full documentation after cloning this repo and by opening the [
   - [Demonstration of the algorithm and slides with simple explanation](https://phiresky.github.io/procedural-cities/) - phiresky
   - [Demonstration with buildings](https://www.tmwhere.com/city_generation.html) - t-mw
 - [Chat GPT](https://chat.openai.com/) for general help, becuase I am still new at C++, but also used for one small algorithm in the code. - OpenAI
+- `DistNodeToRoad` function based on [this video](https://youtu.be/egmZJU-1zPU) - Two-Bit Coding
 - [Doxygen](https://www.doxygen.nl/) used for documenting the code. - Dimitri van Heesch
 
 ## License
