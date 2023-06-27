@@ -12,7 +12,7 @@
 #define CAMERA_IMPLEMENTATION
 
 #define ASPECT_RATIO 16/9
-#define SCREEN_HEIGHT 900
+#define SCREEN_HEIGHT 800
 #define SCREEN_WIDTH SCREEN_HEIGHT * ASPECT_RATIO
 
 #define RAYGUI_IMPLEMENTATION
@@ -66,7 +66,7 @@ int main() {
     City city = City(300.f, &settings);
 
     // ----- GUI -----
-    GuiMainGUIState GUIState = InitGuiMainGUI(SCREEN_WIDTH, &settings, &city);
+    GuiMainGUIState GUIState = InitGuiMainGUI(&settings, &city);
 
     // ----- Main draw loop -----
     while (!WindowShouldClose()) {

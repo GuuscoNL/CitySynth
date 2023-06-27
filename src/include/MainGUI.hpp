@@ -118,7 +118,7 @@ extern "C" {            // Prevents name mangling of functions
     //----------------------------------------------------------------------------------
     // Module Functions Declaration
     //----------------------------------------------------------------------------------
-    GuiMainGUIState InitGuiMainGUI(void);
+    GuiMainGUIState InitGuiMainGUI(Settings* settings, City* city);
     void GuiMainGUI(GuiMainGUIState* state);
     static void ButtonShowNodes(GuiMainGUIState* state);
     static void ButtonDiscoRoads(GuiMainGUIState* state);
@@ -159,10 +159,10 @@ using json = nlohmann::json;
 //----------------------------------------------------------------------------------
 // Module Functions Definition
 //----------------------------------------------------------------------------------
-GuiMainGUIState InitGuiMainGUI(int screenWidth, Settings* settings, City* city) {
+GuiMainGUIState InitGuiMainGUI(Settings* settings, City* city) {
     GuiMainGUIState state = { 0 };
 
-    state.anchorMain = (Vector2){ screenWidth - 424.f, 0 };
+    state.anchorMain = (Vector2){ GetScreenWidth() - 424.f, 0 };
     state.anchorDebug = (Vector2){ 0, 88 };
     state.anchorHighway = (Vector2){ state.anchorMain.x + 8, 32 };
     state.anchorGeneral = (Vector2){ state.anchorMain.x + 8, 224 };
