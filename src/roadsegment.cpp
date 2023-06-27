@@ -18,7 +18,6 @@ void RoadSegment::Draw() const {
     DrawModelEx(model, pos, { 0, 1, 0 }, angle, Vector3{ 1, 1, length / modelLength }, color);
 }
 
-
 unsigned int RoadSegment::GetDelay() const {
     return delay;
 }

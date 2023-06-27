@@ -4,7 +4,7 @@
 struct RoadSegmentGreaterThan {
     /**
      * @brief Based on the delay of the RoadSegment
-     * 
+     *
      * @param lhs Left Hand Side RoadSegment
      * @param rhs Right Hand Side RoadSegment
      * @return true lhs > rhs (Based on delay attribute)

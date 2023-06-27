@@ -58,7 +58,7 @@ void City::SetSize(int size) {
     UpdatePlaneTexture();
 }
 
-void City::Draw() const{
+void City::Draw() const {
 
     for (const auto* const road : roads) {
         road->Draw();
@@ -322,7 +322,7 @@ void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoad
     }
 }
 
-void City::DeleteNode(Node* nodeToRemove){
+void City::DeleteNode(Node* nodeToRemove) {
     // Make sure the node is not used by other roads before deleting
     if (nodeToRemove->GetAmountConnectedRoads() <= 0) {
         nodes.erase(remove(nodes.begin(), nodes.end(), nodeToRemove), nodes.end());
@@ -348,7 +348,7 @@ Vector2 City::CalcPosWithAngle(const Vector2& fromPos, float angle, float length
                     fromPos.y + sin(angleRad) * length };
 }
 
-Vector2 City::HighwaySamples(const RoadSegment* const rootRoad, float MaxAngle) const{
+Vector2 City::HighwaySamples(const RoadSegment* const rootRoad, float MaxAngle) const {
     std::vector<Vector2> positions;
     positions.reserve(settings->highwaySampleAmount); // Speed!
 
@@ -384,14 +384,14 @@ Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, co
 
     // if the intersection pos is close to another road don't create an intersection,
     // but extend road to the close node. This prevents extremely small roads.
-    if (Vector2DistanceSqr(fromNode->GetPos(), intersectionPos) < 0.2*0.2) {
+    if (Vector2DistanceSqr(fromNode->GetPos(), intersectionPos) < 0.2 * 0.2) {
         toAddRoad->SetTo(fromNode);
 
         DeleteNode(orgToNode);
         return fromNode;
     }
 
-    if (Vector2DistanceSqr(toNode->GetPos(), intersectionPos) < 0.2*0.2) {
+    if (Vector2DistanceSqr(toNode->GetPos(), intersectionPos) < 0.2 * 0.2) {
         toAddRoad->SetTo(toNode);
 
         DeleteNode(orgToNode);

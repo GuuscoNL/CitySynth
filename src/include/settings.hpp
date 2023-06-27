@@ -59,7 +59,7 @@ public:
 
     /**
      * @brief Set the Random Seed.
-     * 
+     *
      * @param seed The seed
      */
     void SetSeed(int seed) {

@@ -20,15 +20,6 @@
 #define GUI_MAINGUI_IMPLEMENTATION
 #include "include/MainGUI.hpp"
 
-void handleCameraControls(Camera3D& camera) {
-
-    // Update camera only when right mouse button is held down
-    if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON) || IsKeyDown(KEY_LEFT_SHIFT)) {
-        UpdateCamera(&camera, CAMERA_THIRD_PERSON);
-    }
-
-}
-
 int main() {
     SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_VSYNC_HINT);
 
@@ -73,7 +64,10 @@ int main() {
     // ----- Main draw loop -----
     while (!WindowShouldClose()) {
 
-        handleCameraControls(camera);
+        // Update camera only when right mouse button or L-shift is held down
+        if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON) || IsKeyDown(KEY_LEFT_SHIFT)) {
+            UpdateCamera(&camera, CAMERA_THIRD_PERSON);
+        }
 
         float cameraPos[3] = { camera.position.x, camera.position.y, camera.position.z };
         SetShaderValue(lightingShader, lightingShader.locs[SHADER_LOC_VECTOR_VIEW],
