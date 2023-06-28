@@ -43,8 +43,8 @@ When you open the tool you will see in the top right corner settings for generat
 - **Heatmap**
   - **Frequency:** How frequent the black patches are. Use small increments. Bigger = smaller and more frequent patches.
   - **Amplitude:** Haven't found out what this exactly does yet. :sweat_smile:
-  - **Lucanrity:** How "dense" the patches are? (I recommend experimenting with different values)
-  - **Octaves:** 1 means smooth, 2 means rough.
+  - **Lucanrity:** The gaps? more detailed? (I recommend experimenting with different values, use increments of 1 while octaves is at 2 or higher)
+  - **Octaves:** The higher the rougher.
   - **File name:** Input a file name here including the extension to import as the heatmap. The image must be in the same directory as the executable. It will automatically resize the imageA to fit the size of the city. Press Import to apply the image. This will not regenerate the City automatically.
 - **Controls**
   - **Reset City:** Will reset the city.

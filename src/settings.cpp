@@ -21,7 +21,7 @@ Settings::Settings(Shader lightingShader) {
 
     frequency = 0.042; // bigger = smaller patches
     amplitude = 0.5; // ?
-    lacunarity = 30; // How "dense" the patches are?
+    lacunarity = 2; // How "dense" the patches are?
     persistence = 2 / lacunarity; // ?
     octaves = 2; // Less is more smooth?
 

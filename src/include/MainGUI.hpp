@@ -211,7 +211,7 @@ GuiMainGUIState InitGuiMainGUI(Settings* settings, City* city) {
     state.inputAmplitudeEditMode = false;
     strcpy(state.inputAmplitudeText, "0.5");
     state.inputLacunarityEditMode = false;
-    strcpy(state.inputLacunarityText, "30");
+    strcpy(state.inputLacunarityText, "2");
     state.inputOctavesEditMode = false;
     state.inputOctavesValue = 2;
     state.inputCustomHeatmapEditMode = false;
