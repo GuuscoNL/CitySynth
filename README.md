@@ -94,8 +94,12 @@ Here is an example of a small city exported to a JSON file:
 You can find the full documentation after cloning this repo and by opening the [html/index.html](html/index.html) file in the browser.
 
 ## Possible improvements
-- Generating 10,000 segments currently takes about 10 seconds, and the generation time increases exponentially as more segments are wa. This is due to each RoadSegment needing to check for collisions with every other segment, which can be time consuming. One potential solution is to implement a Quadtree data structure, which would allow the segment to quickly identify and check collisions only with its close neighbors, but sadly I didn't have time to actually implement this. 
-- Another improvement could be made to the rendering of roads, as there is a noticeable performance drop after generating 10,000 roads. One way to address this is by implementing the technique of Drawing Meshes Instanced, which allows rendering multiple instances with just a single draw call. Unfortunately, I didn't have enough time to implement this.
+- **Speed up generating cities**
+  - Generating 10,000 segments currently takes about 10 seconds, and the generation time increases exponentially as more segments are wa. This is due to each RoadSegment needing to check for collisions with every other segment, which can be time consuming. One potential solution is to implement a Quadtree data structure, which would allow the segment to quickly identify and check collisions only with its close neighbors, but sadly I didn't have time to actually implement this. 
+- **Improve rendering of roads and nodes**
+  - There is a noticeable performance drop after generating 10,000 roads. One way to address this is by implementing the technique instancing, which allows rendering multiple meshes with just a single draw call. Unfortunately, I didn't have enough time to implement this.
+- **Using smart pointers**
+  - Currently there are no smart pointers used, since I do not entirely know how to use them correctly yet, however in retrospect using them might have saved me a lot of bug fixing.
 
 ## Tools used / sources used
 - Raylib library used for the rendering of the city and the GUI.
