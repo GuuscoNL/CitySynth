@@ -112,7 +112,7 @@ You can find the full documentation after cloning this repo and by opening the [
 - Raylib library used for the rendering of the city and the GUI.
   - [Raylib website](https://www.raylib.com/) - Ramon Santamaria (@raysan5)
   - [Raylib github](https://github.com/raysan5/raylib) - Ramon Santamaria (@raysan5)
-  - [Raygui:](https://github.com/raysan5/raygui) The Header file for the GUI. - Ramon Santamaria (@raysan5)
+  - [Raygui:](https://github.com/raysan5/raygui) The Header file for the GUI ([`MainGUI.hpp`](src\include\MainGUI.hpp)). - Ramon Santamaria (@raysan5)
   - [RayGUI maker tool:](https://raylibtech.itch.io/rguilayout) The tool used to generate the GUI. - Ramon Santamaria (@raysan5)
 - Github template for raylib in VS code.
   - [Github template:](https://github.com/educ8s/Raylib-CPP-Starter-Template-for-VSCODE-V2) The github template this repo is based on. (Raylib for C++ in VS Code) - educ8s 
