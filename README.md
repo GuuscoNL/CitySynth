@@ -5,7 +5,7 @@ City Synth is a tool made in C++ using the raylib library where you can generate
 This project was created in 2 weeks for my IPASS (Individual Propedeuse Assessment)
 
 ## Usage
-The tool is mainly created for game developers or artist that need a quick city layout for there game or scene. However this tool can also be used for other means, for example a piping system with a heatmap that is based on real life data or for irrigation perhaps.
+The tool is mainly created for game developers or artist that need a quick city layout for there game or scene. However this tool can also be used for other means, for example a piping system with a heatmap that is based on real life data or for irrigation perhaps. If you set Highway SideRoad chance to 0 than you can have a highway/piping system with no side roads/pipes. An easy way to connected places.
 
 ## Installation
 
