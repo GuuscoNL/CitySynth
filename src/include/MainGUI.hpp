@@ -534,7 +534,7 @@ void GuiMainGUI(GuiMainGUIState* state) {
     GuiLabel((Rectangle) { state->anchorGeneral.x + 8, state->anchorGeneral.y + 32, 96, 24 }, "Segment limit:");
     if (GuiValueBox((Rectangle) { state->anchorGeneral.x + 96, state->anchorGeneral.y + 32, 96, 24 }, NULL, & state->inputSegmentLimitValue, 0, 30000, state->inputSegmentLimitEditMode)) state->inputSegmentLimitEditMode = !state->inputSegmentLimitEditMode;
     GuiLabel((Rectangle) { state->anchorGeneral.x + 8, state->anchorGeneral.y + 56, 96, 24 }, "Size:");
-    if (GuiValueBox((Rectangle) { state->anchorGeneral.x + 96, state->anchorGeneral.y + 56, 96, 24 }, NULL, & state->inputSizeValue, 0, 2000, state->inputSizeEditMode)) state->inputSizeEditMode = !state->inputSizeEditMode;
+    if (GuiValueBox((Rectangle) { state->anchorGeneral.x + 96, state->anchorGeneral.y + 56, 96, 24 }, NULL, & state->inputSizeValue, 2, 2000, state->inputSizeEditMode)) state->inputSizeEditMode = !state->inputSizeEditMode;
     GuiLabel((Rectangle) { state->anchorGeneral.x + 8, state->anchorGeneral.y + 80, 56, 24 }, "City name:");
     if (GuiTextBox((Rectangle) { state->anchorGeneral.x + 64, state->anchorGeneral.y + 80, 128, 24 }, state->inputCityNameText, 128, state->inputCityNameEditMode)) state->inputCityNameEditMode = !state->inputCityNameEditMode;
     GuiGroupBox((Rectangle) { state->anchorControls.x + 0, state->anchorControls.y + 0, 200, 88 }, "Controls");
@@ -575,7 +575,7 @@ void GuiMainGUI(GuiMainGUIState* state) {
     if (WasEditingSize && !state->inputSizeEditMode) {
         // Check if the size is valid, there is a limit of 2000,
         // because beyond that it hangs too long
-        if (state->inputSizeValue > 0 && state->inputSizeValue <= 2000) {
+        if (state->inputSizeValue >= 2 && state->inputSizeValue <= 2000) {
             if (state->inputSizeValue % 2 == 0) {
                 state->city->SetSize(state->inputSizeValue);
                 strcpy(state->labelinfo, "");
@@ -584,9 +584,13 @@ void GuiMainGUI(GuiMainGUIState* state) {
                 strcpy(state->labelinfo, "Size must be even");
             }
         }
+        else if (state->inputSizeValue < 2) {
+            state->city->SetSize(2);
+            strcpy(state->labelinfo, "Size: 2-2000");
+        }
         else {
             state->city->SetSize(2000);
-            strcpy(state->labelinfo, "Size: 1-2000");
+            strcpy(state->labelinfo, "Size: 2-2000");
         }
     }
 
