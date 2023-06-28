@@ -18,7 +18,7 @@
 \DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_city_ac0e528d7b69f95f09e90d28b5a432793}{Draw}}()\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00029\ }
 \DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_city_abd490b81a06fe5767df6d0bdeaf5cd9f}{GeneratePopulationHeatmap}}();}
-\DoxyCodeLine{00036\ \ \ \ \ }
+\DoxyCodeLine{00036\ }
 \DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_city_adb2cb2efdc19aec0d2270685cbf9396a}{GenerateCity}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ segmentLimit);}
 \DoxyCodeLine{00043\ }
 \DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_city_a46b8238291760e8bd338dfb05c6bfdd4}{ResetCity}}();}
@@ -47,27 +47,34 @@
 \DoxyCodeLine{00102\ }
 \DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdatePlaneTexture();}
 \DoxyCodeLine{00108\ }
-\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{bool}\ LocalConstraints(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ road);}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{bool}\ LocalConstraints(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ orgRoad);}
 \DoxyCodeLine{00118\ }
-\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{void}\ GlobalGoals(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ rootRoad,\ std::vector<RoadSegment*>\&\ newRoads);}
-\DoxyCodeLine{00126\ }
-\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{void}\ DeleteNode(\mbox{\hyperlink{class_node}{Node}}*\ node);}
-\DoxyCodeLine{00133\ \ \ \ \ }
-\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordtype}{void}\ AddSideRoad(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ rootRoad,\ \textcolor{keywordtype}{float}\ angle,\ std::vector<RoadSegment*>\&\ newRoads);}
-\DoxyCodeLine{00142\ }
-\DoxyCodeLine{00151\ \ \ \ \ Vector2\ CalcPosWithAngle(\textcolor{keyword}{const}\ Vector2\&\ fromPos,\ \textcolor{keywordtype}{float}\ angle,\ \textcolor{keywordtype}{float}\ length)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00152\ }
-\DoxyCodeLine{00161\ \ \ \ \ Vector2\ HighwaySamples(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ \textcolor{keyword}{const}\ rootRoad,\ \textcolor{keywordtype}{float}\ MaxAngle)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00162\ }
-\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keywordtype}{int}\ GetPopulationFromHeatmap(\textcolor{keyword}{const}\ Vector2\&\ pos)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{bool}\ LocalConstraintIntersecting(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ orgRoad);}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordtype}{bool}\ LocalConstraintCloseCrossing(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ orgRoad);}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordtype}{bool}\ LocalConstraintCloseRoad(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ orgRoad);}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keywordtype}{void}\ GlobalGoals(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ rootRoad,\ std::vector<RoadSegment*>\&\ newRoads);}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keywordtype}{void}\ DeleteNode(\mbox{\hyperlink{class_node}{Node}}*\ node);}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keywordtype}{void}\ AddSideRoad(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ rootRoad,\ \textcolor{keywordtype}{float}\ angle,\ std::vector<RoadSegment*>\&\ newRoads);}
 \DoxyCodeLine{00170\ }
-\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keywordtype}{bool}\ RoadsCollide(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ road1,\ \mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ road2,\ Vector2\&\ intersection)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00181\ }
-\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{float}\ CrossProduct(\textcolor{keyword}{const}\ Vector2\&\ v1,\ \textcolor{keyword}{const}\ Vector2\&\ v2)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00179\ \ \ \ \ Vector2\ CalcPosWithAngle(\textcolor{keyword}{const}\ Vector2\&\ fromPos,\ \textcolor{keywordtype}{float}\ angle,\ \textcolor{keywordtype}{float}\ length)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00189\ \ \ \ \ Vector2\ HighwaySamples(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ \textcolor{keyword}{const}\ rootRoad,\ \textcolor{keywordtype}{float}\ MaxAngle)\ \textcolor{keyword}{const};}
 \DoxyCodeLine{00190\ }
-\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keywordtype}{float}\ DistNodeToRoad(\mbox{\hyperlink{class_node}{Node}}*\ node,\ \mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ road,\ Vector2\&\ closestPoint)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00200\ }
-\DoxyCodeLine{00209\ \ \ \ \ \mbox{\hyperlink{class_node}{Node}}*\ AddIntersection(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ toSplitRoad,\ \mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ toAddRoad,\ \textcolor{keyword}{const}\ Vector2\&\ intersectionPos);}
-\DoxyCodeLine{00210\ \};}
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{keywordtype}{int}\ GetPopulationFromHeatmap(\textcolor{keyword}{const}\ Vector2\&\ pos)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordtype}{bool}\ RoadsCollide(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ road1,\ \mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ road2,\ Vector2\&\ intersection)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordtype}{float}\ CrossProduct(\textcolor{keyword}{const}\ Vector2\&\ v1,\ \textcolor{keyword}{const}\ Vector2\&\ v2)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00218\ }
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keywordtype}{float}\ DistNodeToRoad(\mbox{\hyperlink{class_node}{Node}}*\ node,\ \mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ road,\ Vector2\&\ closestPoint)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00228\ }
+\DoxyCodeLine{00237\ \ \ \ \ \mbox{\hyperlink{class_node}{Node}}*\ AddIntersection(\mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ toSplitRoad,\ \mbox{\hyperlink{class_road_segment}{RoadSegment}}*\ toAddRoad,\ \textcolor{keyword}{const}\ Vector2\&\ intersectionPos);}
+\DoxyCodeLine{00238\ \};}
 
 \end{DoxyCode}

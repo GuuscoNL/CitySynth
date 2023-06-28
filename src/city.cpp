@@ -190,85 +190,103 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
         return false;
     }
 
-    { // Check if roads collide
-        for (auto* road : roads) {
-            std::vector<RoadSegment*> ConnectedRoads = orgRoad->GetFrom()->GetConnectedRoads();
-            std::vector<RoadSegment*> ConnectedRoadsTo = orgRoad->GetTo()->GetConnectedRoads();
-            ConnectedRoads.insert(ConnectedRoads.end(), ConnectedRoadsTo.begin(), ConnectedRoadsTo.end());
-
-            // Don't check roads that are connected to this road, since they will always be intersecting.
-            if (std::find(ConnectedRoads.begin(), ConnectedRoads.end(), road) != ConnectedRoads.end()) {
-                continue;
-            }
-
-            Vector2 intersectionPos;
-
-            // If the roads collide make an intersection
-            if (RoadsCollide(road, orgRoad, intersectionPos)) {
-
-                Node* intersectionNode = AddIntersection(road, orgRoad, intersectionPos);
-                intersectionNode->color = GREEN;
-                return true;
-            }
-        }
+    // Check if roads collide
+    if (LocalConstraintIntersecting(orgRoad)) {
+        return true;
+    }
+    
+    // if “ends close to an existing crossing” then “extend street, to reach the crossing”        
+    if (LocalConstraintCloseCrossing(orgRoad)) {
+        return true;
     }
 
-    { // if “ends close to an existing crossing” then “extend street, to reach the crossing”        
-        Node* closestNode = nullptr;
-
-        Vector2 endNodePos = orgRoad->GetToPos();
-        float smallestDistance = std::numeric_limits<float>::max();
-
-        // Loop over all nodes and and check which one is the closest
-        for (auto* node : nodes) {
-            // Distance in sqr
-            float distance = Vector2DistanceSqr(endNodePos, node->GetPos());
-            if (distance < smallestDistance && node != orgRoad->GetTo()) {
-                smallestDistance = distance;
-                closestNode = node;
-            }
-        }
-
-        // If the closest node is closer than `CloseCrossing` then extend street to reach the crossing
-        if (smallestDistance < settings->CloseCrossing * settings->CloseCrossing && closestNode != nullptr) {
-
-            Node* nodeToRemove = orgRoad->GetTo();
-            orgRoad->SetTo(closestNode);
-            closestNode->color = RED;
-
-            // Remove old node
-            DeleteNode(nodeToRemove);
-            return true;
-        }
-    }
-
-    { // if “close to intersecting” then “extend street to form intersection”
-        Node* orgToNode = orgRoad->GetTo();
-        Vector2 closestPoint;
-        Vector2 closestClosestPoint;
-        RoadSegment* closestRoad = nullptr;
-        float smallestDistance = std::numeric_limits<float>::max();
-
-        // Loop over all roads to get the closest road
-        for (auto* road : roads) {
-            // Distance in sqr
-            float distance = DistNodeToRoad(orgToNode, road, closestPoint);
-            if (distance < smallestDistance && road != orgRoad) {
-                smallestDistance = distance;
-                closestRoad = road;
-                closestClosestPoint = closestPoint;
-            }
-        }
-
-        //  Make an intersection if the two roads are close enough
-        if (smallestDistance < settings->CloseRoad * settings->CloseRoad && closestRoad != nullptr) {
-            Node* intersectionNode = AddIntersection(closestRoad, orgRoad, closestClosestPoint);
-            intersectionNode->color = BLUE;
-            return true;
-        }
+    // if “close to intersecting” then “extend street to form intersection”
+    if (LocalConstraintCloseRoad(orgRoad)) {
+        return true;
     }
 
     return true;
+}
+
+bool City::LocalConstraintIntersecting(RoadSegment* orgRoad) {
+    for (auto* road : roads) {
+        std::vector<RoadSegment*> ConnectedRoads = orgRoad->GetFrom()->GetConnectedRoads();
+        std::vector<RoadSegment*> ConnectedRoadsTo = orgRoad->GetTo()->GetConnectedRoads();
+        ConnectedRoads.insert(ConnectedRoads.end(), ConnectedRoadsTo.begin(), ConnectedRoadsTo.end());
+
+        // Don't check roads that are connected to this road, since they will always be intersecting.
+        if (std::find(ConnectedRoads.begin(), ConnectedRoads.end(), road) != ConnectedRoads.end()) {
+            continue;
+        }
+
+        Vector2 intersectionPos;
+
+        // If the roads collide make an intersection
+        if (RoadsCollide(road, orgRoad, intersectionPos)) {
+
+            Node* intersectionNode = AddIntersection(road, orgRoad, intersectionPos);
+            intersectionNode->color = GREEN;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool City::LocalConstraintCloseCrossing(RoadSegment* orgRoad) {
+    Node* closestNode = nullptr;
+
+    Vector2 endNodePos = orgRoad->GetToPos();
+    float smallestDistance = std::numeric_limits<float>::max();
+
+    // Loop over all nodes and and check which one is the closest
+    for (auto* node : nodes) {
+        // Distance in sqr
+        float distance = Vector2DistanceSqr(endNodePos, node->GetPos());
+        if (distance < smallestDistance && node != orgRoad->GetTo()) {
+            smallestDistance = distance;
+            closestNode = node;
+        }
+    }
+
+    // If the closest node is closer than `CloseCrossing` then extend street to reach the crossing
+    if (smallestDistance < settings->CloseCrossing * settings->CloseCrossing && closestNode != nullptr) {
+
+        Node* nodeToRemove = orgRoad->GetTo();
+        orgRoad->SetTo(closestNode);
+        closestNode->color = RED;
+
+        // Remove old node
+        DeleteNode(nodeToRemove);
+        return true;
+    }
+    return false;
+}
+
+bool City::LocalConstraintCloseRoad(RoadSegment* orgRoad) {
+    Node* orgToNode = orgRoad->GetTo();
+    Vector2 closestPoint;
+    Vector2 closestClosestPoint;
+    RoadSegment* closestRoad = nullptr;
+    float smallestDistance = std::numeric_limits<float>::max();
+
+    // Loop over all roads to get the closest road
+    for (auto* road : roads) {
+        // Distance in sqr
+        float distance = DistNodeToRoad(orgToNode, road, closestPoint);
+        if (distance < smallestDistance && road != orgRoad) {
+            smallestDistance = distance;
+            closestRoad = road;
+            closestClosestPoint = closestPoint;
+        }
+    }
+
+    //  Make an intersection if the two roads are close enough
+    if (smallestDistance < settings->CloseRoad * settings->CloseRoad && closestRoad != nullptr) {
+        Node* intersectionNode = AddIntersection(closestRoad, orgRoad, closestClosestPoint);
+        intersectionNode->color = BLUE;
+        return true;
+    }
+    return false;
 }
 
 void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoads) {
@@ -285,7 +303,7 @@ void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoad
         Vector2 newToPos = HighwaySamples(rootRoad, settings->highwayAngle);
         Node* toNode = new Node(newToPos, settings);
         nodes.push_back(toNode);
-        newRoads.push_back(new Highway(1, settings, rootRoad->GetTo(), toNode));
+        newRoads.emplace_back( new Highway(1, settings, rootRoad->GetTo(), toNode));
 
         // Will this highway branch to new highways?
         if (GetRandomValue(0, 10000) / 100.f <= settings->highwayBranchChance) {
@@ -297,7 +315,7 @@ void City::GlobalGoals(RoadSegment* rootRoad, std::vector<RoadSegment*>& newRoad
             Node* branchNode = new Node(CalcPosWithAngle(rootRoad->GetToPos(), rootRoad->GetAngle() + angle, settings->highwayLength), settings);
             nodes.push_back(branchNode);
 
-            newRoads.push_back(new Highway(1, settings, rootRoad->GetTo(), branchNode));
+            newRoads.emplace_back( new Highway(1, settings, rootRoad->GetTo(), branchNode));
 
         }
         // Will this road branch to a new Side road?
@@ -337,7 +355,7 @@ void City::AddSideRoad(RoadSegment* rootRoad, float angle, std::vector<RoadSegme
     if (GetPopulationFromHeatmap(newPos) / 255. >= settings->sideRoadThreshold) {
         Node* newToNode = new Node(newPos, settings);
         nodes.push_back(newToNode);
-        newRoads.push_back(new SideRoad(1, settings, rootRoad->GetTo(), newToNode));
+        newRoads.emplace_back( new SideRoad(1, settings, rootRoad->GetTo(), newToNode));
     }
 }
 
@@ -405,13 +423,13 @@ Node* City::AddIntersection(RoadSegment* toSplitRoad, RoadSegment* toAddRoad, co
     // Connect all roads to the intersect node and use the correct road type
     toAddRoad->SetTo(intersectionNode);
     if (toSplitRoad->GetType() == RoadSegment::HIGHWAY) {
-        roads.push_back(new Highway(1, settings, fromNode, intersectionNode));
-        roads.push_back(new Highway(1, settings, intersectionNode, toNode));
+        roads.emplace_back(new Highway(1, settings, fromNode, intersectionNode));
+        roads.emplace_back(new Highway(1, settings, intersectionNode, toNode));
 
     }
     else if (toSplitRoad->GetType() == RoadSegment::SIDEROAD) {
-        roads.push_back(new SideRoad(1, settings, fromNode, intersectionNode));
-        roads.push_back(new SideRoad(1, settings, intersectionNode, toNode));
+        roads.emplace_back(new SideRoad(1, settings, fromNode, intersectionNode));
+        roads.emplace_back(new SideRoad(1, settings, intersectionNode, toNode));
 
     }
     else {

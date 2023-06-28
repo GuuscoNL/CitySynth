@@ -101,17 +101,19 @@ $(function() {
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="class_node.html#a262910822ad2abc6b821dc0c29d02980">   64</a></span>    <span class="keywordtype">int</span> <a class="code hl_function" href="class_node.html#a262910822ad2abc6b821dc0c29d02980">GetId</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    Color color;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keywordtype">int</span> id;</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keyword">static</span> <span class="keywordtype">int</span> nextId;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    std::vector&lt;RoadSegment*&gt; connectedRoads;</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    Vector2 pos2D;</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    Vector3 pos3D;</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <a class="code hl_struct" href="struct_settings.html">Settings</a>* settings;</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    Model model;</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>};</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="class_node.html#aeb1f20fa14bac94f4f751a6ed1dd48e3">   70</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_node.html#aeb1f20fa14bac94f4f751a6ed1dd48e3">ResetId</a>();</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    Color color;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keywordtype">int</span> id;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keyword">static</span> <span class="keywordtype">int</span> nextId;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    std::vector&lt;RoadSegment*&gt; connectedRoads;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    Vector2 pos2D;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    Vector3 pos3D;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <a class="code hl_struct" href="struct_settings.html">Settings</a>* settings;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    Model model;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>};</div>
 <div class="ttc" id="aclass_node_html"><div class="ttname"><a href="class_node.html">Node</a></div><div class="ttdef"><b>Definition:</b> node.hpp:8</div></div>
 <div class="ttc" id="aclass_node_html_a262910822ad2abc6b821dc0c29d02980"><div class="ttname"><a href="class_node.html#a262910822ad2abc6b821dc0c29d02980">Node::GetId</a></div><div class="ttdeci">int GetId() const</div><div class="ttdoc">Get the Id of this Node.</div></div>
 <div class="ttc" id="aclass_node_html_a300e82d80082ac0a0bc1e9bc727b3614"><div class="ttname"><a href="class_node.html#a300e82d80082ac0a0bc1e9bc727b3614">Node::GetAmountConnectedRoads</a></div><div class="ttdeci">int GetAmountConnectedRoads() const</div><div class="ttdoc">Get the amount of connected Roads to this Node.</div></div>
@@ -119,6 +121,7 @@ $(function() {
 <div class="ttc" id="aclass_node_html_a8e728c40e105330bf255d172011b6960"><div class="ttname"><a href="class_node.html#a8e728c40e105330bf255d172011b6960">Node::Node</a></div><div class="ttdeci">Node(const Vector2 &amp;pos2D, Settings *settings)</div><div class="ttdoc">Construct a new Node object.</div></div>
 <div class="ttc" id="aclass_node_html_aa584361b301b58aded729eb51855d5b4"><div class="ttname"><a href="class_node.html#aa584361b301b58aded729eb51855d5b4">Node::RemoveRoad</a></div><div class="ttdeci">void RemoveRoad(const RoadSegment *const road)</div><div class="ttdoc">Remove road from this Node.</div></div>
 <div class="ttc" id="aclass_node_html_ae77273023e7f31344d418b12a1c41bd2"><div class="ttname"><a href="class_node.html#ae77273023e7f31344d418b12a1c41bd2">Node::AddRoad</a></div><div class="ttdeci">void AddRoad(RoadSegment *const road)</div><div class="ttdoc">Add road to this Node.</div></div>
+<div class="ttc" id="aclass_node_html_aeb1f20fa14bac94f4f751a6ed1dd48e3"><div class="ttname"><a href="class_node.html#aeb1f20fa14bac94f4f751a6ed1dd48e3">Node::ResetId</a></div><div class="ttdeci">void ResetId()</div><div class="ttdoc">Reset nextId to 0.</div></div>
 <div class="ttc" id="aclass_node_html_af8cc2e6eb892f1e4c6825dfea726a533"><div class="ttname"><a href="class_node.html#af8cc2e6eb892f1e4c6825dfea726a533">Node::Draw</a></div><div class="ttdeci">void Draw() const</div><div class="ttdoc">Draw Node.</div></div>
 <div class="ttc" id="aclass_node_html_afa58c9c8784f980bc6ae95c40a89bcca"><div class="ttname"><a href="class_node.html#afa58c9c8784f980bc6ae95c40a89bcca">Node::GetConnectedRoads</a></div><div class="ttdeci">std::vector&lt; RoadSegment * &gt; GetConnectedRoads() const</div><div class="ttdoc">Get the Connected Roads.</div></div>
 <div class="ttc" id="aclass_road_segment_html"><div class="ttname"><a href="class_road_segment.html">RoadSegment</a></div><div class="ttdef"><b>Definition:</b> roadsegment.hpp:8</div></div>

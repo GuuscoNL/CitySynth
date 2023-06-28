@@ -122,7 +122,7 @@
 \DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
 \DoxyCodeLine{00119\ \ \ \ \ \textcolor{comment}{//\ Module\ Functions\ Declaration}}
 \DoxyCodeLine{00120\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00121\ \ \ \ \ \mbox{\hyperlink{struct_gui_main_g_u_i_state}{GuiMainGUIState}}\ InitGuiMainGUI(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00121\ \ \ \ \ \mbox{\hyperlink{struct_gui_main_g_u_i_state}{GuiMainGUIState}}\ InitGuiMainGUI(\mbox{\hyperlink{struct_settings}{Settings}}*\ settings,\ \mbox{\hyperlink{class_city}{City}}*\ city);}
 \DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordtype}{void}\ GuiMainGUI(\mbox{\hyperlink{struct_gui_main_g_u_i_state}{GuiMainGUIState}}*\ state);}
 \DoxyCodeLine{00123\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ ButtonShowNodes(\mbox{\hyperlink{struct_gui_main_g_u_i_state}{GuiMainGUIState}}*\ state);}
 \DoxyCodeLine{00124\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ ButtonDiscoRoads(\mbox{\hyperlink{struct_gui_main_g_u_i_state}{GuiMainGUIState}}*\ state);}
@@ -163,10 +163,10 @@
 \DoxyCodeLine{00159\ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
 \DoxyCodeLine{00160\ \textcolor{comment}{//\ Module\ Functions\ Definition}}
 \DoxyCodeLine{00161\ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
-\DoxyCodeLine{00162\ \mbox{\hyperlink{struct_gui_main_g_u_i_state}{GuiMainGUIState}}\ InitGuiMainGUI(\textcolor{keywordtype}{int}\ screenWidth,\ \mbox{\hyperlink{struct_settings}{Settings}}*\ settings,\ \mbox{\hyperlink{class_city}{City}}*\ city)\ \{}
+\DoxyCodeLine{00162\ \mbox{\hyperlink{struct_gui_main_g_u_i_state}{GuiMainGUIState}}\ InitGuiMainGUI(\mbox{\hyperlink{struct_settings}{Settings}}*\ settings,\ \mbox{\hyperlink{class_city}{City}}*\ city)\ \{}
 \DoxyCodeLine{00163\ \ \ \ \ \mbox{\hyperlink{struct_gui_main_g_u_i_state}{GuiMainGUIState}}\ state\ =\ \{\ 0\ \};}
 \DoxyCodeLine{00164\ }
-\DoxyCodeLine{00165\ \ \ \ \ state.anchorMain\ =\ (Vector2)\{\ screenWidth\ -\/\ 424.f,\ 0\ \};}
+\DoxyCodeLine{00165\ \ \ \ \ state.anchorMain\ =\ (Vector2)\{\ GetScreenWidth()\ -\/\ 424.f,\ 0\ \};}
 \DoxyCodeLine{00166\ \ \ \ \ state.anchorDebug\ =\ (Vector2)\{\ 0,\ 88\ \};}
 \DoxyCodeLine{00167\ \ \ \ \ state.anchorHighway\ =\ (Vector2)\{\ state.anchorMain.x\ +\ 8,\ 32\ \};}
 \DoxyCodeLine{00168\ \ \ \ \ state.anchorGeneral\ =\ (Vector2)\{\ state.anchorMain.x\ +\ 8,\ 224\ \};}
@@ -185,11 +185,11 @@
 \DoxyCodeLine{00181\ \ \ \ \ state.inputHighwayHeightEditMode\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00182\ \ \ \ \ strcpy(state.inputHighwayHeightText,\ \textcolor{stringliteral}{"{}0.045"{}});}
 \DoxyCodeLine{00183\ \ \ \ \ state.inputMaxAngleEditMode\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00184\ \ \ \ \ strcpy(state.inputMaxAngleText,\ \textcolor{stringliteral}{"{}15"{}});}
+\DoxyCodeLine{00184\ \ \ \ \ strcpy(state.inputMaxAngleText,\ \textcolor{stringliteral}{"{}20"{}});}
 \DoxyCodeLine{00185\ \ \ \ \ state.inputSampleAmountEditMode\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00186\ \ \ \ \ state.inputSampleAmountValue\ =\ 10;}
 \DoxyCodeLine{00187\ \ \ \ \ state.inputHighwayBranchChanceEditMode\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00188\ \ \ \ \ strcpy(state.inputHighwayBranchChanceText,\ \textcolor{stringliteral}{"{}2"{}});}
+\DoxyCodeLine{00188\ \ \ \ \ strcpy(state.inputHighwayBranchChanceText,\ \textcolor{stringliteral}{"{}4"{}});}
 \DoxyCodeLine{00189\ \ \ \ \ state.inputHighwaySideRoadChanceEditMode\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00190\ \ \ \ \ strcpy(state.inputHighwaySideRoadChanceText,\ \textcolor{stringliteral}{"{}80"{}});}
 \DoxyCodeLine{00191\ \ \ \ \ state.inputSeedEditMode\ =\ \textcolor{keyword}{false};}
@@ -527,7 +527,7 @@
 \DoxyCodeLine{00523\ \ \ \ \ GuiLabel((Rectangle)\ \{\ state-\/>anchorHighway.x\ +\ 8,\ state-\/>anchorHighway.y\ +\ 80,\ 96,\ 24\ \},\ \textcolor{stringliteral}{"{}Max\ angle:"{}});}
 \DoxyCodeLine{00524\ \ \ \ \ \textcolor{keywordflow}{if}\ (GuiTextBox((Rectangle)\ \{\ state-\/>anchorHighway.x\ +\ 104,\ state-\/>anchorHighway.y\ +\ 80,\ 88,\ 24\ \},\ state-\/>inputMaxAngleText,\ 128,\ state-\/>inputMaxAngleEditMode))\ state-\/>inputMaxAngleEditMode\ =\ !state-\/>inputMaxAngleEditMode;}
 \DoxyCodeLine{00525\ \ \ \ \ GuiLabel((Rectangle)\ \{\ state-\/>anchorHighway.x\ +\ 8,\ state-\/>anchorHighway.y\ +\ 104,\ 96,\ 24\ \},\ \textcolor{stringliteral}{"{}Sample\ amount:"{}});}
-\DoxyCodeLine{00526\ \ \ \ \ \textcolor{keywordflow}{if}\ (GuiValueBox((Rectangle)\ \{\ state-\/>anchorHighway.x\ +\ 104,\ state-\/>anchorHighway.y\ +\ 104,\ 88,\ 24\ \},\ NULL,\ \&\ state-\/>inputSampleAmountValue,\ 0,\ 100,\ state-\/>inputSampleAmountEditMode))\ state-\/>inputSampleAmountEditMode\ =\ !state-\/>inputSampleAmountEditMode;}
+\DoxyCodeLine{00526\ \ \ \ \ \textcolor{keywordflow}{if}\ (GuiValueBox((Rectangle)\ \{\ state-\/>anchorHighway.x\ +\ 104,\ state-\/>anchorHighway.y\ +\ 104,\ 88,\ 24\ \},\ NULL,\ \&\ state-\/>inputSampleAmountValue,\ 1,\ 100,\ state-\/>inputSampleAmountEditMode))\ state-\/>inputSampleAmountEditMode\ =\ !state-\/>inputSampleAmountEditMode;}
 \DoxyCodeLine{00527\ \ \ \ \ GuiLabel((Rectangle)\ \{\ state-\/>anchorHighway.x\ +\ 8,\ state-\/>anchorHighway.y\ +\ 128,\ 96,\ 24\ \},\ \textcolor{stringliteral}{"{}Branch\ chance:"{}});}
 \DoxyCodeLine{00528\ \ \ \ \ \textcolor{keywordflow}{if}\ (GuiTextBox((Rectangle)\ \{\ state-\/>anchorHighway.x\ +\ 104,\ state-\/>anchorHighway.y\ +\ 128,\ 88,\ 24\ \},\ state-\/>inputHighwayBranchChanceText,\ 128,\ state-\/>inputHighwayBranchChanceEditMode))\ state-\/>inputHighwayBranchChanceEditMode\ =\ !state-\/>inputHighwayBranchChanceEditMode;}
 \DoxyCodeLine{00529\ \ \ \ \ GuiLabel((Rectangle)\ \{\ state-\/>anchorHighway.x\ +\ 8,\ state-\/>anchorHighway.y\ +\ 152,\ 96,\ 24\ \},\ \textcolor{stringliteral}{"{}SideRoad\ chance:"{}});}
@@ -580,15 +580,21 @@
 \DoxyCodeLine{00576\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ if\ the\ size\ is\ valid,\ there\ is\ a\ limit\ of\ 2000,}}
 \DoxyCodeLine{00577\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ because\ beyond\ that\ it\ hangs\ too\ long}}
 \DoxyCodeLine{00578\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (state-\/>inputSizeValue\ >\ 0\ \&\&\ state-\/>inputSizeValue\ <=\ 2000)\ \{}
-\DoxyCodeLine{00579\ \ \ \ \ \ \ \ \ \ \ \ \ state-\/>city-\/>\mbox{\hyperlink{class_city_a772cd4b07914bc379ebaebef42b2b6f4}{SetSize}}(state-\/>inputSizeValue);}
-\DoxyCodeLine{00580\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00581\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00582\ \ \ \ \ \ \ \ \ \ \ \ \ state-\/>city-\/>\mbox{\hyperlink{class_city_a772cd4b07914bc379ebaebef42b2b6f4}{SetSize}}(2000);}
-\DoxyCodeLine{00583\ \ \ \ \ \ \ \ \ \ \ \ \ strcpy(state-\/>labelinfo,\ \textcolor{stringliteral}{"{}Size:\ 1-\/2000"{}});}
-\DoxyCodeLine{00584\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00585\ \ \ \ \ \}}
-\DoxyCodeLine{00586\ }
-\DoxyCodeLine{00587\ \ \ \ \ WasEditingSize\ =\ state-\/>inputSizeEditMode;}
-\DoxyCodeLine{00588\ \}}
+\DoxyCodeLine{00579\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (state-\/>inputSizeValue\ \%\ 2\ ==\ 0)\ \{}
+\DoxyCodeLine{00580\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ state-\/>city-\/>\mbox{\hyperlink{class_city_a772cd4b07914bc379ebaebef42b2b6f4}{SetSize}}(state-\/>inputSizeValue);}
+\DoxyCodeLine{00581\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strcpy(state-\/>labelinfo,\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00582\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00583\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00584\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strcpy(state-\/>labelinfo,\ \textcolor{stringliteral}{"{}Size\ must\ be\ even"{}});}
+\DoxyCodeLine{00585\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00586\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00587\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00588\ \ \ \ \ \ \ \ \ \ \ \ \ state-\/>city-\/>\mbox{\hyperlink{class_city_a772cd4b07914bc379ebaebef42b2b6f4}{SetSize}}(2000);}
+\DoxyCodeLine{00589\ \ \ \ \ \ \ \ \ \ \ \ \ strcpy(state-\/>labelinfo,\ \textcolor{stringliteral}{"{}Size:\ 1-\/2000"{}});}
+\DoxyCodeLine{00590\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00591\ \ \ \ \ \}}
+\DoxyCodeLine{00592\ }
+\DoxyCodeLine{00593\ \ \ \ \ WasEditingSize\ =\ state-\/>inputSizeEditMode;}
+\DoxyCodeLine{00594\ \}}
 
 \end{DoxyCode}

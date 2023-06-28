@@ -110,11 +110,39 @@ private:
      * @brief Check if the RoadSegment collides with other RoadSegments, if so
      * than change it's geometry.
      *
-     * @param road The RoadSegment to test.
+     * @param orgRoad The RoadSegment to test.
      * @return true The RoadSegment is not out of bounds.
      * @return false The RoadSegment is out of bounds.
      */
-    bool LocalConstraints(RoadSegment* road);
+    bool LocalConstraints(RoadSegment* orgRoad);
+
+    /**
+     * @brief Does to road intersect with other roads? If so make an intersection.
+     * 
+     * @param orgRoad The RoadSegment to test.
+     * @return true Road intersects and geometry is changed.
+     * @return false Road does not intersects.
+     */
+    bool LocalConstraintIntersecting(RoadSegment* orgRoad);
+
+    /**
+     * @brief Does the road end near an existing node? If so extend road to the node.
+     * 
+     * @param orgRoad The RoadSegment to test.
+     * @return true Road is close to node and geometry is changed.
+     * @return false Road is not close to node.
+     */
+    bool LocalConstraintCloseCrossing(RoadSegment* orgRoad);
+
+    /**
+     * @brief Does the road end near another road? If so connect it to the other road.
+     * 
+     * @param orgRoad The RoadSegment to test.
+     * @return true Road is close to other road and geometry is changed.
+     * @return false Road is not close to other road.
+     */
+    bool LocalConstraintCloseRoad(RoadSegment* orgRoad);
+
 
     /**
      * @brief Decides if there should branch any other RoadSegments from the road.
