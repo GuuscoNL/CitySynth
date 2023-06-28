@@ -359,7 +359,7 @@ static void ButtonGenerateCity(GuiMainGUIState* state) {
     // Already has min and max value
     settings.highwaySampleAmount = state->inputSampleAmountValue;
 
-    if (atof(state->inputMaxAngleText) > 0 && atof(state->inputMaxAngleText) <= 180) {
+    if (atof(state->inputMaxAngleText) >= 0 && atof(state->inputMaxAngleText) <= 180) {
         settings.highwayAngle = atof(state->inputMaxAngleText);
     }
     else {
@@ -375,7 +375,7 @@ static void ButtonGenerateCity(GuiMainGUIState* state) {
         return;
     }
 
-    if (atof(state->inputHighwayBranchChanceText) > 0 && atof(state->inputHighwayBranchChanceText) <= 100) {
+    if (atof(state->inputHighwayBranchChanceText) >= 0 && atof(state->inputHighwayBranchChanceText) <= 100) {
         settings.highwayBranchChance = atof(state->inputHighwayBranchChanceText);
     }
     else {
@@ -383,7 +383,7 @@ static void ButtonGenerateCity(GuiMainGUIState* state) {
         return;
     }
 
-    if (atof(state->inputHighwaySideRoadChanceText) > 0 && atof(state->inputHighwaySideRoadChanceText) <= 100) {
+    if (atof(state->inputHighwaySideRoadChanceText) >= 0 && atof(state->inputHighwaySideRoadChanceText) <= 100) {
         settings.highwaySideRoadBranchChance = atof(state->inputHighwaySideRoadChanceText);
     }
     else {
@@ -415,7 +415,7 @@ static void ButtonGenerateCity(GuiMainGUIState* state) {
         return;
     }
 
-    if (atof(state->inputSideRoadBranchChanceText) > 0 && atof(state->inputSideRoadBranchChanceText) <= 100) {
+    if (atof(state->inputSideRoadBranchChanceText) >= 0 && atof(state->inputSideRoadBranchChanceText) <= 100) {
         settings.sideRoadBranchChance = atof(state->inputSideRoadBranchChanceText);
     }
     else {
@@ -423,7 +423,7 @@ static void ButtonGenerateCity(GuiMainGUIState* state) {
         return;
     }
 
-    if (atof(state->inputThresholdText) > 0 && atof(state->inputThresholdText) <= 1) {
+    if (atof(state->inputThresholdText) >= 0 && atof(state->inputThresholdText) <= 1) {
         settings.sideRoadThreshold = atof(state->inputThresholdText);
     }
     else {
@@ -468,7 +468,7 @@ static void ButtonGenerateHeatmap(GuiMainGUIState* state) {
         settings.lacunarity = atof(state->inputLacunarityText);
     }
     else {
-        strcpy(state->labelinfo, "Amplitude: 0-10000");
+        strcpy(state->labelinfo, "Lacunarity: 0-10000");
         return;
     }
 
