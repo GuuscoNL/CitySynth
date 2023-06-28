@@ -190,7 +190,7 @@ bool City::LocalConstraints(RoadSegment* orgRoad) {
         return false;
     }
 
-    // Check if roads collide
+    // if “two streets intersect” then “generate a crossing”.
     if (LocalConstraintIntersecting(orgRoad)) {
         return true;
     }

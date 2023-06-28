@@ -7,7 +7,6 @@ This project was created in 2 weeks for my IPASS (Individual Propedeuse Assessme
 ## Usage
 The tool is mainly created for game developers or artist that need a quick city layout for there game or scene. However this tool can also be used for other means, for example a piping system with a heatmap that is based on real life data or for irrigation perhaps. If you set Highway SideRoad chance to 0 than you can have a highway/piping system with no side roads/pipes.
 
-## Installation
 To use City Synth you don't need to install anything, you can go to the latest release and get the executable. Be aware that the executable is only for windows and be sure leave the shaders folder in the same directory as the executable.
 <br><br>
 However if you want to build from source you need to follow these steps first:
@@ -49,6 +48,13 @@ When you open the tool you will see in the top right corner settings for generat
   - **Reset City:** Will Remove all the roads and nodes of the current city.
   - **Export City:** Will export a city to JSON format with the city name as the name of the file. The file will be made in the same directory as the executable.
   - **Generate City:** Generates the city based on all the settings.
+- **Debug**
+  - **Show nodes:** Will show all the nodes and give them a color based on the type of intersections.
+    - White: No special intersection.
+    - Green: Two roads intersected, so a node was generated at the intersection.
+    - Red: Ends close to another node, so the road is extended to that node.
+    - Blue: Road ends near other road, so road is extended to create intersection with other road.
+  - **Disco roads:** Give every road a different color, so it is easier to differentiate between roads.
 
 ## Export example
 Here is an example of a small city exported to a JSON file:
