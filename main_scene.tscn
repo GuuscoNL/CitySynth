@@ -25,6 +25,7 @@ mesh = ExtResource("4_y3mal")
 [node name="main_scene" type="Node3D"]
 
 [node name="Floor" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 material_override = ExtResource("1_nfkxf")
 mesh = SubResource("QuadMesh_d13wu")

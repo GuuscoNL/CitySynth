@@ -21,6 +21,7 @@ var rad_to_degree: float = 180 / PI
 
 @onready var multi_mesh_node := %MultiMeshNode
 @onready var multi_mesh_road_segment := %MultiMeshRoadSegment
+@onready var floor := %Floor
 
 # Psuedocode
 #initialize priority queue Q with a single entry: r(0, r0, q0)
@@ -97,8 +98,19 @@ func generate_city() -> void:
 	
 	
 	print("Time took: %s ms" % ( (float)(Time.get_ticks_usec() - start_time) / 1000))
+	print("Segment count: %s" % S.size())
 
 func local_constraints(road: RoadSegment) -> bool:
+	var floor_size: Vector2 = floor.mesh.size
+	var to_pos := road.to_node.pos
+	
+	if (to_pos.x >= floor_size.x / 2 or 
+	to_pos.x <= -floor_size.x / 2 or 
+	to_pos.y >= floor_size.y / 2 or 
+	to_pos.y <= -floor_size.y / 2):
+		print("REJECTED: OUT OF BOUNDS")
+		return false
+	
 	return true
 
 func global_goals(root_road: RoadSegment) -> Array[RoadSegment]:
