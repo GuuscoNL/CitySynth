@@ -8,7 +8,7 @@
 [ext_resource type="BoxMesh" uid="uid://dfo8m7mamq7ug" path="res://meshes/RoadSegmentMesh.tres" id="4_y3mal"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_d13wu"]
-size = Vector2(500, 500)
+size = Vector2(2000, 2000)
 
 [sub_resource type="Environment" id="Environment_0r83c"]
 

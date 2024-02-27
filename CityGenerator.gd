@@ -7,14 +7,14 @@ extends Node3D
 @export var seed := 63
 @export var segment_limit := 1000
 
-var nodes: Array[RoadNode]
 var city_gen_thread := Thread.new()
 var S_mutex := Mutex.new()
 
 var RNG := RandomNumberGenerator.new()
 
 var Q := PriorityQueue.new()
-var S: Array[RoadSegment] = []
+var S: Array[RoadSegment] = [] # @SPEED: SOA?
+var nodes: Array[RoadNode] # @SPEED: PackedVector2Array?
 
 var degree_to_rad: float = PI / 180
 var rad_to_degree: float = 180 / PI
@@ -54,8 +54,6 @@ func generate_city() -> void:
 	
 	Q.push(RoadSegment.new(0, start_node, next_node))
 	
-	#Q.print_queue()
-	
 	while not Q.is_empty() and S.size() < segment_limit:
 		var cur_road: RoadSegment = Q.pop()
 		var accepted: bool = local_constraints(cur_road)
@@ -69,10 +67,6 @@ func generate_city() -> void:
 			for new_road in new_roads:
 				new_road.delay += cur_road.delay + 1
 				Q.push(new_road)
-		
-		if Q.list.size() >= 30:
-			Q.print_queue()
-			pass
 	
 	print("alghoritm done")
 
@@ -80,14 +74,26 @@ func generate_city() -> void:
 	var index := 0
 	for segment in S:
 		segment.validate_nodes()
-		multi_mesh_road_segment.multimesh.set_instance_transform(index, Transform3D(Basis().rotated(Vector3(0, 1, 0), segment.angle), Vector3(segment.pos.x, 0, segment.pos.y)))
+		multi_mesh_road_segment.multimesh.set_instance_transform(
+			index, 
+			Transform3D(Basis().rotated(Vector3(0, 1, 0), segment.angle), 
+			Vector3(segment.pos.x, multi_mesh_road_segment.multimesh.mesh.size.y/2, segment.pos.y))
+			)
 		index += 1
 
 	multi_mesh_node.multimesh.set_instance_count(nodes.size())
 	index = 0
-	for node in nodes:
-		multi_mesh_node.multimesh.set_instance_transform(index, Transform3D(Basis(), Vector3(node.pos.x, 0, node.pos.y)))
-		index += 1
+	for i in range(nodes.size() - 1, 0, -1):
+		var node := nodes[i]
+		if not node.valid: 
+			nodes.remove_at(i)
+		else:
+			multi_mesh_node.multimesh.set_instance_transform(
+				index, 
+				Transform3D(Basis(), 
+				Vector3(node.pos.x, multi_mesh_node.multimesh.mesh.height/2, node.pos.y))
+				)
+			index += 1
 	
 	
 	print("Time took: %s ms" % ( (float)(Time.get_ticks_usec() - start_time) / 1000))
