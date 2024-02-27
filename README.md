@@ -1,3 +1,7 @@
+
+# V1 README
+TODO: Update readme for V2
+
 # City Synth
 
 City Synth is a tool made in C++ using the raylib library where you can generate procedural cities based on a population heatmap. The generated cities can be exported to a JSON file and imported into Blender, Unity, Unreal Engine, ect with a custom script.

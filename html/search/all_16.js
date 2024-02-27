@@ -1,5 +1,0 @@
-var searchData=
-[
-  ['_7ebasic_5fjson_0',['~basic_json',['../classbasic__json.html#a9f3bcb6dc54f447ad95085715104494e',1,'basic_json']]],
-  ['_7ecity_1',['~City',['../class_city.html#ae95feee8a1d4e1f14ea41ec89b47304f',1,'City']]]
-];

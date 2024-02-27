@@ -1,10 +1,3 @@
-
-*.o
-*.d
-*.exe
-*.code-workspace
-*desktop.ini*
-
-*.png
-*.json
-!.vscode/*
+# Godot 4+ specific ignores
+.godot/
+*.tmp

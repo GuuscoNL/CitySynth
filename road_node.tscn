@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://der5qvmjvhc0w"]
+
+[ext_resource type="Script" path="res://RoadNode.gd" id="1_k2m1p"]
+[ext_resource type="CylinderMesh" uid="uid://bnr4harhdx18s" path="res://meshes/RoadNodeMesh.tres" id="2_206h8"]
+
+[node name="RoadNode" type="Node3D"]
+process_mode = 4
+script = ExtResource("1_k2m1p")
+
+[node name="NodeMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+visible = false
+mesh = ExtResource("2_206h8")

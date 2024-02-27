@@ -1,0 +1,86 @@
+[gd_scene load_steps=11 format=3 uid="uid://ceejmrea3vecj"]
+
+[ext_resource type="Material" uid="uid://ly8gh4csqenq" path="res://textures/prototype_static.tres" id="1_nfkxf"]
+[ext_resource type="Script" path="res://addons/free_look_camera/camera.gd" id="3_njbr5"]
+[ext_resource type="CylinderMesh" uid="uid://bnr4harhdx18s" path="res://meshes/RoadNodeMesh.tres" id="4_baue5"]
+[ext_resource type="Script" path="res://CityGenerator.gd" id="4_dkcs2"]
+[ext_resource type="Script" path="res://ProgressBar.gd" id="4_upbav"]
+[ext_resource type="BoxMesh" uid="uid://dfo8m7mamq7ug" path="res://meshes/RoadSegmentMesh.tres" id="4_y3mal"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_d13wu"]
+size = Vector2(500, 500)
+
+[sub_resource type="Environment" id="Environment_0r83c"]
+
+[sub_resource type="MultiMesh" id="MultiMesh_431iw"]
+transform_format = 1
+use_colors = true
+mesh = ExtResource("4_baue5")
+
+[sub_resource type="MultiMesh" id="MultiMesh_16rdr"]
+transform_format = 1
+use_colors = true
+mesh = ExtResource("4_y3mal")
+
+[node name="main_scene" type="Node3D"]
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+material_override = ExtResource("1_nfkxf")
+mesh = SubResource("QuadMesh_d13wu")
+metadata/_edit_lock_ = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0.205299, -0.978699, 0, 0.978699, 0.205299, 1, 8.97391e-09, -4.27803e-08, -11.906, 6.63, 0)
+script = ExtResource("3_njbr5")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.688176, -0.544359, 0.479674, -0.100142, 0.583531, 0.805893, -0.7186, -0.602632, 0.347059, 27.0858, 10.2341, 21.1946)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0r83c")
+
+[node name="CityGenerator" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_dkcs2")
+
+[node name="MultiMeshNode" type="MultiMeshInstance3D" parent="CityGenerator"]
+unique_name_in_owner = true
+multimesh = SubResource("MultiMesh_431iw")
+
+[node name="MultiMeshRoadSegment" type="MultiMeshInstance3D" parent="CityGenerator"]
+unique_name_in_owner = true
+multimesh = SubResource("MultiMesh_16rdr")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -316.0
+offset_bottom = 369.0
+grow_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 15.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 3
+
+[node name="Button_Generate" type="Button" parent="UI/Control/VBoxContainer"]
+layout_mode = 2
+text = "Generate City"
+
+[node name="ProgressBar" type="ProgressBar" parent="UI/Control/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+script = ExtResource("4_upbav")
+
+[connection signal="pressed" from="UI/Control/VBoxContainer/Button_Generate" to="CityGenerator" method="_on_button_generate_pressed"]
