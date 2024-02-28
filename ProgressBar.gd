@@ -20,3 +20,5 @@ func _process(_delta: float) -> void:
 			value = ((float)(city_gen.S.size()) / city_gen.segment_limit)
 
 			city_gen.S_mutex.unlock()
+	elif not city_gen.city_gen_thread.is_started():
+		value = 1

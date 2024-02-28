@@ -1,5 +1,9 @@
-[gd_resource type="CylinderMesh" format=3 uid="uid://bnr4harhdx18s"]
+[gd_resource type="CylinderMesh" load_steps=2 format=3 uid="uid://bnr4harhdx18s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wr5ss"]
+vertex_color_use_as_albedo = true
 
 [resource]
+material = SubResource("StandardMaterial3D_wr5ss")
 height = 0.5
 radial_segments = 6

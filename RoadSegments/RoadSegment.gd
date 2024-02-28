@@ -3,11 +3,17 @@ class_name RoadSegment
 var delay: int
 var from_node: RoadNode:
 	set(val):
+		if from_node: from_node.remove_road(self)
+		
 		from_node = val
+		from_node.add_road(self)
 		calc_pos_angle()
 var to_node: RoadNode:
 	set(val):
+		if to_node: to_node.remove_road(self)
+		
 		to_node = val
+		to_node.add_road(self)
 		calc_pos_angle()
 var angle: float
 var pos: Vector2
@@ -25,3 +31,14 @@ func calc_pos_angle() -> void:
 func validate_nodes() -> void:
 	from_node.valid = true
 	to_node.valid = true
+
+func get_connected_roads() -> Array[RoadSegment]:
+	var connected_roads := from_node.connected_roads
+	connected_roads.append_array(to_node.connected_roads)
+	connected_roads = connected_roads.filter(func(element: RoadSegment) -> bool: return element != self)
+	return connected_roads
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_PREDELETE:
+		from_node.remove_road(self)
+		to_node.remove_road(self)
