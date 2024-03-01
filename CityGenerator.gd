@@ -5,7 +5,7 @@ extends Node3D
 @export var road_length := 5.0
 @export var highway_branch_chance := 0.01
 @export var rng_seed := 63
-@export var segment_limit := 1000
+@export var segment_limit := 100
 
 var city_gen_thread := Thread.new()
 var S_mutex := Mutex.new()
