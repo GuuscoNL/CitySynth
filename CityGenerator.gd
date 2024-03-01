@@ -17,16 +17,17 @@ var Q := PriorityQueue.new()
 var S: Array[RoadSegment] = [] # @SPEED: SOA?
 var nodes: Array[RoadNode] # @SPEED: PackedVector2Array?
 
-var degree_to_rad: float = PI / 180
-var rad_to_degree: float = 180 / PI
+const degree_to_rad: float = PI / 180 ## Used to convert degrees to radians
+const rad_to_degree: float = 180 / PI ## Used to convert radians to degrees
 
 @onready var multi_mesh_node := %MultiMeshNode
 @onready var multi_mesh_road_segment := %MultiMeshRoadSegment
 @onready var world_floor := %Floor
 
+## Return struct for roads_collide()
 class RoadsCollided:
-	var collided: bool
-	var pos: Vector2
+	var collided: bool ## Did the road collide?
+	var pos: Vector2 = Vector2.ZERO ## Position of the collision if it happenend
 	
 	func _init(collided1: bool, pos1: Vector2) -> void:
 		collided = collided1
@@ -131,6 +132,7 @@ func local_constraints(org_road: RoadSegment) -> bool:
 func local_constraint_intersecting(org_road: RoadSegment) -> bool:
 	var connected_roads := org_road.get_connected_roads()
 	
+	# @SPEED: QuadTree
 	for road in S:
 		# Don't check roads that are connected to this road, since they will always be intersecting.
 		if road in connected_roads:
@@ -143,12 +145,9 @@ func local_constraint_intersecting(org_road: RoadSegment) -> bool:
 			intersection_node.color = Color(0, 255, 0)
 			return true
 		
-		
-		
 	return false
 
 func roads_collide(road1: RoadSegment, road2: RoadSegment) -> RoadsCollided:
-	
 	var p1 := road1.from_node.pos
 	var p2 := road1.to_node.pos
 	var p3 := road2.from_node.pos
@@ -221,7 +220,7 @@ func global_goals(root_road: RoadSegment) -> Array[RoadSegment]:
 		
 	return new_roads
 
-func calc_pos_with_angle(from: Vector2, angle: int, length: float) -> Vector2:
+func calc_pos_with_angle(from: Vector2, angle: float, length: float) -> Vector2:
 	var angle_rad := angle * degree_to_rad
 	return Vector2(from.x + cos(angle_rad) * length, from.y + sin(angle_rad) * length)
 
