@@ -1,6 +1,6 @@
 
 # V1 README
-TODO: Update readme for V2
+TODO: Update readme for V2 aka godot_rework
 
 # City Synth
 
@@ -54,10 +54,10 @@ When you open the tool you will see in the top right corner settings for generat
   - **Generate City:** Generates the city based on all the settings.
 - **Debug**
   - **Show nodes:** Will show all the nodes and give them a color based on the type of intersections.
-    - White: No special intersection.
-    - Green: Two roads intersected, so a node was generated at the intersection.
-    - Red: Ends close to another node, so the road is extended to that node.
-    - Blue: Road ends near other road, so road is extended to create intersection with other road.
+	- White: No special intersection.
+	- Green: Two roads intersected, so a node was generated at the intersection.
+	- Red: Ends close to another node, so the road is extended to that node.
+	- Blue: Road ends near other road, so road is extended to create intersection with other road.
   - **Disco roads:** Give every road a different color, so it is easier to differentiate between roads.
 
 ## Export example

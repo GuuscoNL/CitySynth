@@ -5,7 +5,8 @@ extends Node3D
 @export var road_length := 5.0
 @export var highway_branch_chance := 0.01
 @export var rng_seed := 63
-@export var segment_limit := 100
+@export var segment_limit := 1500
+@export var minimum_road_length := 1
 
 var city_gen_thread := Thread.new()
 var S_mutex := Mutex.new()
@@ -140,7 +141,6 @@ func local_constraint_intersecting(org_road: RoadSegment) -> bool:
 		if collided.collided:
 			var intersection_node := add_intersection(road, org_road, collided.pos)
 			intersection_node.color = Color(0, 255, 0)
-			#TODO: MAKE GREEEEEEEN
 			return true
 		
 		
@@ -180,6 +180,16 @@ func add_intersection(road_to_split: RoadSegment, road_to_add: RoadSegment, inte
 	var split_to_node := road_to_split.to_node
 	
 	# TODO: if too close to other node extend to node don't create new node.
+	
+	if split_from_node.pos.distance_squared_to(intersection_pos) < minimum_road_length ** 2:
+		road_to_add.to_node = split_from_node
+		
+		return split_from_node
+	
+	if split_to_node.pos.distance_squared_to(intersection_pos) < minimum_road_length ** 2:
+		road_to_add.to_node = split_to_node
+		
+		return split_to_node
 	
 	var intersection_node := add_node(intersection_pos)
 	
