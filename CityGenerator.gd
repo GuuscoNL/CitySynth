@@ -15,14 +15,11 @@ var RNG := RandomNumberGenerator.new()
 
 var Q := PriorityQueue.new()
 var S: Array[RoadSegment] = [] # @SPEED: SOA?
-var nodes: Array[RoadNode] # @SPEED: PackedVector2Array?
+var nodes: Array[RoadNode] = [] # @SPEED: PackedVector2Array?
 
-const degree_to_rad: float = PI / 180 ## Used to convert degrees to radians
-const rad_to_degree: float = 180 / PI ## Used to convert radians to degrees
-
-@onready var multi_mesh_node := %MultiMeshNode
-@onready var multi_mesh_road_segment := %MultiMeshRoadSegment
-@onready var world_floor := %Floor
+@onready var multi_mesh_node: MultiMeshInstance3D = %MultiMeshNode
+@onready var multi_mesh_road_segment: MultiMeshInstance3D = %MultiMeshRoadSegment
+@onready var world_floor: MeshInstance3D = %Floor
 
 ## Return struct for roads_collide()
 class RoadsCollided:
@@ -60,10 +57,14 @@ func reset_city() -> void:
 
 func generate_city() -> void:
 	var start_time := Time.get_ticks_usec()
+	# BUG: Start node doesn't get drawn?
 	var start_node := add_node(Vector2.ZERO)
-	var next_node := add_node(Vector2(road_length, 0))
+
+	var r_node := add_node(Vector2(road_length, 0))
+	var l_node := add_node(Vector2(-road_length, 0))
 	
-	Q.push(RoadSegment.new(0, start_node, next_node))
+	Q.push(RoadSegment.new(0, start_node, r_node))
+	Q.push(RoadSegment.new(0, start_node, l_node))
 	
 	while not Q.is_empty() and S.size() < segment_limit:
 		var cur_road: RoadSegment = Q.pop()
@@ -105,7 +106,7 @@ func generate_city() -> void:
 				Transform3D(Basis(), 
 				Vector3(node.pos.x, multi_mesh_node.multimesh.mesh.height/2, node.pos.y))
 				)
-				#var temp := Color().n
+
 			multi_mesh_node.multimesh.set_instance_color(index, node.color.clamp())
 			index += 1
 	
@@ -206,7 +207,7 @@ func global_goals(root_road: RoadSegment) -> Array[RoadSegment]:
 	
 	var rand_angle := RNG.randf_range(-10, 10)
 	
-	var new_to_pos := calc_pos_with_angle(root_to_node.pos, (-root_road.angle * rad_to_degree) + rand_angle, road_length) # TODO: Sample from heatmap
+	var new_to_pos := calc_pos_with_angle(root_to_node.pos, (rad_to_degree(-root_road.angle)) + rand_angle, road_length) # TODO: Sample from heatmap
 	var new_to_node := add_node(new_to_pos)
 	new_roads.append(RoadSegment.new(1, root_to_node, new_to_node))
 	
@@ -215,13 +216,13 @@ func global_goals(root_road: RoadSegment) -> Array[RoadSegment]:
 		var angle := 90.0
 		if RNG.randf() < 0.5:
 			angle = -90.0
-		var branch_node := add_node(calc_pos_with_angle(root_to_node.pos, (-root_road.angle * rad_to_degree) + angle, road_length))
+		var branch_node := add_node(calc_pos_with_angle(root_to_node.pos, (rad_to_degree(-root_road.angle)) + angle, road_length))
 		new_roads.append(RoadSegment.new(1, root_to_node, branch_node))
 		
 	return new_roads
 
 func calc_pos_with_angle(from: Vector2, angle: float, length: float) -> Vector2:
-	var angle_rad := angle * degree_to_rad
+	var angle_rad := degree_to_rad(angle)
 	return Vector2(from.x + cos(angle_rad) * length, from.y + sin(angle_rad) * length)
 
 func _on_button_generate_pressed() -> void:
@@ -239,3 +240,10 @@ func _process(_delta: float) -> void:
 		city_gen_thread.wait_to_finish()
 		update_multimeshes()
 
+## Used to convert degrees to radians
+func degree_to_rad(x: float) -> float:
+	return x * PI / 180
+
+##Used to convert radians to degrees
+func rad_to_degree(x: float) -> float:
+	return x * 180 / PI
