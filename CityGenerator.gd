@@ -6,9 +6,10 @@ extends Node3D
 @export var highway_branch_chance := 0.02
 @export var highway_angle := 20.0
 @export var rng_seed := 63
-@export var segment_limit := 500
+@export var segment_limit := 1500
 @export var minimum_road_length := 1.5
 @export var close_crossing := 1.5
+@export var close_road := 1.5
 
 var city_gen_thread := Thread.new()
 var S_mutex := Mutex.new()
@@ -40,6 +41,15 @@ class LocalConstraintResult:
 	func _init(accepted1: bool, should_continue1: bool) -> void:
 		accepted = accepted1
 		should_continue = should_continue1
+
+## Result struct for dist_node_to_road()
+class DistNodeToRoadResult:
+	var closest_point_pos: Vector2 ## Closest point on the road
+	var distance_sqr: float ## Distance to the closest point
+	
+	func _init(closest_point1: Vector2, distance_sqr1: float) -> void:
+		closest_point_pos = closest_point1
+		distance_sqr = distance_sqr1
 
 # Psuedocode
 #initialize priority queue Q with a single entry: r(0, r0, q0)
@@ -147,6 +157,9 @@ func local_constraints(org_road: RoadSegment) -> LocalConstraintResult:
 	
 	if local_constraint_close_node(org_road):
 		return LocalConstraintResult.new(true, false)
+
+	if local_constraint_close_road(org_road):
+		return LocalConstraintResult.new(true, false)
 	
 	return LocalConstraintResult.new(true, true)
 
@@ -195,6 +208,60 @@ func local_constraint_close_node(org_road: RoadSegment) -> bool:
 	
 	return false
 
+func local_constraint_close_road(org_road: RoadSegment) -> bool:
+
+	var smallest_distance := 9999999999.0
+	var closest_road: RoadSegment = null
+	var closest_node_pos: Vector2 = Vector2.ZERO
+
+	# @SPEED: QuadTree
+	for road in S:
+		
+		if road == org_road:
+			continue
+		
+		var result := dist_node_to_road(road, org_road.to_node)
+
+		if result.distance_sqr < smallest_distance:
+			smallest_distance = result.distance_sqr
+			closest_road = road
+			closest_node_pos = result.closest_point_pos
+		
+		
+	if smallest_distance < close_road ** 2 and closest_road != null:
+		var intersection_node := add_intersection(closest_road, org_road, closest_node_pos)
+		intersection_node.color = Color(0, 0, 255)
+		org_road.color = Color(0, 0, 255)
+		return true
+	
+	return false
+
+func dist_node_to_road(org_road: RoadSegment, node: RoadNode) -> DistNodeToRoadResult:
+	var a := org_road.from_node.pos
+	var b := org_road.to_node.pos
+	var p := node.pos
+
+	var ab := b - a
+	var ap := p - a
+
+	var d := ap.dot(ab) / ab.length_squared()
+
+	var result := DistNodeToRoadResult.new(Vector2.ZERO, 0)
+
+	# If the point is outside the line segment, the closest point is one of the end points
+	if d < 0:
+		result.closest_point_pos = a
+	elif d > 1:
+		result.closest_point_pos = b
+	
+	# Otherwise, the closest point is on the line segment
+	else:
+		result.closest_point_pos = a + ab * d
+	
+
+	result.distance_sqr = p.distance_squared_to(result.closest_point_pos)
+
+	return result
 
 func roads_collide(road1: RoadSegment, road2: RoadSegment) -> RoadsCollidedResult:
 	var p1 := road1.from_node.pos
@@ -226,8 +293,6 @@ func roads_collide(road1: RoadSegment, road2: RoadSegment) -> RoadsCollidedResul
 func add_intersection(road_to_split: RoadSegment, road_to_add: RoadSegment, intersection_pos: Vector2) -> RoadNode:
 	var split_from_node := road_to_split.from_node
 	var split_to_node := road_to_split.to_node
-	
-	# TODO: if too close to other node extend to node don't create new node.
 	
 	if split_from_node.pos.distance_squared_to(intersection_pos) < minimum_road_length ** 2:
 		road_to_add.to_node = split_from_node
