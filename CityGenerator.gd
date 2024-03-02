@@ -6,7 +6,7 @@ extends Node3D
 @export var highway_branch_chance := 0.02
 @export var highway_angle := 20.0
 @export var rng_seed := 63
-@export var segment_limit := 3
+@export var segment_limit := 500
 @export var minimum_road_length := 1.5
 @export var close_crossing := 1.5
 @export var close_road := 1.5
@@ -106,11 +106,16 @@ func generate_city() -> void:
 				Q.push(new_road)
 	
 	print("alghoritm done")
+	
+	# Cleanup: Remove roads that were not accepted and remove the road from the nodes
+	for segment: RoadSegment in Q.list:
+		segment.to_node.remove_road(segment)
+		segment.from_node.remove_road(segment)
+	Q.reset()
 
 	multi_mesh_road_segment.multimesh.set_instance_count(S.size())
 	var index := 0
 	for segment in S:
-		segment.validate_nodes()
 		var length := segment.from_node.pos.distance_to(segment.to_node.pos)
 		multi_mesh_road_segment.multimesh.set_instance_transform(
 			index, 
@@ -126,17 +131,19 @@ func generate_city() -> void:
 	index = 0
 	for i in range(nodes.size() - 1, -1, -1):
 		var node := nodes[i]
-		if not node.valid: 
+		
+		if node.connected_roads.size() == 0: 
 			nodes.remove_at(i)
-		else:
-			multi_mesh_node.multimesh.set_instance_transform(
-				index, 
-				Transform3D(Basis(), 
-				Vector3(node.pos.x, multi_mesh_node.multimesh.mesh.height/2, node.pos.y))
-				)
+			continue
 
-			multi_mesh_node.multimesh.set_instance_color(index, node.color.clamp())
-			index += 1
+		multi_mesh_node.multimesh.set_instance_transform(
+			index, 
+			Transform3D(Basis(), 
+			Vector3(node.pos.x, multi_mesh_node.multimesh.mesh.height/2, node.pos.y))
+			)
+
+		multi_mesh_node.multimesh.set_instance_color(index, node.color.clamp())
+		index += 1
 	
 	
 	print("Time took: %s ms" % ( (float)(Time.get_ticks_usec() - start_time) / 1000))

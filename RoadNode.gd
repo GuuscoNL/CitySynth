@@ -1,7 +1,6 @@
 class_name RoadNode
 
 var pos := Vector2.ZERO
-var valid := false
 var connected_roads: Array[RoadSegment]
 var color := Color(255, 255, 255)
 

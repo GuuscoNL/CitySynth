@@ -29,10 +29,6 @@ func calc_pos_angle() -> void:
 	pos = (from_node.pos + to_node.pos) / 2
 	angle = -from_node.pos.angle_to_point(to_node.pos)
 
-func validate_nodes() -> void:
-	from_node.valid = true
-	to_node.valid = true
-
 func get_connected_roads() -> Array[RoadSegment]:
 	var connected_roads:= from_node.connected_roads
 	connected_roads.append_array(to_node.connected_roads)
