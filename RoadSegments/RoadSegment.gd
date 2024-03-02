@@ -17,6 +17,7 @@ var to_node: RoadNode:
 		calc_pos_angle()
 var angle: float
 var pos: Vector2
+var color := Color(255, 255, 255)
 
 func _init(delay1: int, from: RoadNode, to: RoadNode) -> void:
 	from_node = from
