@@ -6,7 +6,7 @@ extends Node3D
 @export var highway_branch_chance := 0.02
 @export var highway_angle := 20.0
 @export var rng_seed := 63
-@export var segment_limit := 1500
+@export var segment_limit := 3
 @export var minimum_road_length := 1.5
 @export var close_crossing := 1.5
 @export var close_road := 1.5
@@ -51,18 +51,20 @@ class DistNodeToRoadResult:
 		closest_point_pos = closest_point1
 		distance_sqr = distance_sqr1
 
-# Psuedocode
-#initialize priority queue Q with a single entry: r(0, r0, q0)
-#initialize segment list S to empty
-#
-#until Q is empty
-	  #pop smallest r(ti, ri, qi) from Q
-	  #accepted = localConstraints(&r)
-	  #if (accepted) {
-		#add segment(ri) to S
-		#foreach r(tj, rj, qj) produced by globalGoals(ri, qi)
-		  #add r(ti + 1 + tj, rj, qj) to Q
-  #}
+"""
+Psuedocode
+initialize priority queue Q with a single entry: r(0, r0, q0)
+initialize segment list S to empty
+
+until Q is empty
+	  pop smallest r(ti, ri, qi) from Q
+	  accepted = localConstraints(&r)
+	  if (accepted) {
+		add segment(ri) to S
+		foreach r(tj, rj, qj) produced by globalGoals(ri, qi)
+		  add r(ti + 1 + tj, rj, qj) to Q
+  }
+"""
 
 func add_node(pos: Vector2) -> RoadNode:
 	var node := RoadNode.new(pos)
@@ -78,7 +80,6 @@ func reset_city() -> void:
 
 func generate_city() -> void:
 	var start_time := Time.get_ticks_usec()
-	# BUG: Start node doesn't get drawn?
 	var start_node := add_node(Vector2.ZERO)
 
 	var r_node := add_node(Vector2(road_length, 0))
@@ -123,7 +124,7 @@ func generate_city() -> void:
 
 	multi_mesh_node.multimesh.set_instance_count(nodes.size())
 	index = 0
-	for i in range(nodes.size() - 1, 0, -1):
+	for i in range(nodes.size() - 1, -1, -1):
 		var node := nodes[i]
 		if not node.valid: 
 			nodes.remove_at(i)
