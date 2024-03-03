@@ -7,6 +7,7 @@ extends Node
 @export var highway_angle := 20.0
 @export var side_road_length := 5.0
 @export var side_road_branch_chance := 0.5
+@export var side_road_delay := 7
 @export var rng_seed := 63
 @export var segment_limit := 1500
 @export var minimum_road_length := 1.5
@@ -371,7 +372,7 @@ func global_goals(root_road: RoadSegment) -> Array[RoadSegment]:
 				var angle := 90.0
 				if RNG.randf() < 0.5:
 					angle = -90.0
-				new_roads.append(add_side_road(root_road, angle))
+				new_roads.append(add_side_road(root_road, angle, side_road_delay))
 		
 		RoadSegment.RoadType.SIDE_ROAD:
 			new_roads.append(add_side_road(root_road, 0))
@@ -381,11 +382,11 @@ func global_goals(root_road: RoadSegment) -> Array[RoadSegment]:
 		
 	return new_roads
 
-func add_side_road(root_road: RoadSegment, angle: float) -> RoadSegment:
+func add_side_road(root_road: RoadSegment, angle: float, delay: int = 1) -> RoadSegment:
 	var root_to_node := root_road.to_node
 	var new_to_pos := calc_pos_with_angle(root_to_node.pos, (rad_to_degree(-root_road.angle)) + angle, side_road_length) # TODO: Sample from heatmap
 	var new_to_node := add_node(new_to_pos)
-	return RoadSegment.new(1, root_to_node, new_to_node, RoadSegment.RoadType.SIDE_ROAD)
+	return RoadSegment.new(delay, root_to_node, new_to_node, RoadSegment.RoadType.SIDE_ROAD)
 
 func calc_pos_with_angle(from: Vector2, angle: float, length: float) -> Vector2:
 	var angle_rad := degree_to_rad(angle)
