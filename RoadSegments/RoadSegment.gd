@@ -19,10 +19,18 @@ var angle: float
 var pos: Vector2
 var color:= Color(255, 255, 255)
 
-func _init(delay1: int, from: RoadNode, to: RoadNode) -> void:
+enum RoadType {
+	HIGHWAY, 
+	SIDE_ROAD
+	}
+
+var type: RoadType = RoadType.HIGHWAY
+
+func _init(delay1: int, from: RoadNode, to: RoadNode, road_type: RoadType) -> void:
 	from_node = from
 	to_node = to
 	delay = delay1
+	type = road_type
 
 func calc_pos_angle() -> void:
 	if not from_node or not to_node: return

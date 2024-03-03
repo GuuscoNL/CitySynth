@@ -1,11 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://ceejmrea3vecj"]
+[gd_scene load_steps=13 format=3 uid="uid://ceejmrea3vecj"]
 
 [ext_resource type="Material" uid="uid://ly8gh4csqenq" path="res://textures/prototype_static.tres" id="1_nfkxf"]
 [ext_resource type="Script" path="res://addons/free_look_camera/camera.gd" id="3_njbr5"]
 [ext_resource type="CylinderMesh" uid="uid://bnr4harhdx18s" path="res://meshes/RoadNodeMesh.tres" id="4_baue5"]
 [ext_resource type="Script" path="res://CityGenerator.gd" id="4_dkcs2"]
 [ext_resource type="Script" path="res://ProgressBar.gd" id="4_upbav"]
-[ext_resource type="BoxMesh" uid="uid://dfo8m7mamq7ug" path="res://meshes/RoadSegmentMesh.tres" id="4_y3mal"]
+[ext_resource type="BoxMesh" uid="uid://dfo8m7mamq7ug" path="res://meshes/HighwayMesh.tres" id="5_1vmiq"]
+[ext_resource type="BoxMesh" uid="uid://dpcv2r1e82s32" path="res://meshes/SideRoadMesh.tres" id="5_grpar"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_d13wu"]
 size = Vector2(2000, 2000)
@@ -20,7 +21,12 @@ mesh = ExtResource("4_baue5")
 [sub_resource type="MultiMesh" id="MultiMesh_16rdr"]
 transform_format = 1
 use_colors = true
-mesh = ExtResource("4_y3mal")
+mesh = ExtResource("5_1vmiq")
+
+[sub_resource type="MultiMesh" id="MultiMesh_p8c3f"]
+transform_format = 1
+use_colors = true
+mesh = ExtResource("5_grpar")
 
 [node name="main_scene" type="Node3D"]
 
@@ -49,9 +55,13 @@ script = ExtResource("4_dkcs2")
 unique_name_in_owner = true
 multimesh = SubResource("MultiMesh_431iw")
 
-[node name="MultiMeshRoadSegment" type="MultiMeshInstance3D" parent="CityGenerator"]
+[node name="MultiMeshHighway" type="MultiMeshInstance3D" parent="CityGenerator"]
 unique_name_in_owner = true
 multimesh = SubResource("MultiMesh_16rdr")
+
+[node name="MultiMeshSideRoad" type="MultiMeshInstance3D" parent="CityGenerator"]
+unique_name_in_owner = true
+multimesh = SubResource("MultiMesh_p8c3f")
 
 [node name="UI" type="CanvasLayer" parent="."]
 

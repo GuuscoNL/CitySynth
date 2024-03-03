@@ -1,12 +1,14 @@
 
 class_name CityGenerator
-extends Node3D
+extends Node
 
-@export var road_length := 5.0
+@export var highway_length := 5.0
 @export var highway_branch_chance := 0.02
 @export var highway_angle := 20.0
+@export var side_road_length := 5.0
+@export var side_road_branch_chance := 0.5
 @export var rng_seed := 63
-@export var segment_limit := 500
+@export var segment_limit := 1500
 @export var minimum_road_length := 1.5
 @export var close_crossing := 1.5
 @export var close_road := 1.5
@@ -21,8 +23,12 @@ var S: Array[RoadSegment] = [] # @SPEED: SOA?
 var nodes: Array[RoadNode] = [] # @SPEED: PackedVector2Array?
 
 @onready var multi_mesh_node: MultiMeshInstance3D = %MultiMeshNode
-@onready var multi_mesh_road_segment: MultiMeshInstance3D = %MultiMeshRoadSegment
+@onready var multi_mesh_highway: MultiMeshInstance3D = %MultiMeshHighway
+@onready var multi_mesh_side_road: MultiMeshInstance3D = %MultiMeshSideRoad
 @onready var world_floor: MeshInstance3D = %Floor
+
+# FIXME: Nodes don't get deleted becuase multiple people have a reference to them, that is why there are
+# 2 red roads trying to use eachothers nodes.
 
 ## Result struct for roads_collide()
 class RoadsCollidedResult:
@@ -82,11 +88,11 @@ func generate_city() -> void:
 	var start_time := Time.get_ticks_usec()
 	var start_node := add_node(Vector2.ZERO)
 
-	var r_node := add_node(Vector2(road_length, 0))
-	var l_node := add_node(Vector2(-road_length, 0))
+	var r_node := add_node(Vector2(highway_length, 0))
+	var l_node := add_node(Vector2(-highway_length, 0))
 	
-	Q.push(RoadSegment.new(0, start_node, r_node))
-	Q.push(RoadSegment.new(0, start_node, l_node))
+	Q.push(RoadSegment.new(0, start_node, r_node, RoadSegment.RoadType.HIGHWAY))
+	Q.push(RoadSegment.new(0, start_node, l_node, RoadSegment.RoadType.HIGHWAY))
 	
 	while not Q.is_empty() and S.size() < segment_limit:
 		var cur_road: RoadSegment = Q.pop()
@@ -109,26 +115,44 @@ func generate_city() -> void:
 	
 	# Cleanup: Remove roads that were not accepted and remove the road from the nodes
 	for segment: RoadSegment in Q.list:
+		# TODO: Perhaps move this into Q.reset()?
 		segment.to_node.remove_road(segment)
 		segment.from_node.remove_road(segment)
 	Q.reset()
 
-	multi_mesh_road_segment.multimesh.set_instance_count(S.size())
-	var index := 0
+	multi_mesh_highway.multimesh.set_instance_count(S.size())
+	multi_mesh_side_road.multimesh.set_instance_count(S.size())
+	var highway_index := 0
+	var side_road_index := 0
 	for segment in S:
-		var length := segment.from_node.pos.distance_to(segment.to_node.pos)
-		multi_mesh_road_segment.multimesh.set_instance_transform(
-			index, 
-			Transform3D(Basis().scaled(Vector3(length, 1, 1)).rotated(Vector3(0, 1, 0), segment.angle), 
-			Vector3(segment.pos.x, multi_mesh_road_segment.multimesh.mesh.size.y/2, segment.pos.y))
-			)
+		match segment.type:
+			RoadSegment.RoadType.HIGHWAY:
+				var length := segment.from_node.pos.distance_to(segment.to_node.pos)
+				multi_mesh_highway.multimesh.set_instance_transform(
+					highway_index, 
+					Transform3D(Basis().scaled(Vector3(length, 1, 1)).rotated(Vector3(0, 1, 0), segment.angle), 
+					Vector3(segment.pos.x, multi_mesh_highway.multimesh.mesh.size.y/2, segment.pos.y))
+					)
 
-		multi_mesh_road_segment.multimesh.set_instance_color(index, segment.color.clamp())
-		
-		index += 1
+				multi_mesh_highway.multimesh.set_instance_color(highway_index, segment.color.clamp())
+				
+				highway_index += 1
+
+			RoadSegment.RoadType.SIDE_ROAD:
+
+				var length := segment.from_node.pos.distance_to(segment.to_node.pos)
+				multi_mesh_side_road.multimesh.set_instance_transform(
+					side_road_index, 
+					Transform3D(Basis().scaled(Vector3(length, 1, 1)).rotated(Vector3(0, 1, 0), segment.angle), 
+					Vector3(segment.pos.x, multi_mesh_side_road.multimesh.mesh.size.y/2, segment.pos.y))
+					)
+
+				multi_mesh_side_road.multimesh.set_instance_color(side_road_index, segment.color.clamp())
+				
+				side_road_index += 1
 
 	multi_mesh_node.multimesh.set_instance_count(nodes.size())
-	index = 0
+	var node_index := 0
 	for i in range(nodes.size() - 1, -1, -1):
 		var node := nodes[i]
 		
@@ -137,13 +161,13 @@ func generate_city() -> void:
 			continue
 
 		multi_mesh_node.multimesh.set_instance_transform(
-			index, 
+			node_index, 
 			Transform3D(Basis(), 
 			Vector3(node.pos.x, multi_mesh_node.multimesh.mesh.height/2, node.pos.y))
 			)
 
-		multi_mesh_node.multimesh.set_instance_color(index, node.color.clamp())
-		index += 1
+		multi_mesh_node.multimesh.set_instance_color(node_index, node.color.clamp())
+		node_index += 1
 	
 	
 	print("Time took: %s ms" % ( (float)(Time.get_ticks_usec() - start_time) / 1000))
@@ -317,7 +341,7 @@ func add_intersection(road_to_split: RoadSegment, road_to_add: RoadSegment, inte
 	# TODO: roadTypes
 	road_to_add.to_node = intersection_node
 	
-	S.append(RoadSegment.new(1, intersection_node, split_to_node))
+	S.append(RoadSegment.new(1, intersection_node, split_to_node, road_to_split.type))
 	road_to_split.to_node = intersection_node
 	
 	return intersection_node
@@ -326,21 +350,42 @@ func global_goals(root_road: RoadSegment) -> Array[RoadSegment]:
 	var new_roads: Array[RoadSegment] = []
 	var root_to_node := root_road.to_node
 	
-	var rand_angle := RNG.randf_range(-highway_angle, highway_angle)
-	
-	var new_to_pos := calc_pos_with_angle(root_to_node.pos, (rad_to_degree(-root_road.angle)) + rand_angle, road_length) # TODO: Sample from heatmap
-	var new_to_node := add_node(new_to_pos)
-	new_roads.append(RoadSegment.new(1, root_to_node, new_to_node))
-	
-	# Will highway branch to a new highway?
-	if RNG.randf() < highway_branch_chance:
-		var angle := 90.0
-		if RNG.randf() < 0.5:
-			angle = -90.0
-		var branch_node := add_node(calc_pos_with_angle(root_to_node.pos, (rad_to_degree(-root_road.angle)) + angle, road_length))
-		new_roads.append(RoadSegment.new(1, root_to_node, branch_node))
+	match root_road.type:
+		RoadSegment.RoadType.HIGHWAY:
+
+			var rand_angle := RNG.randf_range(-highway_angle, highway_angle)
+			
+			var new_to_pos := calc_pos_with_angle(root_to_node.pos, (rad_to_degree(-root_road.angle)) + rand_angle, highway_length) # TODO: Sample from heatmap
+			var new_to_node := add_node(new_to_pos)
+			new_roads.append(RoadSegment.new(1, root_to_node, new_to_node, RoadSegment.RoadType.HIGHWAY))
+			
+			# Will highway branch to a new highway?
+			if RNG.randf() < highway_branch_chance:
+				var angle := 90.0
+				if RNG.randf() < 0.5:
+					angle = -90.0
+				var branch_node := add_node(calc_pos_with_angle(root_to_node.pos, (rad_to_degree(-root_road.angle)) + angle, highway_length))
+				new_roads.append(RoadSegment.new(1, root_to_node, branch_node, RoadSegment.RoadType.HIGHWAY))
+			
+			elif RNG.randf() < side_road_branch_chance:
+				var angle := 90.0
+				if RNG.randf() < 0.5:
+					angle = -90.0
+				new_roads.append(add_side_road(root_road, angle))
+		
+		RoadSegment.RoadType.SIDE_ROAD:
+			new_roads.append(add_side_road(root_road, 0))
+
+			if RNG.randf() < side_road_branch_chance:
+				new_roads.append(add_side_road(root_road, 90))
 		
 	return new_roads
+
+func add_side_road(root_road: RoadSegment, angle: float) -> RoadSegment:
+	var root_to_node := root_road.to_node
+	var new_to_pos := calc_pos_with_angle(root_to_node.pos, (rad_to_degree(-root_road.angle)) + angle, side_road_length) # TODO: Sample from heatmap
+	var new_to_node := add_node(new_to_pos)
+	return RoadSegment.new(1, root_to_node, new_to_node, RoadSegment.RoadType.SIDE_ROAD)
 
 func calc_pos_with_angle(from: Vector2, angle: float, length: float) -> Vector2:
 	var angle_rad := degree_to_rad(angle)
