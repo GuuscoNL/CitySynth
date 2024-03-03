@@ -9,7 +9,7 @@ extends Node
 @export var side_road_branch_chance := 0.5
 @export var side_road_delay := 7
 @export var rng_seed := 63
-@export var segment_limit := 1500
+@export var segment_limit := 1000
 @export var minimum_road_length := 1.5
 @export var close_crossing := 1.5
 @export var close_road := 1.5
@@ -28,8 +28,7 @@ var nodes: Array[RoadNode] = [] # @SPEED: PackedVector2Array?
 @onready var multi_mesh_side_road: MultiMeshInstance3D = %MultiMeshSideRoad
 @onready var world_floor: MeshInstance3D = %Floor
 
-# FIXME: Nodes don't get deleted becuase multiple people have a reference to them, that is why there are
-# 2 red roads trying to use eachothers nodes.
+# BUG: When red and blue collide node gets deleted
 
 ## Result struct for roads_collide()
 class RoadsCollidedResult:
@@ -204,7 +203,8 @@ func local_constraint_intersecting(org_road: RoadSegment) -> bool:
 		# Don't check roads that are connected to this road, since they will always be intersecting.
 		if road in connected_roads:
 			continue
-			
+		
+		# BUG: Check if there is a road closer that it collided with.
 		var collided := roads_collide(org_road, road)
 		
 		if collided.collided:
@@ -221,6 +221,8 @@ func local_constraint_close_node(org_road: RoadSegment) -> bool:
 
 	var to_node_pos := org_road.to_node.pos
 	var smallest_distance := 9999999999.0
+	
+	var old_node := org_road.to_node
 
 	# @SPEED: QuadTree
 	for node in nodes:
@@ -237,6 +239,7 @@ func local_constraint_close_node(org_road: RoadSegment) -> bool:
 		org_road.to_node = closest_node
 		closest_node.color = Color(255, 0, 0)
 		org_road.color = Color(255, 0, 0)
+		nodes.erase(old_node)
 		return true
 	
 	return false
@@ -326,6 +329,7 @@ func roads_collide(road1: RoadSegment, road2: RoadSegment) -> RoadsCollidedResul
 func add_intersection(road_to_split: RoadSegment, road_to_add: RoadSegment, intersection_pos: Vector2) -> RoadNode:
 	var split_from_node := road_to_split.from_node
 	var split_to_node := road_to_split.to_node
+	nodes.erase(road_to_add.to_node)
 	
 	if split_from_node.pos.distance_squared_to(intersection_pos) < minimum_road_length ** 2:
 		road_to_add.to_node = split_from_node
@@ -339,11 +343,11 @@ func add_intersection(road_to_split: RoadSegment, road_to_add: RoadSegment, inte
 	
 	var intersection_node := add_node(intersection_pos)
 	
-	# TODO: roadTypes
 	road_to_add.to_node = intersection_node
 	
 	S.append(RoadSegment.new(1, intersection_node, split_to_node, road_to_split.type))
 	road_to_split.to_node = intersection_node
+	
 	
 	return intersection_node
 
