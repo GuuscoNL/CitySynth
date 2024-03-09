@@ -9,7 +9,7 @@ extends Node
 @export var side_road_branch_chance := 0.5
 @export var side_road_delay := 7
 @export var rng_seed := 63
-@export var segment_limit := 1000
+@export var segment_limit := 500
 @export var minimum_road_length := 1.5
 @export var close_crossing := 1.5
 @export var close_road := 1.5
@@ -197,7 +197,11 @@ func local_constraints(org_road: RoadSegment) -> LocalConstraintResult:
 
 func local_constraint_intersecting(org_road: RoadSegment) -> bool:
 	var connected_roads := org_road.get_connected_roads()
-	
+	var closest_collision_dist := 9999999999.0
+	var closest_collision: RoadsCollidedResult
+	var closest_collision_road: RoadSegment
+	var had_to_retry := false
+
 	# @SPEED: QuadTree
 	for road in S:
 		# Don't check roads that are connected to this road, since they will always be intersecting.
@@ -205,13 +209,24 @@ func local_constraint_intersecting(org_road: RoadSegment) -> bool:
 			continue
 		
 		# BUG: Check if there is a road closer that it collided with.
-		var collided := roads_collide(org_road, road)
+		var collided_result := roads_collide(org_road, road)
 		
-		if collided.collided:
-			var intersection_node := add_intersection(road, org_road, collided.pos)
-			intersection_node.color = Color(0, 255, 0)
-			org_road.color = Color(0, 255, 0)
-			return true
+		if collided_result.collided and collided_result.pos.distance_squared_to(org_road.to_node.pos) < closest_collision_dist:
+			if collided_result.pos.distance_squared_to(org_road.to_node.pos) > 0.0001:
+				if closest_collision_dist < 9999999999.0: had_to_retry = true
+				closest_collision_dist = collided_result.pos.distance_squared_to(org_road.to_node.pos)
+				closest_collision = collided_result
+				closest_collision_road = road
+				print("COLIISION: ", closest_collision_dist)
+		
+	if closest_collision and closest_collision.collided:
+		print("")
+		var intersection_node := add_intersection(closest_collision_road, org_road, closest_collision.pos)
+		var color := Color(0, 255, 0)
+		if had_to_retry: color = Color(150, 150, 0)
+		intersection_node.color = color
+		org_road.color = color
+		return true
 		
 	return false
 
@@ -239,7 +254,11 @@ func local_constraint_close_node(org_road: RoadSegment) -> bool:
 		org_road.to_node = closest_node
 		closest_node.color = Color(255, 0, 0)
 		org_road.color = Color(255, 0, 0)
-		nodes.erase(old_node)
+		#if old_node.connected_roads.size() > 0:
+			#print(old_node.connected_roads.size())
+		delete_node(old_node)
+
+
 		return true
 	
 	return false
@@ -329,7 +348,8 @@ func roads_collide(road1: RoadSegment, road2: RoadSegment) -> RoadsCollidedResul
 func add_intersection(road_to_split: RoadSegment, road_to_add: RoadSegment, intersection_pos: Vector2) -> RoadNode:
 	var split_from_node := road_to_split.from_node
 	var split_to_node := road_to_split.to_node
-	nodes.erase(road_to_add.to_node)
+	var old_node := road_to_add.to_node
+	delete_node(old_node)
 	
 	if split_from_node.pos.distance_squared_to(intersection_pos) < minimum_road_length ** 2:
 		road_to_add.to_node = split_from_node
@@ -338,6 +358,8 @@ func add_intersection(road_to_split: RoadSegment, road_to_add: RoadSegment, inte
 	
 	if split_to_node.pos.distance_squared_to(intersection_pos) < minimum_road_length ** 2:
 		road_to_add.to_node = split_to_node
+		if old_node.connected_roads.size() > 0:
+			print(old_node.connected_roads.size())
 		
 		return split_to_node
 	
@@ -347,7 +369,6 @@ func add_intersection(road_to_split: RoadSegment, road_to_add: RoadSegment, inte
 	
 	S.append(RoadSegment.new(1, intersection_node, split_to_node, road_to_split.type))
 	road_to_split.to_node = intersection_node
-	
 	
 	return intersection_node
 
@@ -395,6 +416,10 @@ func add_side_road(root_road: RoadSegment, angle: float, delay: int = 1) -> Road
 func calc_pos_with_angle(from: Vector2, angle: float, length: float) -> Vector2:
 	var angle_rad := degree_to_rad(angle)
 	return Vector2(from.x + cos(angle_rad) * length, from.y + sin(angle_rad) * length)
+
+func delete_node(node: RoadNode) -> void:
+	if node.connected_roads.size() > 0:
+		nodes.erase(node)
 
 func _on_button_generate_pressed() -> void:
 	reset_city()
